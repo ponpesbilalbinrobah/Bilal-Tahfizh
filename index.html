@@ -64,11 +64,10 @@
             background: var(--bg-elemen); padding: 24px; border-radius: 20px; margin-bottom: 25px; border: 1px solid var(--border-halus);
             box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.2); transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
-        .box:hover { transform: translateY(-3px); box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.3); border-color: rgba(255,255,255,0.15); }
         
         input:not([type="color"]):not([type="radio"]):not([type="file"]), select, textarea { 
             width: 100%; padding: 14px 16px; margin: 8px 0; background: var(--bg-input); border: 1px solid var(--border-halus);
-            border-radius: 12px; box-sizing: border-box; font-size: 15px; color: var(--teks-utama); font-weight: 600; outline: none; transition: all 0.3s ease;
+            border-radius: 12px; box-sizing: border-box; font-size: 15px; color: var(--teks-utama); font-weight: 600; outline: none; transition: all 0.2s ease;
             appearance: none; -moz-appearance: none; -webkit-appearance: none;
         }
         select { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 15px center; background-size: 16px; padding-right: 40px; }
@@ -78,10 +77,10 @@
         button { 
             width: 100%; background: linear-gradient(135deg, var(--tema-warna), var(--tema-gelap)); color: var(--teks-dalam-tombol); border: none; cursor: pointer; 
             font-weight: 800; padding: 16px; border-radius: 14px; font-size: 16px; margin-top: 10px;
-            box-shadow: 0 6px 0 rgba(0,0,0,0.4), 0 8px 15px rgba(0,0,0,0.3); transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1); text-transform: uppercase; letter-spacing: 1px;
+            box-shadow: 0 6px 0 #b45309, 0 8px 15px rgba(0,0,0,0.3); transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1); text-transform: uppercase; letter-spacing: 1px;
         }
-        button:hover { filter: brightness(1.15); transform: translateY(-1px); box-shadow: 0 7px 0 rgba(0,0,0,0.5), 0 12px 20px rgba(0,0,0,0.4); }
-        button:active { transform: translateY(6px); box-shadow: 0 0 0 rgba(0,0,0,0.6), 0 2px 4px rgba(0,0,0,0.2); }
+        button:hover { filter: brightness(1.15); transform: translateY(-1px); box-shadow: 0 7px 0 #b45309, 0 12px 20px rgba(0,0,0,0.4); }
+        button:active { transform: translateY(6px); box-shadow: 0 0 0 #b45309, 0 2px 4px rgba(0,0,0,0.2); }
         
         .btn-outline { background: transparent; color: var(--tema-warna); border: 2px solid var(--tema-warna); box-shadow: none; }
         .btn-logout { background: linear-gradient(135deg, #ef4444, #b91c1c); color: white; box-shadow: 0 6px 0 #991b1b, 0 8px 15px rgba(0,0,0,0.3); margin-top: 30px; }
@@ -90,9 +89,13 @@
         textarea { height: 100px; resize: none; margin-top: 5px; }
         .hidden { display: none !important; }
 
-        /* =========================================================
-           --- DUAL MODE: ZIYADAH & MUROJAAH ---
-        ========================================================= */
+        /* TABEL DATA MASTER (ADMIN) */
+        .list-container { margin-top:15px; max-height:280px; overflow-y:auto; border-top:1px solid var(--border-halus); padding-top:10px; }
+        .list-item { display:flex; justify-content:space-between; align-items:center; background:var(--bg-input); padding:10px 15px; border-radius:10px; margin-bottom:8px; border:1px solid var(--border-halus); transition:all 0.2s;}
+        .list-item:hover { border-color:var(--tema-warna); }
+        .list-item-text { font-weight:700; font-size:14px; color:var(--teks-utama); }
+
+        /* DUAL MODE: ZIYADAH & MUROJAAH */
         .toggle-setoran { display: flex; background: rgba(0,0,0,0.5); border-radius: 12px; padding: 6px; margin-bottom: 20px; border: 1px solid var(--border-halus); }
         .toggle-btn { flex: 1; padding: 12px; text-align: center; font-weight: 800; cursor: pointer; border-radius: 8px; transition: all 0.3s ease; color: var(--teks-sekunder); font-size: 15px; letter-spacing: 0.5px; }
         .toggle-btn.aktif-ziyadah { background: linear-gradient(135deg, #fbbf24, #d97706); color: #451a03; box-shadow: 0 4px 10px rgba(251,191,36,0.3); }
@@ -102,9 +105,7 @@
         .badge-mode.Ziyadah { background: rgba(251, 191, 36, 0.2); color: #fbbf24; border: 1px solid rgba(251, 191, 36, 0.4); }
         .badge-mode.Murojaah { background: rgba(16, 185, 129, 0.2); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.4); }
 
-        /* =========================================================
-           --- GRID RESPONSIF (HP vs PC) ---
-        ========================================================= */
+        /* GRID RESPONSIF */
         .grid-juz-surah { display: grid; grid-template-columns: 80px 1fr; gap: 12px; margin-bottom: 12px; }
         .grid-ayat { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 15px; }
         .form-label-small { font-size: 13px; color: var(--teks-sekunder); font-weight: 700; margin-bottom: 4px; display: block; text-transform: uppercase; letter-spacing: 0.5px;}
@@ -125,7 +126,10 @@
             .rating-container { flex-direction: column; align-items: flex-start; padding: 15px 0; }
             .rating { width: 100%; justify-content: space-between; margin-top: 8px; } .rating label { font-size: 38px; margin: 0; }
             .btn-status-container { flex-direction: column; gap: 10px; }
+            .input-group-admin { flex-direction: column; } .input-group-admin button { margin-top: 0; width: 100%;}
         }
+
+        .input-group-admin { display: flex; gap: 8px; align-items: center; }
 
         .kontrol-tema-pill { display: flex; align-items: center; gap: 6px; background: rgba(0,0,0,0.3); padding: 5px 8px; border-radius: 100px; box-shadow: inset 0 2px 5px rgba(0,0,0,0.5); border: 1px solid var(--border-halus); }
         .btn-ikon-bulat { width: 38px; height: 38px; border-radius: 50%; display: flex; justify-content: center; align-items: center; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); cursor: pointer; transition: all 0.2s; padding: 0; margin: 0; font-size: 18px; text-transform: none; position: relative; overflow: hidden; }
@@ -141,10 +145,10 @@
         .btn-group { display: flex; gap: 15px; margin-top: 25px; }
         .btn-batal { background: linear-gradient(135deg, #64748b, #475569); color: white; box-shadow: 0 6px 0 #334155, 0 8px 15px rgba(0,0,0,0.3); }
 
-        .kartu-riwayat { background: var(--bg-elemen); padding: 20px; border-radius: 16px; margin-bottom: 16px; font-size: 14px; border: 1px solid var(--border-halus); border-left: 6px solid var(--tema-warna); }
+        .kartu-riwayat { background: var(--bg-elemen); padding: 20px; border-radius: 16px; margin-bottom: 16px; font-size: 14px; border: 1px solid var(--border-halus); }
         .riwayat-bintang-grid { display: grid; grid-template-columns: 1fr; gap: 6px; margin: 12px 0; background: var(--bg-input); padding: 12px; border-radius: 10px; border: 1px solid var(--border-halus); }
         .rb-item { display: flex; justify-content: space-between; align-items: center; font-weight: 600; color: var(--teks-sekunder);}
-        .btn-kecil { padding: 10px 14px; font-size: 13px; width: auto; margin: 0; border-radius: 10px; color: white; font-weight: bold; flex: 1; display:flex; justify-content:center; gap: 5px; }
+        .btn-kecil { padding: 8px 12px; font-size: 13px; width: auto; margin: 0; border-radius: 8px; color: white; font-weight: bold; flex: 1; display:flex; justify-content:center; align-items:center; gap: 5px; border:none; cursor:pointer;}
 
         .kartu-prestasi { display: none; background: rgba(251, 191, 36, 0.05); padding: 18px; border-radius: 14px; margin-top: -5px; margin-bottom: 20px; border: 1px solid rgba(251, 191, 36, 0.2); }
         .kartu-prestasi h4 { margin: 0 0 10px 0; color: var(--tema-warna); font-size: 16px;}
@@ -158,13 +162,8 @@
         .btn-status { flex: 1; padding: 14px; border-radius: 12px; font-weight: 800; font-size: 15px; margin-top: 0; transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1); cursor: pointer; text-transform: none; letter-spacing: normal; border:none;}
         
         .mode-z .btn-3d-active { background: linear-gradient(135deg, #fbbf24, #d97706); color: #451a03 !important; box-shadow: 0 6px 0 #b45309; transform: translateY(0); }
-        .mode-z .btn-3d-active:active { transform: translateY(6px); box-shadow: 0 0 0 #b45309; }
-        
         .mode-m .btn-3d-active { background: linear-gradient(135deg, #10b981, #047857); color: white !important; box-shadow: 0 6px 0 #065f46; transform: translateY(0); }
-        .mode-m .btn-3d-active:active { transform: translateY(6px); box-shadow: 0 0 0 #065f46; }
-
         .btn-3d-active-danger { background: linear-gradient(135deg, #ef4444, #b91c1c); color: white !important; box-shadow: 0 6px 0 #991b1b; transform: translateY(0); }
-        .btn-3d-active-danger:active { transform: translateY(6px); box-shadow: 0 0 0 #991b1b; }
         .btn-3d-inactive { background: rgba(255,255,255,0.05); color: var(--teks-sekunder) !important; border: 1px solid var(--border-halus); box-shadow: none; transform: translateY(4px); }
         
         label.form-label { font-weight: 700; font-size: 14px; color: var(--teks-utama); display: block; margin-bottom: 6px;}
@@ -213,23 +212,49 @@
 
     <div id="admin-page" class="container hidden">
         <h2 style="color: var(--tema-warna);">Dashboard Admin</h2>
+        
         <div class="box" style="border-left: 6px solid var(--tema-warna); background: rgba(245, 158, 11, 0.05);">
             <h3 style="color: var(--tema-warna); border-color: rgba(245, 158, 11, 0.2);">⚙️ Pengaturan Instansi</h3>
             <label class="form-label">Nama Aplikasi:</label><input type="text" id="setting-nama-aplikasi" placeholder="Contoh: Bilal Tahfizh">
             <label class="form-label">Nama Instansi:</label><input type="text" id="setting-nama-instansi" placeholder="Contoh: Pesantren Bilal Bin Robah">
             <button onclick="simpanPengaturanInstansi()" style="margin-top: 15px;">Simpan Pengaturan</button>
         </div>
-        <div class="box"><h3>1. Tambah Halaqah</h3><input type="text" id="nama-halaqah-baru" placeholder="Ketik nama halaqah..."><button onclick="tambahHalaqah()">Buat Halaqah</button></div>
-        <div class="box"><h3>2. Masukkan Santri</h3><select id="admin-pilih-halaqah"></select><textarea id="data-santri-baru" placeholder="Fulan bin Fulan&#10;Ahmad Zaid"></textarea><button onclick="tambahSantri()">Simpan Santri</button></div>
-        
+
         <div class="box">
-            <h3>3. Tambah Guru (Muhaffizh)</h3>
-            <input type="text" id="nama-muhaffiz-baru" placeholder="Contoh: Ustadz Zaid...">
-            <button onclick="tambahMuhaffiz()">Simpan Muhaffiz</button>
-            <p style="font-size: 12px; color: var(--teks-sekunder); margin-top: 8px;">Sandi otomatis: <b>guru123</b> (Bisa diganti mandiri oleh guru saat login).</p>
+            <h3>1. Kelola Guru (Muhaffizh)</h3>
+            <div class="input-group-admin">
+                <input type="text" id="nama-muhaffiz-baru" placeholder="Nama Muhaffizh baru...">
+                <button onclick="tambahGuru()" style="width:auto; margin:0; padding:14px 20px;">➕</button>
+            </div>
+            <p style="font-size: 12px; color: var(--teks-sekunder); margin-top: 5px;">Sandi otomatis: <b>guru123</b></p>
+            <div id="tabel-guru" class="list-container"></div>
         </div>
 
-        <div class="box"><h3>4. Laporan (LPJ)</h3><button style="background: linear-gradient(135deg, #8b5cf6, #6d28d9); color: white; box-shadow: 0 6px 0 #5b21b6;" onclick="bukaModalLaporan()">🖨️ Cetak Laporan</button></div>
+        <div class="box">
+            <h3>2. Kelola Halaqah</h3>
+            <div class="input-group-admin">
+                <input type="text" id="nama-halaqah-baru" placeholder="Nama Halaqah baru...">
+                <button onclick="tambahHalaqah()" style="width:auto; margin:0; padding:14px 20px;">➕</button>
+            </div>
+            <div id="tabel-halaqah" class="list-container"></div>
+        </div>
+
+        <div class="box">
+            <h3>3. Kelola Santri</h3>
+            <select id="admin-pilih-halaqah" onchange="renderTabelSantriAdmin()"></select>
+            <div class="input-group-admin" style="margin-top:10px;">
+                <textarea id="data-santri-baru" placeholder="Ketik nama santri di sini...&#10;(Bisa menekan Enter untuk banyak nama sekaligus)" style="margin-bottom:0;"></textarea>
+                <button onclick="tambahSantri()" style="width:auto; margin:0; padding:14px 20px; align-self:stretch;">➕</button>
+            </div>
+            <div id="tabel-santri" class="list-container">
+                <p style="color:var(--teks-sekunder); text-align:center; font-size:13px;">Pilih halaqah di atas untuk melihat daftar santri.</p>
+            </div>
+        </div>
+
+        <div class="box">
+            <h3>4. Laporan (LPJ)</h3>
+            <button style="background: linear-gradient(135deg, #8b5cf6, #6d28d9); color: white; box-shadow: 0 6px 0 #5b21b6;" onclick="bukaModalLaporan()">🖨️ Cetak Laporan Excel/PDF</button>
+        </div>
         <button class="btn-logout" onclick="logout()">Keluar dari Admin</button>
     </div>
 
@@ -241,20 +266,16 @@
         <p style="text-align: center; color: var(--teks-sekunder); margin-bottom: 25px;">Silakan pilih nama anak Anda untuk melihat perkembangan hafalannya secara real-time.</p>
 
         <div class="box">
-            <label class="form-label">Pilih Halaqah:</label>
-            <select id="ortu-pilih-halaqah" onchange="updateSantriOrtu()"></select>
-            <label class="form-label" style="margin-top: 10px;">Pilih Nama Santri:</label>
-            <select id="ortu-pilih-santri" onchange="tampilkanDataOrtu()"><option value="">-- Pilih Halaqah Dulu --</option></select>
-
+            <label class="form-label">Pilih Halaqah:</label><select id="ortu-pilih-halaqah" onchange="updateSantriOrtu()"></select>
+            <label class="form-label" style="margin-top: 10px;">Pilih Nama Santri:</label><select id="ortu-pilih-santri" onchange="tampilkanDataOrtu()"><option value="">-- Pilih Halaqah Dulu --</option></select>
             <div id="ortu-kartuPrestasi" class="kartu-prestasi">
-                <h4>🎯 Capaian Terakhir Ananda</h4>
+                <h4>🎯 Hafalan Baru (Ziyadah) Ananda</h4>
                 <div style="display:flex; justify-content:space-between; align-items:center; border-top:1px solid rgba(251,191,36,0.2); padding-top:10px; margin-top:5px;">
-                    <div><span style="font-size:12px; color:var(--teks-sekunder);">Total Hafalan</span><br><span id="ortu-infoJuz" style="font-size:16px; font-weight:800; color:var(--teks-utama);">-</span></div>
+                    <div><span style="font-size:12px; color:var(--teks-sekunder);">Posisi Juz</span><br><span id="ortu-infoJuz" style="font-size:16px; font-weight:800; color:var(--teks-utama);">-</span></div>
                     <div style="text-align:right;"><span style="font-size:12px; color:var(--teks-sekunder);">Surah Terakhir</span><br><span id="ortu-infoSurah" style="font-size:16px; font-weight:800; color:var(--teks-utama);">-</span></div>
                 </div>
             </div>
         </div>
-
         <div class="box" style="background: transparent; border: none; box-shadow: none; padding: 0;">
             <h3 style="margin-top: 0; margin-bottom: 15px; border:none;">⏱️ Riwayat Setoran Anak</h3>
             <div id="ortu-tempat-riwayat">
@@ -269,6 +290,7 @@
             <div class="kontrol-tema-pill">
                 <button class="btn-ikon-bulat" onclick="bukaModalGantiSandi()" title="Ganti Sandi Saya" style="color: #fbbf24;">🔑</button>
                 <div style="width:1px; height:20px; background:var(--border-halus); margin: 0 2px;"></div>
+                <label class="btn-ikon-bulat" title="Ubah Warna Utama"><span style="position: absolute; z-index: 1;">🎨</span><input type="color" id="pemilih-warna" value="#fbbf24" class="color-picker-hidden" onchange="ubahTemaWarna(this.value)"></label>
                 <button class="btn-ikon-bulat" onclick="bukaModalWallpaper()" title="Ganti Latar Belakang" style="color: #60a5fa;">🖼️</button>
             </div>
         </div>
@@ -276,11 +298,8 @@
         <p style="text-align: center; font-weight: 800; font-size: 18px; color: var(--tema-warna); margin-top:0; margin-bottom: 25px; background: rgba(251,191,36,0.05); padding: 12px; border-radius: 12px; border: 1px dashed rgba(251,191,36,0.3);"><span id="nama-guru-aktif"></span></p>
         
         <div class="box">
-            <label class="form-label">1. Pilih Halaqah:</label>
-            <select id="muhaffiz-pilih-halaqah" onchange="updateDropdownSantri()"></select>
-            <label class="form-label" style="margin-top: 10px;">2. Pilih Santri:</label>
-            <select id="muhaffiz-pilih-santri" onchange="tampilkanKartuPrestasi()"><option value="">-- Pilih Halaqah Dulu --</option></select>
-
+            <label class="form-label">1. Pilih Halaqah:</label><select id="muhaffiz-pilih-halaqah" onchange="updateDropdownSantri()"></select>
+            <label class="form-label" style="margin-top: 10px;">2. Pilih Santri:</label><select id="muhaffiz-pilih-santri" onchange="tampilkanKartuPrestasi()"><option value="">-- Pilih Halaqah Dulu --</option></select>
             <div id="kartuPrestasi" class="kartu-prestasi">
                 <h4>🎯 Hafalan Baru Terakhir (Ziyadah)</h4>
                 <div style="display:flex; justify-content:space-between; align-items:center; border-top:1px solid rgba(251,191,36,0.2); padding-top:10px; margin-top:5px;">
@@ -291,13 +310,11 @@
         </div>
 
         <div class="box mode-z" id="box-form-setoran" style="border-top: 4px solid var(--warna-input-aktif);">
-            
             <div class="toggle-setoran">
                 <div id="btn-mode-ziyadah" class="toggle-btn aktif-ziyadah" onclick="ubahModeSetoran('Ziyadah')">⭐ ZIYADAH</div>
                 <div id="btn-mode-murojaah" class="toggle-btn" onclick="ubahModeSetoran('Murojaah')">🔄 MUROJA'AH</div>
             </div>
             <input type="hidden" id="jenis-setoran-aktif" value="Ziyadah">
-
             <label class="form-label">Status Kehadiran:</label>
             <div class="absensi-group">
                 <label><input type="radio" name="kehadiran" value="Hadir" checked onchange="toggleFormSetoran()"> Hadir</label>
@@ -307,38 +324,28 @@
             </div>
 
             <div id="area-form-setoran" style="transition: all 0.3s ease;">
-                
                 <div class="grid-juz-surah">
                     <div><label class="form-label-small">Juz</label><input type="number" id="input-juz" placeholder="1-30" min="1" max="30" style="text-align: center; font-weight: 800; font-size: 16px; padding:14px 5px;"></div>
                     <div><label class="form-label-small">Nama Surah</label><select id="input-surah" onchange="updateDropdownAyat()" style="font-weight: 700;"><option value="">-- Pilih Surah --</option></select></div>
                 </div>
-
                 <div class="grid-ayat">
                     <div><label class="form-label-small">Ayat Awal</label><select id="input-ayat-awal" style="font-weight: 700; text-align: center; padding-left:0; padding-right:15px;"><option value="">-</option></select></div>
                     <div><label class="form-label-small">Ayat Akhir</label><select id="input-ayat-akhir" style="font-weight: 700; text-align: center; padding-left:0; padding-right:15px;"><option value="">-</option></select></div>
                 </div>
-
                 <div style="background: var(--bg-elemen); padding: 10px 20px; border-radius: 16px; margin-top: 15px; border: 1px solid var(--border-halus);">
                     <div class="rating-container"><span class="rating-label">Tajwid:</span><div class="rating"><input type="radio" id="star5-tajwid" name="tajwid" value="5"><label for="star5-tajwid">★</label><input type="radio" id="star4-tajwid" name="tajwid" value="4"><label for="star4-tajwid">★</label><input type="radio" id="star3-tajwid" name="tajwid" value="3"><label for="star3-tajwid">★</label><input type="radio" id="star2-tajwid" name="tajwid" value="2"><label for="star2-tajwid">★</label><input type="radio" id="star1-tajwid" name="tajwid" value="1"><label for="star1-tajwid">★</label></div></div>
                     <div class="rating-container"><span class="rating-label">Kelancaran:</span><div class="rating"><input type="radio" id="star5-lancar" name="lancar" value="5"><label for="star5-lancar">★</label><input type="radio" id="star4-lancar" name="lancar" value="4"><label for="star4-lancar">★</label><input type="radio" id="star3-lancar" name="lancar" value="3"><label for="star3-lancar">★</label><input type="radio" id="star2-lancar" name="lancar" value="2"><label for="star2-lancar">★</label><input type="radio" id="star1-lancar" name="lancar" value="1"><label for="star1-lancar">★</label></div></div>
                     <div class="rating-container"><span class="rating-label">Makhraj:</span><div class="rating"><input type="radio" id="star5-makhraj" name="makhraj" value="5"><label for="star5-makhraj">★</label><input type="radio" id="star4-makhraj" name="makhraj" value="4"><label for="star4-makhraj">★</label><input type="radio" id="star3-makhraj" name="makhraj" value="3"><label for="star3-makhraj">★</label><input type="radio" id="star2-makhraj" name="makhraj" value="2"><label for="star2-makhraj">★</label><input type="radio" id="star1-makhraj" name="makhraj" value="1"><label for="star1-makhraj">★</label></div></div>
                 </div>
-
                 <div style="margin-top: 25px;">
-                    <label class="form-label">Keputusan Hafalan:</label>
-                    <input type="hidden" id="statusSetoran" value="Lanjut"> 
+                    <label class="form-label">Keputusan Hafalan:</label><input type="hidden" id="statusSetoran" value="Lanjut"> 
                     <div class="btn-status-container">
                         <button type="button" id="btnLanjut" class="btn-status btn-3d-active" onclick="pilihStatus('Lanjut')">✅ Boleh Lanjut</button>
                         <button type="button" id="btnUlangi" class="btn-status btn-3d-inactive" onclick="pilihStatus('Ulangi')">🔄 Harus Ulangi</button>
                     </div>
                 </div>
-
-                <div style="margin-top: 25px;">
-                    <label class="form-label">Catatan Tambahan (Opsional):</label>
-                    <textarea id="catatanEvaluasi" placeholder="Ketik pesan untuk anak atau orang tua..."></textarea>
-                </div>
+                <div style="margin-top: 25px;"><label class="form-label">Catatan Tambahan (Opsional):</label><textarea id="catatanEvaluasi" placeholder="Ketik pesan untuk anak atau orang tua..."></textarea></div>
             </div>
-            
             <button id="btn-simpan-utama" style="margin-top: 15px; font-size: 18px; padding: 18px;" onclick="simpanSetoran()">💾 SIMPAN ZIYADAH</button>
         </div>
 
@@ -413,7 +420,12 @@
             "Al-Lahab": 5, "Al-Ikhlas": 4, "Al-Falaq": 5, "An-Nas": 6
         };
 
-        let dataProgresGlobal = {}; let dataRiwayatServer = []; let dataAkunGlobal = {}; let namaMuhaffizAktif = ""; 
+        // VARIABEL GLOBAL MASTER
+        let databasePesantren = {};
+        let dataProgresGlobal = {}; 
+        let dataRiwayatServer = []; 
+        let dataAkunGlobal = {}; 
+        let namaMuhaffizAktif = ""; 
 
         window.addEventListener('load', function() {
             let selectSurah = document.getElementById('input-surah');
@@ -421,6 +433,16 @@
 
             fetch(scriptURL).then(r => r.json()).then(data => {
                 dataProgresGlobal = data.progres || {}; dataRiwayatServer = data.riwayat || []; dataAkunGlobal = data.akun || {};
+                
+                // Bangun ulang databasePesantren berdasarkan tarikan Google Sheets
+                if(data.halaqah && data.halaqah.length > 0) {
+                    databasePesantren = {};
+                    data.halaqah.forEach(h => databasePesantren[h] = []);
+                    if(data.santri) { data.santri.forEach(s => { if(databasePesantren[s.halaqah]) databasePesantren[s.halaqah].push(s.nama); }); }
+                } else {
+                    databasePesantren = { "Halaqah Abu Bakar": ["Ahmad Fulan", "Zaid bin Tsabit"], "Halaqah Umar": ["Abdullah bin Umar", "Hasan"] };
+                }
+
                 renderMuhaffizDropdown();
                 document.getElementById('teks-loading').innerText = "Sistem Siap!";
             }).catch(e => { document.getElementById('teks-loading').innerText = "Mode Offline";
@@ -432,39 +454,131 @@
             });
         });
 
+        // --- HELPER UNTUK MENGIRIM PERINTAH EDIT/HAPUS KE SPREADSHEETS ---
+        function eksekusiCRUD(action, sheetName, idLama, payloadData) {
+            let payload = { action: action, sheetName: sheetName, id_lama: idLama };
+            if(action === 'crud_tambah_batch') payload.rowsData = payloadData; else payload.rowData = payloadData;
+            fetch(scriptURL, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) }).catch(e => console.error(e));
+        }
+
         // RENDER MUHAFFIZ DARI DATABASE
         function renderMuhaffizDropdown() {
             let selectMuhaffiz = document.getElementById('select-muhaffiz');
             selectMuhaffiz.innerHTML = '<option value="">-- Pilih Nama Antum --</option>';
-            if (Object.keys(dataAkunGlobal).length > 0) {
-                for (let namaGuru in dataAkunGlobal) { selectMuhaffiz.appendChild(new Option(namaGuru, namaGuru)); }
+            for (let namaGuru in dataAkunGlobal) { selectMuhaffiz.appendChild(new Option(namaGuru, namaGuru)); }
+        }
+
+        // =========================================================
+        // --- LOGIKA ADMIN MASTER DATA (GURU, HALAQAH, SANTRI) ---
+        // =========================================================
+        function renderTabelAdmin() {
+            // Tabel Guru
+            let htmlGuru = '';
+            for(let nama in dataAkunGlobal) {
+                htmlGuru += `<div class="list-item"><span class="list-item-text">${nama}</span><div style="display:flex; gap:5px;"><button onclick="editGuru('${nama}')" class="btn-kecil" style="background:rgba(59,130,246,0.2); color:#93c5fd; border:1px solid rgba(59,130,246,0.3); padding:6px 10px;">✏️</button><button onclick="hapusGuru('${nama}')" class="btn-kecil" style="background:rgba(239,68,68,0.2); color:#fca5a5; border:1px solid rgba(239,68,68,0.3); padding:6px 10px;">🗑️</button></div></div>`;
+            }
+            document.getElementById('tabel-guru').innerHTML = htmlGuru || '<p style="color:var(--teks-sekunder); text-align:center; font-size:13px;">Belum ada data guru.</p>';
+
+            // Tabel Halaqah
+            let htmlHalaqah = '';
+            for(let halaqah in databasePesantren) {
+                htmlHalaqah += `<div class="list-item"><span class="list-item-text">${halaqah}</span><div style="display:flex; gap:5px;"><button onclick="editHalaqah('${halaqah}')" class="btn-kecil" style="background:rgba(59,130,246,0.2); color:#93c5fd; border:1px solid rgba(59,130,246,0.3); padding:6px 10px;">✏️</button><button onclick="hapusHalaqah('${halaqah}')" class="btn-kecil" style="background:rgba(239,68,68,0.2); color:#fca5a5; border:1px solid rgba(239,68,68,0.3); padding:6px 10px;">🗑️</button></div></div>`;
+            }
+            document.getElementById('tabel-halaqah').innerHTML = htmlHalaqah || '<p style="color:var(--teks-sekunder); text-align:center; font-size:13px;">Belum ada data halaqah.</p>';
+
+            renderTabelSantriAdmin(); // Auto refresh Santri
+            renderHalaqahDropdowns(); // Auto refresh dropdown
+        }
+
+        // CRUD Guru
+        function tambahGuru() {
+            let n = document.getElementById('nama-muhaffiz-baru').value.trim();
+            if(!n) return alert("⚠️ Nama tidak boleh kosong!"); if(dataAkunGlobal[n]) return alert("⚠️ Nama sudah terdaftar!");
+            eksekusiCRUD('crud_tambah', 'Akun', '', [n, "guru123"]);
+            dataAkunGlobal[n] = "guru123"; document.getElementById('nama-muhaffiz-baru').value = ''; alert("✅ Muhaffizh ditambahkan!");
+            renderTabelAdmin(); renderMuhaffizDropdown();
+        }
+        function editGuru(namaLama) {
+            let n = prompt("Ubah Nama Muhaffizh:", namaLama);
+            if(n && n.trim() !== "" && n !== namaLama) {
+                eksekusiCRUD('crud_edit', 'Akun', namaLama, [n.trim(), dataAkunGlobal[namaLama]]);
+                dataAkunGlobal[n.trim()] = dataAkunGlobal[namaLama]; delete dataAkunGlobal[namaLama];
+                renderTabelAdmin(); renderMuhaffizDropdown();
+            }
+        }
+        function hapusGuru(nama) {
+            if(confirm(`Yakin ingin menghapus Muhaffizh '${nama}'?`)) {
+                eksekusiCRUD('crud_hapus', 'Akun', nama, []);
+                delete dataAkunGlobal[nama]; renderTabelAdmin(); renderMuhaffizDropdown();
             }
         }
 
-        // TAMBAH MUHAFFIZ BARU OLEH ADMIN
-        function tambahMuhaffiz() {
-            let namaBaru = document.getElementById('nama-muhaffiz-baru').value.trim();
-            if (namaBaru === "") { alert("⚠️ Nama Muhaffizh tidak boleh kosong!"); return; }
-            if (dataAkunGlobal[namaBaru]) { alert("⚠️ Nama Muhaffizh sudah terdaftar!"); return; }
-
-            let btn = document.querySelector('button[onclick="tambahMuhaffiz()"]');
-            let asli = btn.innerText; btn.innerText = "⏳ Menyimpan..."; btn.disabled = true;
-
-            let payload = { action: "tambah_muhaffiz", nama: namaBaru, sandiDefault: "guru123" };
-
-            fetch(scriptURL, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) })
-            .then(() => { 
-                dataAkunGlobal[namaBaru] = "guru123"; 
-                renderMuhaffizDropdown();
-                alert("✅ Muhaffizh '" + namaBaru + "' berhasil ditambahkan dengan sandi otomatis: guru123"); 
-                document.getElementById('nama-muhaffiz-baru').value = '';
-            })
-            .catch(() => alert("⚠️ Gagal koneksi ke server."))
-            .finally(() => { btn.innerText = asli; btn.disabled = false; });
+        // CRUD Halaqah
+        function tambahHalaqah() {
+            let n = document.getElementById('nama-halaqah-baru').value.trim();
+            if(!n) return alert("⚠️ Nama Halaqah tidak boleh kosong!"); if(databasePesantren[n]) return alert("⚠️ Halaqah sudah ada!");
+            eksekusiCRUD('crud_tambah', 'Halaqah', '', [n]);
+            databasePesantren[n] = []; document.getElementById('nama-halaqah-baru').value = ''; alert("✅ Halaqah ditambahkan!");
+            renderTabelAdmin(); 
+        }
+        function editHalaqah(namaLama) {
+            let n = prompt("Ubah Nama Halaqah:", namaLama);
+            if(n && n.trim() !== "" && n !== namaLama) {
+                eksekusiCRUD('crud_edit', 'Halaqah', namaLama, [n.trim()]);
+                databasePesantren[n.trim()] = databasePesantren[namaLama]; delete databasePesantren[namaLama];
+                renderTabelAdmin(); 
+            }
+        }
+        function hapusHalaqah(nama) {
+            if(confirm(`Yakin menghapus Halaqah '${nama}'?`)) {
+                eksekusiCRUD('crud_hapus', 'Halaqah', nama, []);
+                delete databasePesantren[nama]; renderTabelAdmin(); 
+            }
         }
 
+        // CRUD Santri
+        function renderTabelSantriAdmin() {
+            let h = document.getElementById('admin-pilih-halaqah').value; let tmp = document.getElementById('tabel-santri');
+            if(!h) { tmp.innerHTML = '<p style="color:var(--teks-sekunder); text-align:center; font-size:13px;">Pilih halaqah di atas.</p>'; return; }
+            let santris = databasePesantren[h] || [];
+            if(santris.length === 0) { tmp.innerHTML = '<p style="color:var(--teks-sekunder); text-align:center; font-size:13px;">Belum ada santri.</p>'; return; }
+            
+            let html = '';
+            santris.forEach(s => {
+                html += `<div class="list-item"><span class="list-item-text">${s}</span><div style="display:flex; gap:5px;"><button onclick="editSantri('${h}', '${s}')" class="btn-kecil" style="background:rgba(59,130,246,0.2); color:#93c5fd; border:1px solid rgba(59,130,246,0.3); padding:6px 10px;">✏️</button><button onclick="hapusSantri('${h}', '${s}')" class="btn-kecil" style="background:rgba(239,68,68,0.2); color:#fca5a5; border:1px solid rgba(239,68,68,0.3); padding:6px 10px;">🗑️</button></div></div>`;
+            }); tmp.innerHTML = html;
+        }
+        function tambahSantri() {
+            let h = document.getElementById('admin-pilih-halaqah').value; let d = document.getElementById('data-santri-baru').value.trim();
+            if(!h || !d) return alert("⚠️ Pilih Halaqah dan ketik nama santri!");
+            let lines = d.split('\n'); let batch = [];
+            lines.forEach(n => { 
+                let nm = n.trim(); 
+                if(nm !== "" && (!databasePesantren[h] || !databasePesantren[h].includes(nm))) { 
+                    batch.push([h, nm]); if(!databasePesantren[h]) databasePesantren[h] = []; databasePesantren[h].push(nm); 
+                } 
+            });
+            if(batch.length > 0) { eksekusiCRUD('crud_tambah_batch', 'Santri', '', batch); alert(`✅ ${batch.length} Santri ditambahkan!`); document.getElementById('data-santri-baru').value = ''; renderTabelSantriAdmin(); }
+        }
+        function editSantri(halaqah, namaLama) {
+            let n = prompt(`Ubah Nama Santri (${halaqah}):`, namaLama);
+            if(n && n.trim() !== "" && n !== namaLama) {
+                eksekusiCRUD('crud_edit', 'Santri', halaqah + "_" + namaLama, [halaqah, n.trim()]);
+                let idx = databasePesantren[halaqah].indexOf(namaLama); if(idx > -1) databasePesantren[halaqah][idx] = n.trim();
+                renderTabelSantriAdmin();
+            }
+        }
+        function hapusSantri(halaqah, nama) {
+            if(confirm(`Hapus Santri '${nama}'?`)) {
+                eksekusiCRUD('crud_hapus', 'Santri', halaqah + "_" + nama, []);
+                let idx = databasePesantren[halaqah].indexOf(nama); if(idx > -1) databasePesantren[halaqah].splice(idx, 1);
+                renderTabelSantriAdmin();
+            }
+        }
 
-        // TOGGLE ZIYADAH / MUROJAAH
+        // =========================================================
+        // --- LOGIKA APLIKASI UTAMA ---
+        // =========================================================
         function ubahModeSetoran(mode) {
             let btnZ = document.getElementById('btn-mode-ziyadah'); let btnM = document.getElementById('btn-mode-murojaah');
             let formBox = document.getElementById('box-form-setoran'); let btnSimpan = document.getElementById('btn-simpan-utama');
@@ -473,13 +587,11 @@
             if(mode === 'Ziyadah') {
                 btnZ.className = 'toggle-btn aktif-ziyadah'; btnM.className = 'toggle-btn';
                 document.documentElement.style.setProperty('--warna-input-aktif', '#fbbf24'); document.documentElement.style.setProperty('--warna-input-bayangan', 'rgba(251, 191, 36, 0.2)');
-                formBox.className = 'box mode-z';
-                btnSimpan.style.background = 'linear-gradient(135deg, #fbbf24, #d97706)'; btnSimpan.style.color = '#451a03'; btnSimpan.style.boxShadow = '0 6px 0 #b45309, 0 8px 15px rgba(0,0,0,0.3)'; btnSimpan.innerText = "💾 SIMPAN ZIYADAH";
+                formBox.className = 'box mode-z'; btnSimpan.style.background = 'linear-gradient(135deg, #fbbf24, #d97706)'; btnSimpan.style.color = '#451a03'; btnSimpan.style.boxShadow = '0 6px 0 #b45309, 0 8px 15px rgba(0,0,0,0.3)'; btnSimpan.innerText = "💾 SIMPAN ZIYADAH";
             } else {
                 btnM.className = 'toggle-btn aktif-murojaah'; btnZ.className = 'toggle-btn';
                 document.documentElement.style.setProperty('--warna-input-aktif', '#10b981'); document.documentElement.style.setProperty('--warna-input-bayangan', 'rgba(16, 185, 129, 0.2)');
-                formBox.className = 'box mode-m';
-                btnSimpan.style.background = 'linear-gradient(135deg, #10b981, #047857)'; btnSimpan.style.color = 'white'; btnSimpan.style.boxShadow = '0 6px 0 #065f46, 0 8px 15px rgba(0,0,0,0.3)'; btnSimpan.innerText = "💾 SIMPAN MUROJA'AH";
+                formBox.className = 'box mode-m'; btnSimpan.style.background = 'linear-gradient(135deg, #10b981, #047857)'; btnSimpan.style.color = 'white'; btnSimpan.style.boxShadow = '0 6px 0 #065f46, 0 8px 15px rgba(0,0,0,0.3)'; btnSimpan.innerText = "💾 SIMPAN MUROJA'AH";
             }
             pilihStatus(document.getElementById('statusSetoran').value);
         }
@@ -512,7 +624,7 @@
             namaMuhaffizAktif = muhaffiz; document.getElementById('sandi-muhaffiz').value = ''; 
             document.getElementById('nama-guru-aktif').innerText = "👤 Ustadz/ah " + muhaffiz; document.getElementById('tombol-gerigi').classList.add('hidden'); 
             document.getElementById('login-page').classList.add('hidden'); document.getElementById('muhaffiz-page').classList.remove('hidden');
-            document.getElementById('muhaffiz-pilih-halaqah').value = ""; updateDropdownSantri(); 
+            document.getElementById('muhaffiz-pilih-halaqah').value = ""; updateDropdownSantri(); renderHalaqahDropdowns();
             document.getElementById('infoTotalJuz').innerText = "Memuat..."; document.getElementById('infoSurah').innerText = "Sinkronisasi..."; tarikDataServer('muhaffiz');
         }
 
@@ -533,6 +645,7 @@
                 dataProgresGlobal = data.progres; dataRiwayatServer = data.riwayat;
                 if (asal === 'muhaffiz' && document.getElementById('muhaffiz-pilih-santri').value !== "") tampilkanKartuPrestasi(); 
                 else if (asal === 'ortu' && document.getElementById('ortu-pilih-santri').value !== "") tampilkanDataOrtu();
+                else if (asal === 'admin') renderTabelAdmin(); 
             }).catch(e => console.error('Gagal tarik data server', e));
         }
 
@@ -550,15 +663,16 @@
                 } else {
                     let h = ''; riwayatAnak.forEach(item => {
                         let w = item.kehadiran === 'Hadir' ? 'var(--tema-warna)' : (item.kehadiran === 'Sakit' ? '#f59e0b' : (item.kehadiran === 'Izin' ? '#3b82f6' : '#ef4444'));
-                        let warnaTeksBadge = item.kehadiran === 'Hadir' ? 'var(--teks-dalam-tombol)' : '#ffffff';
+                        let wt = item.kehadiran === 'Hadir' ? 'var(--teks-dalam-tombol)' : '#ffffff';
                         let badgeJenis = item.jenis === 'Murojaah' ? `<span class="badge-mode Murojaah">Muroja'ah</span>` : `<span class="badge-mode Ziyadah">Ziyadah</span>`;
                         let infoSetoran = item.kehadiran === 'Hadir' ? `<div style="font-size: 17px; font-weight: 800; color: var(--teks-utama); margin-bottom: 5px;">📖 Juz ${item.juz} - ${item.surah} : ${item.ayat} ${badgeJenis}</div><div class="riwayat-bintang-grid"><div class="rb-item"><span>Tajwid</span> <span class="rb-stars">${drawStars(item.tajwid)}</span></div><div class="rb-item"><span>Lancar</span> <span class="rb-stars">${drawStars(item.lancar)}</span></div><div class="rb-item"><span>Makhraj</span> <span class="rb-stars">${drawStars(item.makhraj)}</span></div></div><div style="font-size:14px; font-weight:800; color: ${item.status === 'Lanjut' ? 'var(--tema-warna)' : '#ef4444'}; margin-top:10px;">${item.status === 'Lanjut' ? '✅ BOLEH LANJUT' : '🔄 HARUS ULANGI'}</div>${item.catatan !== '-' ? `<div style="margin-top:10px; font-size:13px; font-style:italic; color:var(--teks-sekunder); background: rgba(0,0,0,0.2); padding: 10px; border-radius: 8px; border-left: 3px solid rgba(255,255,255,0.2);">📝 Pesan: ${item.catatan}</div>` : ''}` : `<div style="color: var(--teks-sekunder); font-style: italic; font-weight:600; margin-top:10px;">Tidak setoran (Absen)</div>`;
-                        h += `<div class="kartu-riwayat" style="border-left-color: ${w};"><div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:12px;"><div><span style="font-size:12px; color:var(--teks-sekunder); font-weight:700;">${item.tgl}</span></div><div style="text-align:right;"><span class="badge-absen" style="background-color: ${w}; color: ${warnaTeksBadge}; margin:0;">${item.kehadiran}</span></div></div><div style="border-top: 1px dashed var(--border-halus); padding-top:12px;">${infoSetoran}</div></div>`;
+                        h += `<div class="kartu-riwayat" style="border-left-color: ${w};"><div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:12px;"><div><span style="font-size:12px; color:var(--teks-sekunder); font-weight:700;">${item.tgl}</span></div><div style="text-align:right;"><span class="badge-absen" style="background-color: ${w}; color: ${wt}; margin:0;">${item.kehadiran}</span></div></div><div style="border-top: 1px dashed var(--border-halus); padding-top:12px;">${infoSetoran}</div></div>`;
                     }); tmp.innerHTML = h;
                 }
             } else { kartu.style.display = "none"; tmp.innerHTML = '<div style="background: var(--bg-elemen); padding: 30px 20px; border-radius: 20px; text-align: center; border: 2px dashed var(--border-halus);"><p style="color:var(--teks-sekunder); font-size:14px; font-weight: 600;">Silakan pilih nama santri di atas.</p></div>'; }
         }
 
+        // SANDI & LOGOUT
         function bukaModalGantiSandi() { document.getElementById('modal-ganti-sandi').classList.remove('hidden'); document.getElementById('input-sandi-lama').value = ''; document.getElementById('input-sandi-baru').value = ''; document.getElementById('input-sandi-konfirmasi').value = ''; }
         function tutupModalGantiSandi() { document.getElementById('modal-ganti-sandi').classList.add('hidden'); }
         function prosesGantiSandi() {
@@ -571,6 +685,7 @@
         }
         function logout() { document.getElementById('admin-page').classList.add('hidden'); document.getElementById('muhaffiz-page').classList.add('hidden'); document.getElementById('ortu-page').classList.add('hidden'); document.getElementById('login-page').classList.remove('hidden'); document.getElementById('tombol-gerigi').classList.remove('hidden'); document.getElementById('sandi-muhaffiz').value = ''; namaMuhaffizAktif = ""; }
 
+        // INPUT SETORAN
         function tampilkanKartuPrestasi() {
             let santri = document.getElementById('muhaffiz-pilih-santri').value; let kartu = document.getElementById('kartuPrestasi');
             if (santri !== "") {
@@ -588,12 +703,14 @@
             if (s !== "Hadir") { f.style.opacity = "0.4"; f.style.pointerEvents = "none"; f.style.transform = "scale(0.98)"; f.style.filter = "grayscale(100%)"; } else { f.style.opacity = "1"; f.style.pointerEvents = "auto"; f.style.transform = "scale(1)"; f.style.filter = "grayscale(0%)"; }
         }
 
+        // TEMA
         function ubahTemaWarna(warna) { document.documentElement.style.setProperty('--tema-warna', warna); if(document.getElementById('statusSetoran').value === 'Lanjut') pilihStatus('Lanjut'); }
         function bukaModalWallpaper() { document.getElementById('modal-wallpaper').classList.remove('hidden'); }
         function tutupModalWallpaper() { document.getElementById('modal-wallpaper').classList.add('hidden'); }
         function setWallpaper(bgStr) { document.body.style.background = bgStr; document.body.style.backgroundAttachment = 'fixed'; document.body.style.backgroundSize = 'cover'; document.body.style.backgroundPosition = 'center'; }
         function uploadWallpaper(event) { let f = event.target.files[0]; if (f) { let r = new FileReader(); r.onload = function(e) { setWallpaper(`url('${e.target.result}')`); }; r.readAsDataURL(f); } }
 
+        // SIMPAN & RIWAYAT
         let dataRiwayat = []; 
         function simpanSetoran() {
             let halaqah = document.getElementById('muhaffiz-pilih-halaqah').value; let santri = document.getElementById('muhaffiz-pilih-santri').value; let kehadiran = document.querySelector('input[name="kehadiran"]:checked').value;
@@ -650,7 +767,6 @@
             }); kotakArea.innerHTML = htmlHTML;
         }
 
-        let databasePesantren = { "Halaqah Abu Bakar": ["Ahmad Fulan", "Zaid bin Tsabit", "Anas bin Malik"], "Halaqah Umar": ["Abdullah bin Umar", "Hasan", "Husein"] };
         function renderHalaqahDropdowns() {
             let a = document.getElementById('admin-pilih-halaqah'); let m = document.getElementById('muhaffiz-pilih-halaqah'); let l = document.getElementById('pilih-halaqah-laporan');
             a.innerHTML = '<option value="">-- Pilih Halaqah --</option>'; m.innerHTML = '<option value="">-- Pilih Halaqah --</option>'; l.innerHTML = '<option value="">-- Pilih Halaqah --</option>';
@@ -658,11 +774,16 @@
         }
         function bukaModalAdminLogin() { document.getElementById('modal-admin-login').classList.remove('hidden'); }
         function tutupModalAdminLogin() { document.getElementById('modal-admin-login').classList.add('hidden'); document.getElementById('admin-password').value = ''; }
-        function loginAdmin() { if(document.getElementById('admin-password').value === 'admin123') { tutupModalAdminLogin(); document.getElementById('tombol-gerigi').classList.add('hidden'); document.getElementById('login-page').classList.add('hidden'); document.getElementById('admin-page').classList.remove('hidden'); } else { alert('⚠️ Akses Ditolak! Sandi salah.'); document.getElementById('admin-password').value = ''; } }
-        function tambahHalaqah() { let n = document.getElementById('nama-halaqah-baru').value.trim(); if(n !== "") { if(!databasePesantren[n]) { databasePesantren[n] = []; renderHalaqahDropdowns(); alert('✅ ' + n + ' ditambahkan!'); document.getElementById('nama-halaqah-baru').value = ''; } else { alert('⚠️ Halaqah sudah ada!'); } } }
-        function tambahSantri() { let h = document.getElementById('admin-pilih-halaqah').value; let d = document.getElementById('data-santri-baru').value.trim(); if(h === "" || d === "") { alert('⚠️ Lengkapi data!'); return; } let b = d.split('\n'); let j = 0; b.forEach(n => { if(n.trim() !== "") { databasePesantren[h].push(n.trim()); j++; } }); alert('✅ ' + j + ' Santri dimasukkan ke ' + h); document.getElementById('data-santri-baru').value = ''; }
-        function updateDropdownSantri() { let h = document.getElementById('muhaffiz-pilih-halaqah').value; let s = document.getElementById('muhaffiz-pilih-santri'); s.innerHTML = '<option value="">-- Pilih Santri --</option>'; document.getElementById('kartuPrestasi').style.display = 'none'; if(h !== "") { let ds = databasePesantren[h]; if(ds.length > 0) { ds.forEach(n => s.appendChild(new Option(n, n))); } } }
+        function loginAdmin() { 
+            if(document.getElementById('admin-password').value === 'admin123') { 
+                tutupModalAdminLogin(); document.getElementById('tombol-gerigi').classList.add('hidden'); document.getElementById('login-page').classList.add('hidden'); 
+                document.getElementById('admin-page').classList.remove('hidden'); renderTabelAdmin(); // REFRESH TABEL
+            } else { alert('⚠️ Akses Ditolak! Sandi salah.'); document.getElementById('admin-password').value = ''; } 
+        }
 
+        // =========================================================
+        // --- LAPORAN (LPJ) PDF & EXCEL (BUG FIXED) ---
+        // =========================================================
         function bukaModalLaporan() { document.getElementById('tanggal-laporan').valueAsDate = new Date(); document.getElementById('modal-laporan').classList.remove('hidden'); aturFormLaporan(); }
         function tutupModalLaporan() { document.getElementById('modal-laporan').classList.add('hidden'); }
         function aturFormLaporan() { let j = document.getElementById('jenis-laporan').value; let bh = document.getElementById('opsi-halaqah-laporan'); let bs = document.getElementById('opsi-santri-laporan'); if(j === 'semua') { bh.classList.add('hidden'); bs.classList.add('hidden'); } else if(j === 'halaqah') { bh.classList.remove('hidden'); bs.classList.add('hidden'); } else if(j === 'santri') { bh.classList.remove('hidden'); bs.classList.remove('hidden'); updateSantriLaporan(); } }
@@ -674,9 +795,14 @@
             if (dataCetak.length === 0) { alert("⚠️ Tidak ada data untuk dicetak."); return; }
             
             let head = [["No", "Waktu", "Halaqah", "Nama Santri", "Kehadiran", "Jenis", "Juz", "Surah/Ayat", "Nilai (T,L,M)", "Status", "Catatan"]];
-            let body = dataCetak.map((item, idx) => [ idx + 1, item.tgl, item.halaqah, item.santri, item.kehadiran, item.jenis, item.juz, item.kehadiran === 'Hadir' ? `${item.surah} : ${item.ayat}` : "-", item.kehadiran === 'Hadir' ? `T:${item.tajwid}, L:${item.lancar}, M:${item.makhraj}` : "-", item.status, item.catatan ]);
-            if (tipeExport === 'Excel') { let wb = XLSX.utils.book_new(); let ws = XLSX.utils.aoa_to_sheet([...head, ...body]); XLSX.utils.book_append_sheet(wb, ws, "Laporan"); XLSX.writeFile(wb, `Laporan_${tgl}.xlsx`);
-            } else if (tipeExport === 'PDF') { const { jsPDF } = window.jspdf; const doc = new jsPDF('landscape'); doc.setFontSize(16); doc.setTextColor(251, 191, 36); doc.text("Laporan Setoran", 14, 15); doc.setFontSize(11); doc.setTextColor(55, 65, 81); doc.text(`Tanggal: ${tgl} | Penanggung Jawab: ${pj}`, 14, 23); doc.autoTable({ head: head, body: body, startY: 28, theme: 'grid', headStyles: { fillColor: [217, 119, 6] }, styles: { fontSize: 9, cellPadding: 3 } }); doc.save(`Laporan_${tgl}.pdf`); } tutupModalLaporan();
+            // FIX ERROR MAP (Pemanggilan Index yang salah diselesaikan)
+            let body = dataCetak.map((item, indexKe) => [ indexKe + 1, item.tgl, item.halaqah, item.santri, item.kehadiran, item.jenis, item.juz, item.kehadiran === 'Hadir' ? `${item.surah} : ${item.ayat}` : "-", item.kehadiran === 'Hadir' ? `T:${item.tajwid}, L:${item.lancar}, M:${item.makhraj}` : "-", item.status, item.catatan ]);
+            
+            if (tipeExport === 'Excel') { 
+                let wb = XLSX.utils.book_new(); let ws = XLSX.utils.aoa_to_sheet([...head, ...body]); XLSX.utils.book_append_sheet(wb, ws, "Laporan"); XLSX.writeFile(wb, `Laporan_${tgl}.xlsx`);
+            } else if (tipeExport === 'PDF') { 
+                const { jsPDF } = window.jspdf; const doc = new jsPDF('landscape'); doc.setFontSize(16); doc.setTextColor(251, 191, 36); doc.text("Laporan Setoran", 14, 15); doc.setFontSize(11); doc.setTextColor(55, 65, 81); doc.text(`Tanggal: ${tgl} | Penanggung Jawab: ${pj}`, 14, 23); doc.autoTable({ head: head, body: body, startY: 28, theme: 'grid', headStyles: { fillColor: [217, 119, 6] }, styles: { fontSize: 9, cellPadding: 3 } }); doc.save(`Laporan_${tgl}.pdf`); 
+            } tutupModalLaporan();
         }
     </script>
 </body>
