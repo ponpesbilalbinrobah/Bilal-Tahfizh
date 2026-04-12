@@ -13,21 +13,12 @@
         /* =========================================================
            --- SPLASH SCREEN MEWAH ---
         ========================================================= */
-        #splash-screen {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: radial-gradient(circle at center, #0a1128 0%, #03040a 100%);
-            display: flex; flex-direction: column; justify-content: center; align-items: center;
-            z-index: 9999; transition: opacity 1s ease, visibility 1s ease;
-        }
+        #splash-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(circle at center, #0a1128 0%, #03040a 100%); display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 9999; transition: opacity 1s ease, visibility 1s ease; }
         #splash-screen.fade-out { opacity: 0; visibility: hidden; }
         .splash-content { text-align: center; }
         .logo-container { width: 140px; height: 140px; margin-bottom: 25px; filter: drop-shadow(0 0 15px rgba(245, 158, 11, 0.5)); }
         .splash-logo { width: 100%; height: 100%; object-fit: contain; animation: breathingLogo 2.5s ease-in-out infinite; }
-        
-        .app-name-splash {
-            font-size: 38px; font-weight: 900; background: linear-gradient(to bottom, #fbbf24, #d97706);
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin: 0; letter-spacing: -1px; text-shadow: 0 4px 8px rgba(0,0,0,0.5);
-        }
+        .app-name-splash { font-size: 38px; font-weight: 900; background: linear-gradient(to bottom, #fbbf24, #d97706); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin: 0; letter-spacing: -1px; text-shadow: 0 4px 8px rgba(0,0,0,0.5); }
         .loading-text { font-size: 14px; color: #60a5fa; margin-top: 15px; font-weight: 600; text-transform: uppercase; letter-spacing: 2px; animation: blinkingText 1.5s infinite; }
 
         @keyframes breathingLogo { 0% { transform: scale(1); filter: drop-shadow(0 0 10px rgba(245, 158, 11, 0.3)); } 50% { transform: scale(1.05); filter: drop-shadow(0 0 30px rgba(245, 158, 11, 0.8)); } 100% { transform: scale(1); filter: drop-shadow(0 0 10px rgba(245, 158, 11, 0.3)); } }
@@ -40,52 +31,27 @@
             --tema-warna: #fbbf24; --tema-gelap: #d97706; --teks-dalam-tombol: #451a03; --teks-utama: #f8fafc; --teks-sekunder: #94a3b8; 
             --border-halus: rgba(255, 255, 255, 0.1); --bg-kaca: rgba(10, 17, 40, 0.5); --bg-elemen: rgba(255, 255, 255, 0.04);
             --bg-input: rgba(0, 0, 0, 0.4); --shadow-kaca: 0 25px 50px -12px rgba(0, 0, 0, 0.6);
-            
-            --warna-input-aktif: var(--tema-warna);
-            --warna-input-bayangan: rgba(251, 191, 36, 0.2);
+            --warna-input-aktif: var(--tema-warna); --warna-input-bayangan: rgba(251, 191, 36, 0.2);
         }
 
-        body { 
-            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; 
-            background: radial-gradient(circle at top center, #0a1128 0%, #020617 100%);
-            background-attachment: fixed; background-size: cover; background-position: center;
-            margin: 0; padding: 20px; color: var(--teks-utama); transition: background 0.5s ease;
-        }
-        
-        .container { 
-            max-width: 650px; margin: 0 auto; background: var(--bg-kaca); backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px); 
-            padding: 35px 25px; border-radius: 28px; border: 1px solid rgba(255, 255, 255, 0.15); box-shadow: var(--shadow-kaca);
-        }
-        
+        body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background: radial-gradient(circle at top center, #0a1128 0%, #020617 100%); background-attachment: fixed; background-size: cover; background-position: center; margin: 0; padding: 20px; color: var(--teks-utama); transition: background 0.5s ease; }
+        .container { max-width: 650px; margin: 0 auto; background: var(--bg-kaca); backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px); padding: 35px 25px; border-radius: 28px; border: 1px solid rgba(255, 255, 255, 0.15); box-shadow: var(--shadow-kaca); }
         h2 { text-align: center; color: var(--tema-warna); font-weight: 800; letter-spacing: -0.5px; margin-bottom: 25px; text-shadow: 0 2px 10px rgba(251,191,36,0.3);}
         h3 { color: var(--teks-utama); font-weight: 700; margin-top: 0; font-size: 18px; border-bottom: 1px solid var(--border-halus); padding-bottom: 12px; margin-bottom: 20px;}
+        .box { background: var(--bg-elemen); padding: 24px; border-radius: 20px; margin-bottom: 25px; border: 1px solid var(--border-halus); box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.2); transition: transform 0.3s ease, box-shadow 0.3s ease; }
+        .box:hover { transform: translateY(-3px); box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.3); border-color: rgba(255,255,255,0.15); }
         
-        .box { 
-            background: var(--bg-elemen); padding: 24px; border-radius: 20px; margin-bottom: 25px; border: 1px solid var(--border-halus);
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.2); transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        
-        input:not([type="color"]):not([type="radio"]):not([type="file"]), select, textarea { 
-            width: 100%; padding: 14px 16px; margin: 8px 0; background: var(--bg-input); border: 1px solid var(--border-halus);
-            border-radius: 12px; box-sizing: border-box; font-size: 15px; color: var(--teks-utama); font-weight: 600; outline: none; transition: all 0.2s ease;
-            appearance: none; -moz-appearance: none; -webkit-appearance: none;
-        }
+        input:not([type="color"]):not([type="radio"]):not([type="file"]), select, textarea { width: 100%; padding: 14px 16px; margin: 8px 0; background: var(--bg-input); border: 1px solid var(--border-halus); border-radius: 12px; box-sizing: border-box; font-size: 15px; color: var(--teks-utama); font-weight: 600; outline: none; transition: all 0.2s ease; appearance: none; -moz-appearance: none; -webkit-appearance: none; }
         select { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 15px center; background-size: 16px; padding-right: 40px; }
         option { background: #0f172a; color: #f8fafc; font-weight: 600; padding: 10px; }
         input:focus, select:focus, textarea:focus { background: rgba(0,0,0,0.6); border-color: var(--warna-input-aktif); box-shadow: 0 0 0 3px var(--warna-input-bayangan); }
 
-        button { 
-            width: 100%; background: linear-gradient(135deg, var(--tema-warna), var(--tema-gelap)); color: var(--teks-dalam-tombol); border: none; cursor: pointer; 
-            font-weight: 800; padding: 16px; border-radius: 14px; font-size: 16px; margin-top: 10px;
-            box-shadow: 0 6px 0 #b45309, 0 8px 15px rgba(0,0,0,0.3); transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1); text-transform: uppercase; letter-spacing: 1px;
-        }
-        button:hover { filter: brightness(1.15); transform: translateY(-1px); box-shadow: 0 7px 0 #b45309, 0 12px 20px rgba(0,0,0,0.4); }
-        button:active { transform: translateY(6px); box-shadow: 0 0 0 #b45309, 0 2px 4px rgba(0,0,0,0.2); }
-        
+        button { width: 100%; background: linear-gradient(135deg, var(--tema-warna), var(--tema-gelap)); color: var(--teks-dalam-tombol); border: none; cursor: pointer; font-weight: 800; padding: 16px; border-radius: 14px; font-size: 16px; margin-top: 10px; box-shadow: 0 6px 0 rgba(0,0,0,0.4), 0 8px 15px rgba(0,0,0,0.3); transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1); text-transform: uppercase; letter-spacing: 1px; }
+        button:hover { filter: brightness(1.15); transform: translateY(-1px); box-shadow: 0 7px 0 rgba(0,0,0,0.5), 0 12px 20px rgba(0,0,0,0.4); }
+        button:active { transform: translateY(6px); box-shadow: 0 0 0 rgba(0,0,0,0.6), 0 2px 4px rgba(0,0,0,0.2); }
         .btn-outline { background: transparent; color: var(--tema-warna); border: 2px solid var(--tema-warna); box-shadow: none; }
         .btn-logout { background: linear-gradient(135deg, #ef4444, #b91c1c); color: white; box-shadow: 0 6px 0 #991b1b, 0 8px 15px rgba(0,0,0,0.3); margin-top: 30px; }
         .btn-logout:active { box-shadow: 0 0 0 #991b1b; transform: translateY(6px); }
-
         textarea { height: 100px; resize: none; margin-top: 5px; }
         .hidden { display: none !important; }
 
@@ -116,7 +82,6 @@
         .rating { display: flex; flex-direction: row-reverse; justify-content: flex-end; }
         .rating input { display: none; }
         .rating label { font-size: 32px; color: rgba(255,255,255,0.15); cursor: pointer; transition: all 0.2s; margin: 0 4px; line-height: 1; }
-        
         .mode-z .rating input:checked ~ label { color: #fbbf24; transform: scale(1.15); filter: drop-shadow(0 2px 10px rgba(251, 191, 36, 0.6)); } 
         .mode-m .rating input:checked ~ label { color: #10b981; transform: scale(1.15); filter: drop-shadow(0 2px 10px rgba(16, 185, 129, 0.6)); } 
 
@@ -251,8 +216,19 @@
             </div>
         </div>
 
+        <div class="box" style="border-left: 6px solid #10b981; background: rgba(16, 185, 129, 0.05);">
+            <h3 style="color: #10b981; border-color: rgba(16, 185, 129, 0.2);">4. Import Data Masal (Excel)</h3>
+            <p style="font-size: 13px; color: var(--teks-sekunder); margin-top: 0; line-height:1.4;">Gunakan template untuk memasukkan banyak Guru dan Santri sekaligus.</p>
+            
+            <button onclick="unduhTemplate()" class="btn-outline" style="margin-top: 5px; margin-bottom: 15px; color:#34d399; border-color:#34d399;">📥 Unduh Template Excel</button>
+            
+            <label class="form-label" style="font-size: 12px;">Upload Template yang Terisi:</label>
+            <input type="file" id="file-import-excel" accept=".xlsx, .xls" style="margin-bottom: 10px; background:var(--bg-elemen);">
+            <button onclick="prosesImportExcel()" id="btn-proses-import" style="background: linear-gradient(135deg, #10b981, #047857); color:white; box-shadow: 0 6px 0 #065f46;">🚀 Proses Import Data</button>
+        </div>
+
         <div class="box">
-            <h3>4. Laporan (LPJ)</h3>
+            <h3>5. Laporan (LPJ)</h3>
             <button style="background: linear-gradient(135deg, #8b5cf6, #6d28d9); color: white; box-shadow: 0 6px 0 #5b21b6;" onclick="bukaModalLaporan()">🖨️ Cetak Laporan Excel/PDF</button>
         </div>
         <button class="btn-logout" onclick="logout()">Keluar dari Admin</button>
@@ -434,13 +410,11 @@
             fetch(scriptURL).then(r => r.json()).then(data => {
                 dataProgresGlobal = data.progres || {}; dataRiwayatServer = data.riwayat || []; dataAkunGlobal = data.akun || {};
                 
-                // Bangun ulang databasePesantren berdasarkan tarikan Google Sheets
+                // Bangun ulang databasePesantren dari Google Sheets
                 if(data.halaqah && data.halaqah.length > 0) {
                     databasePesantren = {};
                     data.halaqah.forEach(h => databasePesantren[h] = []);
                     if(data.santri) { data.santri.forEach(s => { if(databasePesantren[s.halaqah]) databasePesantren[s.halaqah].push(s.nama); }); }
-                } else {
-                    databasePesantren = { "Halaqah Abu Bakar": ["Ahmad Fulan", "Zaid bin Tsabit"], "Halaqah Umar": ["Abdullah bin Umar", "Hasan"] };
                 }
 
                 renderMuhaffizDropdown();
@@ -461,7 +435,6 @@
             fetch(scriptURL, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) }).catch(e => console.error(e));
         }
 
-        // RENDER MUHAFFIZ DARI DATABASE
         function renderMuhaffizDropdown() {
             let selectMuhaffiz = document.getElementById('select-muhaffiz');
             selectMuhaffiz.innerHTML = '<option value="">-- Pilih Nama Antum --</option>';
@@ -486,11 +459,10 @@
             }
             document.getElementById('tabel-halaqah').innerHTML = htmlHalaqah || '<p style="color:var(--teks-sekunder); text-align:center; font-size:13px;">Belum ada data halaqah.</p>';
 
-            renderTabelSantriAdmin(); // Auto refresh Santri
-            renderHalaqahDropdowns(); // Auto refresh dropdown
+            renderTabelSantriAdmin(); 
+            renderHalaqahDropdowns(); 
         }
 
-        // CRUD Guru
         function tambahGuru() {
             let n = document.getElementById('nama-muhaffiz-baru').value.trim();
             if(!n) return alert("⚠️ Nama tidak boleh kosong!"); if(dataAkunGlobal[n]) return alert("⚠️ Nama sudah terdaftar!");
@@ -513,7 +485,6 @@
             }
         }
 
-        // CRUD Halaqah
         function tambahHalaqah() {
             let n = document.getElementById('nama-halaqah-baru').value.trim();
             if(!n) return alert("⚠️ Nama Halaqah tidak boleh kosong!"); if(databasePesantren[n]) return alert("⚠️ Halaqah sudah ada!");
@@ -530,13 +501,12 @@
             }
         }
         function hapusHalaqah(nama) {
-            if(confirm(`Yakin menghapus Halaqah '${nama}'?`)) {
+            if(confirm(`Yakin menghapus Halaqah '${nama}'? (Data santri di dalamnya mungkin tidak memiliki induk)`)) {
                 eksekusiCRUD('crud_hapus', 'Halaqah', nama, []);
                 delete databasePesantren[nama]; renderTabelAdmin(); 
             }
         }
 
-        // CRUD Santri
         function renderTabelSantriAdmin() {
             let h = document.getElementById('admin-pilih-halaqah').value; let tmp = document.getElementById('tabel-santri');
             if(!h) { tmp.innerHTML = '<p style="color:var(--teks-sekunder); text-align:center; font-size:13px;">Pilih halaqah di atas.</p>'; return; }
@@ -577,6 +547,64 @@
         }
 
         // =========================================================
+        // --- LOGIKA IMPORT EXCEL MASAL ---
+        // =========================================================
+        function unduhTemplate() {
+            let wb = XLSX.utils.book_new();
+            let wsGuru = XLSX.utils.aoa_to_sheet([["Nama", "Sandi"], ["Ustadz Fulan", "guru123"], ["Ustadzah Fulanah", "guru123"]]);
+            let wsSantri = XLSX.utils.aoa_to_sheet([["Halaqah", "Nama Santri"], ["Halaqah Abu Bakar", "Ahmad Zaid"], ["Halaqah Umar", "Umar Al-Faruq"]]);
+            
+            // Atur lebar kolom
+            wsGuru['!cols'] = [{wch: 25}, {wch: 15}];
+            wsSantri['!cols'] = [{wch: 25}, {wch: 25}];
+
+            XLSX.utils.book_append_sheet(wb, wsGuru, "Guru");
+            XLSX.utils.book_append_sheet(wb, wsSantri, "Santri");
+            XLSX.writeFile(wb, "Template_Import_Bilal.xlsx");
+        }
+
+        function prosesImportExcel() {
+            let fileInput = document.getElementById('file-import-excel');
+            if(!fileInput.files[0]) return alert("⚠️ Pilih file Excel terlebih dahulu!");
+            
+            let btn = document.getElementById('btn-proses-import');
+            let asli = btn.innerText; btn.innerText = "⏳ Memproses Import..."; btn.disabled = true;
+
+            let reader = new FileReader();
+            reader.onload = function(e) {
+                let data = new Uint8Array(e.target.result);
+                let workbook = XLSX.read(data, {type: 'array'});
+                
+                let dataGuru = []; let dataSantri = [];
+                
+                if(workbook.Sheets["Guru"]) {
+                    let jsonGuru = XLSX.utils.sheet_to_json(workbook.Sheets["Guru"], {header: 1});
+                    jsonGuru.slice(1).forEach(row => { if(row[0]) dataGuru.push([row[0].toString().trim(), (row[1] || "guru123").toString().trim()]); });
+                }
+                
+                if(workbook.Sheets["Santri"]) {
+                    let jsonSantri = XLSX.utils.sheet_to_json(workbook.Sheets["Santri"], {header: 1});
+                    jsonSantri.slice(1).forEach(row => { if(row[0] && row[1]) dataSantri.push([row[0].toString().trim(), row[1].toString().trim()]); });
+                }
+                
+                if(dataGuru.length === 0 && dataSantri.length === 0) {
+                    btn.innerText = asli; btn.disabled = false; fileInput.value = '';
+                    return alert("⚠️ Tidak ada data valid di sheet 'Guru' atau 'Santri'. Pastikan format sesuai template!");
+                }
+                
+                let payload = { action: "import_excel", guru: dataGuru, santri: dataSantri };
+                fetch(scriptURL, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) })
+                .then(() => {
+                    alert("✅ Import Data Berhasil! Aplikasi akan memuat ulang data dari server.");
+                    tarikDataServer('admin'); // Muat ulang data terbaru
+                })
+                .catch(() => alert("⚠️ Gagal koneksi import ke server."))
+                .finally(() => { btn.innerText = asli; btn.disabled = false; fileInput.value = ''; });
+            };
+            reader.readAsArrayBuffer(fileInput.files[0]);
+        }
+
+        // =========================================================
         // --- LOGIKA APLIKASI UTAMA ---
         // =========================================================
         function ubahModeSetoran(mode) {
@@ -604,7 +632,6 @@
             }
         }
 
-        // PENGATURAN
         function muatPengaturanInstansi() {
             let namaAplikasi = localStorage.getItem('namaAplikasi') || "Bilal Tahfizh"; let namaInstansi = localStorage.getItem('namaInstansi') || "Sistem Tahfiz Terpadu";
             document.getElementById('judul-aplikasi-utama').innerText = namaAplikasi; document.getElementById('judul-instansi-utama').innerText = namaInstansi; document.getElementById('judul-panel-guru').innerText = "Panel " + namaAplikasi;
@@ -643,6 +670,14 @@
         function tarikDataServer(asal) {
             fetch(scriptURL).then(r => r.json()).then(data => {
                 dataProgresGlobal = data.progres; dataRiwayatServer = data.riwayat;
+                
+                // Perbarui databasePesantren lokal jika ditarik oleh Admin setelah import
+                if(data.halaqah && data.halaqah.length > 0) {
+                    databasePesantren = {}; data.halaqah.forEach(h => databasePesantren[h] = []);
+                    if(data.santri) { data.santri.forEach(s => { if(databasePesantren[s.halaqah]) databasePesantren[s.halaqah].push(s.nama); }); }
+                }
+                if(data.akun) dataAkunGlobal = data.akun;
+
                 if (asal === 'muhaffiz' && document.getElementById('muhaffiz-pilih-santri').value !== "") tampilkanKartuPrestasi(); 
                 else if (asal === 'ortu' && document.getElementById('ortu-pilih-santri').value !== "") tampilkanDataOrtu();
                 else if (asal === 'admin') renderTabelAdmin(); 
@@ -672,7 +707,6 @@
             } else { kartu.style.display = "none"; tmp.innerHTML = '<div style="background: var(--bg-elemen); padding: 30px 20px; border-radius: 20px; text-align: center; border: 2px dashed var(--border-halus);"><p style="color:var(--teks-sekunder); font-size:14px; font-weight: 600;">Silakan pilih nama santri di atas.</p></div>'; }
         }
 
-        // SANDI & LOGOUT
         function bukaModalGantiSandi() { document.getElementById('modal-ganti-sandi').classList.remove('hidden'); document.getElementById('input-sandi-lama').value = ''; document.getElementById('input-sandi-baru').value = ''; document.getElementById('input-sandi-konfirmasi').value = ''; }
         function tutupModalGantiSandi() { document.getElementById('modal-ganti-sandi').classList.add('hidden'); }
         function prosesGantiSandi() {
@@ -685,7 +719,6 @@
         }
         function logout() { document.getElementById('admin-page').classList.add('hidden'); document.getElementById('muhaffiz-page').classList.add('hidden'); document.getElementById('ortu-page').classList.add('hidden'); document.getElementById('login-page').classList.remove('hidden'); document.getElementById('tombol-gerigi').classList.remove('hidden'); document.getElementById('sandi-muhaffiz').value = ''; namaMuhaffizAktif = ""; }
 
-        // INPUT SETORAN
         function tampilkanKartuPrestasi() {
             let santri = document.getElementById('muhaffiz-pilih-santri').value; let kartu = document.getElementById('kartuPrestasi');
             if (santri !== "") {
@@ -703,14 +736,12 @@
             if (s !== "Hadir") { f.style.opacity = "0.4"; f.style.pointerEvents = "none"; f.style.transform = "scale(0.98)"; f.style.filter = "grayscale(100%)"; } else { f.style.opacity = "1"; f.style.pointerEvents = "auto"; f.style.transform = "scale(1)"; f.style.filter = "grayscale(0%)"; }
         }
 
-        // TEMA
         function ubahTemaWarna(warna) { document.documentElement.style.setProperty('--tema-warna', warna); if(document.getElementById('statusSetoran').value === 'Lanjut') pilihStatus('Lanjut'); }
         function bukaModalWallpaper() { document.getElementById('modal-wallpaper').classList.remove('hidden'); }
         function tutupModalWallpaper() { document.getElementById('modal-wallpaper').classList.add('hidden'); }
         function setWallpaper(bgStr) { document.body.style.background = bgStr; document.body.style.backgroundAttachment = 'fixed'; document.body.style.backgroundSize = 'cover'; document.body.style.backgroundPosition = 'center'; }
         function uploadWallpaper(event) { let f = event.target.files[0]; if (f) { let r = new FileReader(); r.onload = function(e) { setWallpaper(`url('${e.target.result}')`); }; r.readAsDataURL(f); } }
 
-        // SIMPAN & RIWAYAT
         let dataRiwayat = []; 
         function simpanSetoran() {
             let halaqah = document.getElementById('muhaffiz-pilih-halaqah').value; let santri = document.getElementById('muhaffiz-pilih-santri').value; let kehadiran = document.querySelector('input[name="kehadiran"]:checked').value;
@@ -777,13 +808,10 @@
         function loginAdmin() { 
             if(document.getElementById('admin-password').value === 'admin123') { 
                 tutupModalAdminLogin(); document.getElementById('tombol-gerigi').classList.add('hidden'); document.getElementById('login-page').classList.add('hidden'); 
-                document.getElementById('admin-page').classList.remove('hidden'); renderTabelAdmin(); // REFRESH TABEL
+                document.getElementById('admin-page').classList.remove('hidden'); renderTabelAdmin(); 
             } else { alert('⚠️ Akses Ditolak! Sandi salah.'); document.getElementById('admin-password').value = ''; } 
         }
 
-        // =========================================================
-        // --- LAPORAN (LPJ) PDF & EXCEL (BUG FIXED) ---
-        // =========================================================
         function bukaModalLaporan() { document.getElementById('tanggal-laporan').valueAsDate = new Date(); document.getElementById('modal-laporan').classList.remove('hidden'); aturFormLaporan(); }
         function tutupModalLaporan() { document.getElementById('modal-laporan').classList.add('hidden'); }
         function aturFormLaporan() { let j = document.getElementById('jenis-laporan').value; let bh = document.getElementById('opsi-halaqah-laporan'); let bs = document.getElementById('opsi-santri-laporan'); if(j === 'semua') { bh.classList.add('hidden'); bs.classList.add('hidden'); } else if(j === 'halaqah') { bh.classList.remove('hidden'); bs.classList.add('hidden'); } else if(j === 'santri') { bh.classList.remove('hidden'); bs.classList.remove('hidden'); updateSantriLaporan(); } }
@@ -795,14 +823,14 @@
             if (dataCetak.length === 0) { alert("⚠️ Tidak ada data untuk dicetak."); return; }
             
             let head = [["No", "Waktu", "Halaqah", "Nama Santri", "Kehadiran", "Jenis", "Juz", "Surah/Ayat", "Nilai (T,L,M)", "Status", "Catatan"]];
-            // FIX ERROR MAP (Pemanggilan Index yang salah diselesaikan)
-            let body = dataCetak.map((item, indexKe) => [ indexKe + 1, item.tgl, item.halaqah, item.santri, item.kehadiran, item.jenis, item.juz, item.kehadiran === 'Hadir' ? `${item.surah} : ${item.ayat}` : "-", item.kehadiran === 'Hadir' ? `T:${item.tajwid}, L:${item.lancar}, M:${item.makhraj}` : "-", item.status, item.catatan ]);
+            let body = dataCetak.map((item, idx) => [ idx + 1, item.tgl, item.halaqah, item.santri, item.kehadiran, item.jenis, item.juz, item.kehadiran === 'Hadir' ? `${item.surah} : ${item.ayat}` : "-", item.kehadiran === 'Hadir' ? `T:${item.tajwid}, L:${item.lancar}, M:${item.makhraj}` : "-", item.status, item.catatan ]);
             
             if (tipeExport === 'Excel') { 
                 let wb = XLSX.utils.book_new(); let ws = XLSX.utils.aoa_to_sheet([...head, ...body]); XLSX.utils.book_append_sheet(wb, ws, "Laporan"); XLSX.writeFile(wb, `Laporan_${tgl}.xlsx`);
             } else if (tipeExport === 'PDF') { 
                 const { jsPDF } = window.jspdf; const doc = new jsPDF('landscape'); doc.setFontSize(16); doc.setTextColor(251, 191, 36); doc.text("Laporan Setoran", 14, 15); doc.setFontSize(11); doc.setTextColor(55, 65, 81); doc.text(`Tanggal: ${tgl} | Penanggung Jawab: ${pj}`, 14, 23); doc.autoTable({ head: head, body: body, startY: 28, theme: 'grid', headStyles: { fillColor: [217, 119, 6] }, styles: { fontSize: 9, cellPadding: 3 } }); doc.save(`Laporan_${tgl}.pdf`); 
-            } tutupModalLaporan();
+            } 
+            tutupModalLaporan();
         }
     </script>
 </body>
