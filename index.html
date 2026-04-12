@@ -41,7 +41,6 @@
             --border-halus: rgba(255, 255, 255, 0.1); --bg-kaca: rgba(10, 17, 40, 0.5); --bg-elemen: rgba(255, 255, 255, 0.04);
             --bg-input: rgba(0, 0, 0, 0.4); --shadow-kaca: 0 25px 50px -12px rgba(0, 0, 0, 0.6);
             
-            /* Tema Murojaah Dinamis */
             --warna-input-aktif: var(--tema-warna);
             --warna-input-bayangan: rgba(251, 191, 36, 0.2);
         }
@@ -92,19 +91,13 @@
         .hidden { display: none !important; }
 
         /* =========================================================
-           --- DUAL MODE: ZIYADAH & MUROJAAH (TOGGLE) ---
+           --- DUAL MODE: ZIYADAH & MUROJAAH ---
         ========================================================= */
-        .toggle-setoran {
-            display: flex; background: rgba(0,0,0,0.5); border-radius: 12px; padding: 6px; margin-bottom: 20px; border: 1px solid var(--border-halus);
-        }
-        .toggle-btn {
-            flex: 1; padding: 12px; text-align: center; font-weight: 800; cursor: pointer; border-radius: 8px; transition: all 0.3s ease;
-            color: var(--teks-sekunder); font-size: 15px; letter-spacing: 0.5px;
-        }
+        .toggle-setoran { display: flex; background: rgba(0,0,0,0.5); border-radius: 12px; padding: 6px; margin-bottom: 20px; border: 1px solid var(--border-halus); }
+        .toggle-btn { flex: 1; padding: 12px; text-align: center; font-weight: 800; cursor: pointer; border-radius: 8px; transition: all 0.3s ease; color: var(--teks-sekunder); font-size: 15px; letter-spacing: 0.5px; }
         .toggle-btn.aktif-ziyadah { background: linear-gradient(135deg, #fbbf24, #d97706); color: #451a03; box-shadow: 0 4px 10px rgba(251,191,36,0.3); }
         .toggle-btn.aktif-murojaah { background: linear-gradient(135deg, #10b981, #047857); color: white; box-shadow: 0 4px 10px rgba(16,185,129,0.3); }
 
-        /* Label Info Mode Murojaah */
         .badge-mode { padding: 4px 8px; border-radius: 6px; font-size: 11px; font-weight: bold; margin-left: 6px; display:inline-block; vertical-align: middle; letter-spacing: normal;}
         .badge-mode.Ziyadah { background: rgba(251, 191, 36, 0.2); color: #fbbf24; border: 1px solid rgba(251, 191, 36, 0.4); }
         .badge-mode.Murojaah { background: rgba(16, 185, 129, 0.2); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.4); }
@@ -123,7 +116,6 @@
         .rating input { display: none; }
         .rating label { font-size: 32px; color: rgba(255,255,255,0.15); cursor: pointer; transition: all 0.2s; margin: 0 4px; line-height: 1; }
         
-        /* Warna Bintang Berdasarkan Mode */
         .mode-z .rating input:checked ~ label { color: #fbbf24; transform: scale(1.15); filter: drop-shadow(0 2px 10px rgba(251, 191, 36, 0.6)); } 
         .mode-m .rating input:checked ~ label { color: #10b981; transform: scale(1.15); filter: drop-shadow(0 2px 10px rgba(16, 185, 129, 0.6)); } 
 
@@ -135,7 +127,6 @@
             .btn-status-container { flex-direction: column; gap: 10px; }
         }
 
-        /* Elemen Mini UI Lainnya */
         .kontrol-tema-pill { display: flex; align-items: center; gap: 6px; background: rgba(0,0,0,0.3); padding: 5px 8px; border-radius: 100px; box-shadow: inset 0 2px 5px rgba(0,0,0,0.5); border: 1px solid var(--border-halus); }
         .btn-ikon-bulat { width: 38px; height: 38px; border-radius: 50%; display: flex; justify-content: center; align-items: center; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); cursor: pointer; transition: all 0.2s; padding: 0; margin: 0; font-size: 18px; text-transform: none; position: relative; overflow: hidden; }
         .color-picker-hidden { position: absolute; top: -50px; left: -50px; width: 150px; height: 150px; opacity: 0; cursor: pointer; border: none; padding: 0; margin: 0; }
@@ -150,7 +141,7 @@
         .btn-group { display: flex; gap: 15px; margin-top: 25px; }
         .btn-batal { background: linear-gradient(135deg, #64748b, #475569); color: white; box-shadow: 0 6px 0 #334155, 0 8px 15px rgba(0,0,0,0.3); }
 
-        .kartu-riwayat { background: var(--bg-elemen); padding: 20px; border-radius: 16px; margin-bottom: 16px; font-size: 14px; border: 1px solid var(--border-halus); }
+        .kartu-riwayat { background: var(--bg-elemen); padding: 20px; border-radius: 16px; margin-bottom: 16px; font-size: 14px; border: 1px solid var(--border-halus); border-left: 6px solid var(--tema-warna); }
         .riwayat-bintang-grid { display: grid; grid-template-columns: 1fr; gap: 6px; margin: 12px 0; background: var(--bg-input); padding: 12px; border-radius: 10px; border: 1px solid var(--border-halus); }
         .rb-item { display: flex; justify-content: space-between; align-items: center; font-weight: 600; color: var(--teks-sekunder);}
         .btn-kecil { padding: 10px 14px; font-size: 13px; width: auto; margin: 0; border-radius: 10px; color: white; font-weight: bold; flex: 1; display:flex; justify-content:center; gap: 5px; }
@@ -161,12 +152,11 @@
         .absensi-group { display: flex; gap: 12px; margin-top: 5px; margin-bottom: 20px; flex-wrap: wrap; background: var(--bg-input); padding: 15px; border-radius: 14px; border: 1px solid var(--border-halus); }
         .absensi-group label { cursor: pointer; font-size: 15px; display: flex; align-items: center; gap: 8px; font-weight: 600; color: var(--teks-utama); }
         input[type="radio"] { accent-color: var(--warna-input-aktif); transform: scale(1.3); }
-        .badge-absen { padding: 4px 12px; border-radius: 8px; font-size: 12px; color: white; font-weight: bold; text-transform: uppercase; }
+        .badge-absen { padding: 4px 12px; border-radius: 8px; font-size: 12px; color: var(--teks-dalam-tombol); font-weight: bold; text-transform: uppercase; }
 
         .btn-status-container { display: flex; gap: 15px; margin-top: 10px; }
         .btn-status { flex: 1; padding: 14px; border-radius: 12px; font-weight: 800; font-size: 15px; margin-top: 0; transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1); cursor: pointer; text-transform: none; letter-spacing: normal; border:none;}
         
-        /* Tombol Status menyesuaikan warna aktif */
         .mode-z .btn-3d-active { background: linear-gradient(135deg, #fbbf24, #d97706); color: #451a03 !important; box-shadow: 0 6px 0 #b45309; transform: translateY(0); }
         .mode-z .btn-3d-active:active { transform: translateY(6px); box-shadow: 0 0 0 #b45309; }
         
@@ -201,8 +191,6 @@
             
             <select id="select-muhaffiz" style="margin-bottom: 10px; text-align: center; font-weight: 700; border: 1px solid rgba(255,255,255,0.2);">
                 <option value="">-- Pilih Nama Antum --</option>
-                <option value="Ustadz Ali">Ustadz Ali</option>
-                <option value="Ustadzah Aisyah">Ustadzah Aisyah</option>
             </select>
             <input type="password" id="sandi-muhaffiz" placeholder="Sandi Rahasia Anda..." style="margin-bottom: 25px; text-align: center; font-weight: 700; letter-spacing: 2px;">
             
@@ -233,7 +221,15 @@
         </div>
         <div class="box"><h3>1. Tambah Halaqah</h3><input type="text" id="nama-halaqah-baru" placeholder="Ketik nama halaqah..."><button onclick="tambahHalaqah()">Buat Halaqah</button></div>
         <div class="box"><h3>2. Masukkan Santri</h3><select id="admin-pilih-halaqah"></select><textarea id="data-santri-baru" placeholder="Fulan bin Fulan&#10;Ahmad Zaid"></textarea><button onclick="tambahSantri()">Simpan Santri</button></div>
-        <div class="box"><h3>3. Laporan (LPJ)</h3><button style="background: linear-gradient(135deg, #8b5cf6, #6d28d9); color: white; box-shadow: 0 6px 0 #5b21b6;" onclick="bukaModalLaporan()">🖨️ Cetak Laporan</button></div>
+        
+        <div class="box">
+            <h3>3. Tambah Guru (Muhaffizh)</h3>
+            <input type="text" id="nama-muhaffiz-baru" placeholder="Contoh: Ustadz Zaid...">
+            <button onclick="tambahMuhaffiz()">Simpan Muhaffiz</button>
+            <p style="font-size: 12px; color: var(--teks-sekunder); margin-top: 8px;">Sandi otomatis: <b>guru123</b> (Bisa diganti mandiri oleh guru saat login).</p>
+        </div>
+
+        <div class="box"><h3>4. Laporan (LPJ)</h3><button style="background: linear-gradient(135deg, #8b5cf6, #6d28d9); color: white; box-shadow: 0 6px 0 #5b21b6;" onclick="bukaModalLaporan()">🖨️ Cetak Laporan</button></div>
         <button class="btn-logout" onclick="logout()">Keluar dari Admin</button>
     </div>
 
@@ -251,9 +247,9 @@
             <select id="ortu-pilih-santri" onchange="tampilkanDataOrtu()"><option value="">-- Pilih Halaqah Dulu --</option></select>
 
             <div id="ortu-kartuPrestasi" class="kartu-prestasi">
-                <h4>🎯 Hafalan Baru (Ziyadah) Ananda</h4>
+                <h4>🎯 Capaian Terakhir Ananda</h4>
                 <div style="display:flex; justify-content:space-between; align-items:center; border-top:1px solid rgba(251,191,36,0.2); padding-top:10px; margin-top:5px;">
-                    <div><span style="font-size:12px; color:var(--teks-sekunder);">Posisi Juz</span><br><span id="ortu-infoJuz" style="font-size:16px; font-weight:800; color:var(--teks-utama);">-</span></div>
+                    <div><span style="font-size:12px; color:var(--teks-sekunder);">Total Hafalan</span><br><span id="ortu-infoJuz" style="font-size:16px; font-weight:800; color:var(--teks-utama);">-</span></div>
                     <div style="text-align:right;"><span style="font-size:12px; color:var(--teks-sekunder);">Surah Terakhir</span><br><span id="ortu-infoSurah" style="font-size:16px; font-weight:800; color:var(--teks-utama);">-</span></div>
                 </div>
             </div>
@@ -300,7 +296,6 @@
                 <div id="btn-mode-ziyadah" class="toggle-btn aktif-ziyadah" onclick="ubahModeSetoran('Ziyadah')">⭐ ZIYADAH</div>
                 <div id="btn-mode-murojaah" class="toggle-btn" onclick="ubahModeSetoran('Murojaah')">🔄 MUROJA'AH</div>
             </div>
-            
             <input type="hidden" id="jenis-setoran-aktif" value="Ziyadah">
 
             <label class="form-label">Status Kehadiran:</label>
@@ -314,27 +309,13 @@
             <div id="area-form-setoran" style="transition: all 0.3s ease;">
                 
                 <div class="grid-juz-surah">
-                    <div>
-                        <label class="form-label-small">Juz</label>
-                        <input type="number" id="input-juz" placeholder="1-30" min="1" max="30" style="text-align: center; font-weight: 800; font-size: 16px; padding:14px 5px;">
-                    </div>
-                    <div>
-                        <label class="form-label-small">Nama Surah</label>
-                        <select id="input-surah" onchange="updateDropdownAyat()" style="font-weight: 700;">
-                            <option value="">-- Pilih Surah --</option>
-                        </select>
-                    </div>
+                    <div><label class="form-label-small">Juz</label><input type="number" id="input-juz" placeholder="1-30" min="1" max="30" style="text-align: center; font-weight: 800; font-size: 16px; padding:14px 5px;"></div>
+                    <div><label class="form-label-small">Nama Surah</label><select id="input-surah" onchange="updateDropdownAyat()" style="font-weight: 700;"><option value="">-- Pilih Surah --</option></select></div>
                 </div>
 
                 <div class="grid-ayat">
-                    <div>
-                        <label class="form-label-small">Ayat Awal</label>
-                        <select id="input-ayat-awal" style="font-weight: 700; text-align: center; padding-left:0; padding-right:15px;"><option value="">-</option></select>
-                    </div>
-                    <div>
-                        <label class="form-label-small">Ayat Akhir</label>
-                        <select id="input-ayat-akhir" style="font-weight: 700; text-align: center; padding-left:0; padding-right:15px;"><option value="">-</option></select>
-                    </div>
+                    <div><label class="form-label-small">Ayat Awal</label><select id="input-ayat-awal" style="font-weight: 700; text-align: center; padding-left:0; padding-right:15px;"><option value="">-</option></select></div>
+                    <div><label class="form-label-small">Ayat Akhir</label><select id="input-ayat-akhir" style="font-weight: 700; text-align: center; padding-left:0; padding-right:15px;"><option value="">-</option></select></div>
                 </div>
 
                 <div style="background: var(--bg-elemen); padding: 10px 20px; border-radius: 16px; margin-top: 15px; border: 1px solid var(--border-halus);">
@@ -417,7 +398,6 @@
         // --- ⚠️ URL GOOGLE APPS SCRIPT ANTUM ---
         const scriptURL = 'URL_APPS_SCRIPT_ANTUM';
 
-        // --- DATA QUR'AN OTOMATIS ---
         const dataSurahLengkap = {
             "Al-Fatihah": 7, "Al-Baqarah": 286, "Ali 'Imran": 200, "An-Nisa'": 176, "Al-Ma'idah": 120, "Al-An'am": 165, "Al-A'raf": 206, "Al-Anfal": 75, "At-Taubah": 129, "Yunus": 109,
             "Hud": 123, "Yusuf": 111, "Ar-Ra'd": 43, "Ibrahim": 52, "Al-Hijr": 99, "An-Nahl": 128, "Al-Isra'": 111, "Al-Kahf": 110, "Maryam": 98, "Taha": 135,
@@ -441,6 +421,7 @@
 
             fetch(scriptURL).then(r => r.json()).then(data => {
                 dataProgresGlobal = data.progres || {}; dataRiwayatServer = data.riwayat || []; dataAkunGlobal = data.akun || {};
+                renderMuhaffizDropdown();
                 document.getElementById('teks-loading').innerText = "Sistem Siap!";
             }).catch(e => { document.getElementById('teks-loading').innerText = "Mode Offline";
             }).finally(() => {
@@ -451,56 +432,63 @@
             });
         });
 
-        // --- FUNGSI TOGGLE ZIYADAH / MUROJAAH ---
+        // RENDER MUHAFFIZ DARI DATABASE
+        function renderMuhaffizDropdown() {
+            let selectMuhaffiz = document.getElementById('select-muhaffiz');
+            selectMuhaffiz.innerHTML = '<option value="">-- Pilih Nama Antum --</option>';
+            if (Object.keys(dataAkunGlobal).length > 0) {
+                for (let namaGuru in dataAkunGlobal) { selectMuhaffiz.appendChild(new Option(namaGuru, namaGuru)); }
+            }
+        }
+
+        // TAMBAH MUHAFFIZ BARU OLEH ADMIN
+        function tambahMuhaffiz() {
+            let namaBaru = document.getElementById('nama-muhaffiz-baru').value.trim();
+            if (namaBaru === "") { alert("⚠️ Nama Muhaffizh tidak boleh kosong!"); return; }
+            if (dataAkunGlobal[namaBaru]) { alert("⚠️ Nama Muhaffizh sudah terdaftar!"); return; }
+
+            let btn = document.querySelector('button[onclick="tambahMuhaffiz()"]');
+            let asli = btn.innerText; btn.innerText = "⏳ Menyimpan..."; btn.disabled = true;
+
+            let payload = { action: "tambah_muhaffiz", nama: namaBaru, sandiDefault: "guru123" };
+
+            fetch(scriptURL, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) })
+            .then(() => { 
+                dataAkunGlobal[namaBaru] = "guru123"; 
+                renderMuhaffizDropdown();
+                alert("✅ Muhaffizh '" + namaBaru + "' berhasil ditambahkan dengan sandi otomatis: guru123"); 
+                document.getElementById('nama-muhaffiz-baru').value = '';
+            })
+            .catch(() => alert("⚠️ Gagal koneksi ke server."))
+            .finally(() => { btn.innerText = asli; btn.disabled = false; });
+        }
+
+
+        // TOGGLE ZIYADAH / MUROJAAH
         function ubahModeSetoran(mode) {
-            let btnZ = document.getElementById('btn-mode-ziyadah');
-            let btnM = document.getElementById('btn-mode-murojaah');
-            let formBox = document.getElementById('box-form-setoran');
-            let btnSimpan = document.getElementById('btn-simpan-utama');
-            
+            let btnZ = document.getElementById('btn-mode-ziyadah'); let btnM = document.getElementById('btn-mode-murojaah');
+            let formBox = document.getElementById('box-form-setoran'); let btnSimpan = document.getElementById('btn-simpan-utama');
             document.getElementById('jenis-setoran-aktif').value = mode;
 
             if(mode === 'Ziyadah') {
-                btnZ.className = 'toggle-btn aktif-ziyadah';
-                btnM.className = 'toggle-btn';
-                
-                // Ubah Tema ke Emas
-                document.documentElement.style.setProperty('--warna-input-aktif', '#fbbf24');
-                document.documentElement.style.setProperty('--warna-input-bayangan', 'rgba(251, 191, 36, 0.2)');
+                btnZ.className = 'toggle-btn aktif-ziyadah'; btnM.className = 'toggle-btn';
+                document.documentElement.style.setProperty('--warna-input-aktif', '#fbbf24'); document.documentElement.style.setProperty('--warna-input-bayangan', 'rgba(251, 191, 36, 0.2)');
                 formBox.className = 'box mode-z';
-                
-                btnSimpan.style.background = 'linear-gradient(135deg, #fbbf24, #d97706)';
-                btnSimpan.style.color = '#451a03';
-                btnSimpan.style.boxShadow = '0 6px 0 #b45309, 0 8px 15px rgba(0,0,0,0.3)';
-                btnSimpan.innerText = "💾 SIMPAN ZIYADAH";
+                btnSimpan.style.background = 'linear-gradient(135deg, #fbbf24, #d97706)'; btnSimpan.style.color = '#451a03'; btnSimpan.style.boxShadow = '0 6px 0 #b45309, 0 8px 15px rgba(0,0,0,0.3)'; btnSimpan.innerText = "💾 SIMPAN ZIYADAH";
             } else {
-                btnM.className = 'toggle-btn aktif-murojaah';
-                btnZ.className = 'toggle-btn';
-                
-                // Ubah Tema ke Emerald (Zamrud)
-                document.documentElement.style.setProperty('--warna-input-aktif', '#10b981');
-                document.documentElement.style.setProperty('--warna-input-bayangan', 'rgba(16, 185, 129, 0.2)');
+                btnM.className = 'toggle-btn aktif-murojaah'; btnZ.className = 'toggle-btn';
+                document.documentElement.style.setProperty('--warna-input-aktif', '#10b981'); document.documentElement.style.setProperty('--warna-input-bayangan', 'rgba(16, 185, 129, 0.2)');
                 formBox.className = 'box mode-m';
-                
-                btnSimpan.style.background = 'linear-gradient(135deg, #10b981, #047857)';
-                btnSimpan.style.color = 'white';
-                btnSimpan.style.boxShadow = '0 6px 0 #065f46, 0 8px 15px rgba(0,0,0,0.3)';
-                btnSimpan.innerText = "💾 SIMPAN MUROJA'AH";
+                btnSimpan.style.background = 'linear-gradient(135deg, #10b981, #047857)'; btnSimpan.style.color = 'white'; btnSimpan.style.boxShadow = '0 6px 0 #065f46, 0 8px 15px rgba(0,0,0,0.3)'; btnSimpan.innerText = "💾 SIMPAN MUROJA'AH";
             }
-            
-            // Segarkan status tombol Lanjut/Ulangi agar warnanya ikut berubah
             pilihStatus(document.getElementById('statusSetoran').value);
         }
 
-        // LOGIKA DROPDOWN AYAT
         function updateDropdownAyat() {
-            let surahTerpilih = document.getElementById('input-surah').value;
-            let selAwal = document.getElementById('input-ayat-awal');
-            let selAkhir = document.getElementById('input-ayat-akhir');
+            let surahTerpilih = document.getElementById('input-surah').value; let selAwal = document.getElementById('input-ayat-awal'); let selAkhir = document.getElementById('input-ayat-akhir');
             selAwal.innerHTML = '<option value="">-</option>'; selAkhir.innerHTML = '<option value="">-</option>';
             if (surahTerpilih !== "" && dataSurahLengkap[surahTerpilih]) {
-                let maxAyat = dataSurahLengkap[surahTerpilih];
-                for(let i=1; i<=maxAyat; i++) { selAwal.appendChild(new Option(i, i)); selAkhir.appendChild(new Option(i, i)); }
+                let maxAyat = dataSurahLengkap[surahTerpilih]; for(let i=1; i<=maxAyat; i++) { selAwal.appendChild(new Option(i, i)); selAkhir.appendChild(new Option(i, i)); }
             }
         }
 
@@ -511,9 +499,7 @@
             if(document.getElementById('setting-nama-aplikasi')) { document.getElementById('setting-nama-aplikasi').value = namaAplikasi; document.getElementById('setting-nama-instansi').value = namaInstansi; }
         }
         function simpanPengaturanInstansi() {
-            localStorage.setItem('namaAplikasi', document.getElementById('setting-nama-aplikasi').value.trim() || "Bilal Tahfizh"); 
-            localStorage.setItem('namaInstansi', document.getElementById('setting-nama-instansi').value.trim() || "Sistem Tahfiz Terpadu"); 
-            muatPengaturanInstansi(); alert("✅ Alhamdulillah, Pengaturan tersimpan!");
+            localStorage.setItem('namaAplikasi', document.getElementById('setting-nama-aplikasi').value.trim() || "Bilal Tahfizh"); localStorage.setItem('namaInstansi', document.getElementById('setting-nama-instansi').value.trim() || "Sistem Tahfiz Terpadu"); muatPengaturanInstansi(); alert("✅ Alhamdulillah, Pengaturan tersimpan!");
         }
 
         // LOGIN & PORTAL ORTU
@@ -565,9 +551,7 @@
                     let h = ''; riwayatAnak.forEach(item => {
                         let w = item.kehadiran === 'Hadir' ? 'var(--tema-warna)' : (item.kehadiran === 'Sakit' ? '#f59e0b' : (item.kehadiran === 'Izin' ? '#3b82f6' : '#ef4444'));
                         let warnaTeksBadge = item.kehadiran === 'Hadir' ? 'var(--teks-dalam-tombol)' : '#ffffff';
-                        
                         let badgeJenis = item.jenis === 'Murojaah' ? `<span class="badge-mode Murojaah">Muroja'ah</span>` : `<span class="badge-mode Ziyadah">Ziyadah</span>`;
-
                         let infoSetoran = item.kehadiran === 'Hadir' ? `<div style="font-size: 17px; font-weight: 800; color: var(--teks-utama); margin-bottom: 5px;">📖 Juz ${item.juz} - ${item.surah} : ${item.ayat} ${badgeJenis}</div><div class="riwayat-bintang-grid"><div class="rb-item"><span>Tajwid</span> <span class="rb-stars">${drawStars(item.tajwid)}</span></div><div class="rb-item"><span>Lancar</span> <span class="rb-stars">${drawStars(item.lancar)}</span></div><div class="rb-item"><span>Makhraj</span> <span class="rb-stars">${drawStars(item.makhraj)}</span></div></div><div style="font-size:14px; font-weight:800; color: ${item.status === 'Lanjut' ? 'var(--tema-warna)' : '#ef4444'}; margin-top:10px;">${item.status === 'Lanjut' ? '✅ BOLEH LANJUT' : '🔄 HARUS ULANGI'}</div>${item.catatan !== '-' ? `<div style="margin-top:10px; font-size:13px; font-style:italic; color:var(--teks-sekunder); background: rgba(0,0,0,0.2); padding: 10px; border-radius: 8px; border-left: 3px solid rgba(255,255,255,0.2);">📝 Pesan: ${item.catatan}</div>` : ''}` : `<div style="color: var(--teks-sekunder); font-style: italic; font-weight:600; margin-top:10px;">Tidak setoran (Absen)</div>`;
                         h += `<div class="kartu-riwayat" style="border-left-color: ${w};"><div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:12px;"><div><span style="font-size:12px; color:var(--teks-sekunder); font-weight:700;">${item.tgl}</span></div><div style="text-align:right;"><span class="badge-absen" style="background-color: ${w}; color: ${warnaTeksBadge}; margin:0;">${item.kehadiran}</span></div></div><div style="border-top: 1px dashed var(--border-halus); padding-top:12px;">${infoSetoran}</div></div>`;
                     }); tmp.innerHTML = h;
@@ -575,7 +559,6 @@
             } else { kartu.style.display = "none"; tmp.innerHTML = '<div style="background: var(--bg-elemen); padding: 30px 20px; border-radius: 20px; text-align: center; border: 2px dashed var(--border-halus);"><p style="color:var(--teks-sekunder); font-size:14px; font-weight: 600;">Silakan pilih nama santri di atas.</p></div>'; }
         }
 
-        // SANDI & LOGOUT
         function bukaModalGantiSandi() { document.getElementById('modal-ganti-sandi').classList.remove('hidden'); document.getElementById('input-sandi-lama').value = ''; document.getElementById('input-sandi-baru').value = ''; document.getElementById('input-sandi-konfirmasi').value = ''; }
         function tutupModalGantiSandi() { document.getElementById('modal-ganti-sandi').classList.add('hidden'); }
         function prosesGantiSandi() {
@@ -588,7 +571,6 @@
         }
         function logout() { document.getElementById('admin-page').classList.add('hidden'); document.getElementById('muhaffiz-page').classList.add('hidden'); document.getElementById('ortu-page').classList.add('hidden'); document.getElementById('login-page').classList.remove('hidden'); document.getElementById('tombol-gerigi').classList.remove('hidden'); document.getElementById('sandi-muhaffiz').value = ''; namaMuhaffizAktif = ""; }
 
-        // INPUT SETORAN
         function tampilkanKartuPrestasi() {
             let santri = document.getElementById('muhaffiz-pilih-santri').value; let kartu = document.getElementById('kartuPrestasi');
             if (santri !== "") {
@@ -606,18 +588,16 @@
             if (s !== "Hadir") { f.style.opacity = "0.4"; f.style.pointerEvents = "none"; f.style.transform = "scale(0.98)"; f.style.filter = "grayscale(100%)"; } else { f.style.opacity = "1"; f.style.pointerEvents = "auto"; f.style.transform = "scale(1)"; f.style.filter = "grayscale(0%)"; }
         }
 
-        // TEMA
         function ubahTemaWarna(warna) { document.documentElement.style.setProperty('--tema-warna', warna); if(document.getElementById('statusSetoran').value === 'Lanjut') pilihStatus('Lanjut'); }
         function bukaModalWallpaper() { document.getElementById('modal-wallpaper').classList.remove('hidden'); }
         function tutupModalWallpaper() { document.getElementById('modal-wallpaper').classList.add('hidden'); }
         function setWallpaper(bgStr) { document.body.style.background = bgStr; document.body.style.backgroundAttachment = 'fixed'; document.body.style.backgroundSize = 'cover'; document.body.style.backgroundPosition = 'center'; }
         function uploadWallpaper(event) { let f = event.target.files[0]; if (f) { let r = new FileReader(); r.onload = function(e) { setWallpaper(`url('${e.target.result}')`); }; r.readAsDataURL(f); } }
 
-        // SIMPAN & RIWAYAT
         let dataRiwayat = []; 
         function simpanSetoran() {
             let halaqah = document.getElementById('muhaffiz-pilih-halaqah').value; let santri = document.getElementById('muhaffiz-pilih-santri').value; let kehadiran = document.querySelector('input[name="kehadiran"]:checked').value;
-            let jenisSetoran = document.getElementById('jenis-setoran-aktif').value; // Mengambil Ziyadah/Murojaah
+            let jenisSetoran = document.getElementById('jenis-setoran-aktif').value; 
             let juz = document.getElementById('input-juz').value; let surah = document.getElementById('input-surah').value; 
             
             let aAwal = document.getElementById('input-ayat-awal').value; let aAkhir = document.getElementById('input-ayat-akhir').value; let ayat = "";
@@ -639,10 +619,7 @@
                 document.getElementById('input-juz').value = ''; document.getElementById('input-surah').value = ''; document.getElementById('input-ayat-awal').innerHTML = '<option value="">-</option>'; document.getElementById('input-ayat-akhir').innerHTML = '<option value="">-</option>'; document.getElementById('catatanEvaluasi').value = ''; 
                 pilihStatus('Lanjut'); if(t && t.checked) t.checked = false; if(l && l.checked) l.checked = false; if(m && m.checked) m.checked = false; document.querySelector('input[name="kehadiran"][value="Hadir"]').checked = true; toggleFormSetoran(); 
                 
-                // Update progres jika yang disetor adalah hafalan baru (Ziyadah) dan Lanjut
-                if(kehadiran === "Hadir" && statusSetoran === "Lanjut" && jenisSetoran === "Ziyadah") { 
-                    dataProgresGlobal[santri] = { juz: juz, surah: surah, ayat: ayat }; tampilkanKartuPrestasi(); 
-                }
+                if(kehadiran === "Hadir" && statusSetoran === "Lanjut" && jenisSetoran === "Ziyadah") { dataProgresGlobal[santri] = { juz: juz, surah: surah, ayat: ayat }; tampilkanKartuPrestasi(); }
             }).catch(e => { alert('⚠️ Gagal menyimpan ke Spreadsheet. Cek internet.'); }).finally(() => { btn.innerText = asli; btn.disabled = false; });
         }
 
@@ -651,9 +628,7 @@
         function editRiwayat(index) {
             if(confirm("✏️ Data ditarik ke form untuk diedit. Lanjutkan?")) {
                 let item = dataRiwayat[index]; document.getElementById('muhaffiz-pilih-halaqah').value = item.halaqah; updateDropdownSantri(); document.getElementById('muhaffiz-pilih-santri').value = item.santri; tampilkanKartuPrestasi(); document.querySelector(`input[name="kehadiran"][value="${item.kehadiran}"]`).checked = true; toggleFormSetoran();
-                
-                ubahModeSetoran(item.jenis); // Sesuaikan Mode
-
+                ubahModeSetoran(item.jenis);
                 if (item.kehadiran === "Hadir") {
                     document.getElementById('input-juz').value = item.juz; document.getElementById('input-surah').value = item.surah; updateDropdownAyat();
                     let arrAyat = item.ayat.split("-"); document.getElementById('input-ayat-awal').value = arrAyat[0]; document.getElementById('input-ayat-akhir').value = arrAyat.length > 1 ? arrAyat[1] : arrAyat[0];
@@ -669,9 +644,7 @@
             let htmlHTML = '';
             dataRiwayat.forEach((item, index) => {
                 let w = item.kehadiran === 'Hadir' ? 'var(--tema-warna)' : (item.kehadiran === 'Sakit' ? '#f59e0b' : (item.kehadiran === 'Izin' ? '#3b82f6' : '#ef4444')); let wt = item.kehadiran === 'Hadir' ? 'var(--teks-dalam-tombol)' : '#ffffff';
-                
                 let badgeJenis = item.jenis === 'Murojaah' ? `<span class="badge-mode Murojaah">Muroja'ah</span>` : `<span class="badge-mode Ziyadah">Ziyadah</span>`;
-
                 let info = item.kehadiran === 'Hadir' ? `<div style="font-size: 17px; font-weight: 800; color: var(--teks-utama); margin-bottom: 5px;">📖 Juz ${item.juz} - ${item.surah} : ${item.ayat} ${badgeJenis}</div><div class="riwayat-bintang-grid"><div class="rb-item"><span>Tajwid</span> <span class="rb-stars">${drawStars(item.tajwid)}</span></div><div class="rb-item"><span>Lancar</span> <span class="rb-stars">${drawStars(item.lancar)}</span></div><div class="rb-item"><span>Makhraj</span> <span class="rb-stars">${drawStars(item.makhraj)}</span></div></div><div style="font-size:14px; font-weight:800; color: ${item.status === 'Lanjut' ? 'var(--tema-warna)' : '#ef4444'}; margin-top:10px;">${item.status === 'Lanjut' ? '✅ BOLEH LANJUT' : '🔄 HARUS ULANGI'}</div>${item.catatan !== '-' ? `<div style="margin-top:10px; font-size:13px; font-style:italic; color:var(--teks-sekunder); background: rgba(0,0,0,0.2); padding: 10px; border-radius: 8px; border-left: 3px solid rgba(255,255,255,0.2);">📝 ${item.catatan}</div>` : ''}` : `<div style="color: var(--teks-sekunder); font-style: italic; font-weight:600; margin-top:10px;">Tidak setoran (Absen)</div>`;
                 htmlHTML += `<div class="kartu-riwayat" style="border-left-color: ${w};"><div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:12px;"><div><strong style="font-size: 16px; color: var(--teks-utama); display:block;">${item.santri}</strong><span style="font-size:12px; color:var(--teks-sekunder); font-weight:700;">${item.halaqah}</span></div><div style="text-align:right;"><span class="badge-absen" style="background-color: ${w}; color: ${wt}; display:inline-block; margin-bottom:4px;">${item.kehadiran}</span><br><span style="font-size:11px; color:var(--teks-sekunder); font-weight: 600;">${item.tgl}</span></div></div><div style="border-top: 1px dashed var(--border-halus); padding-top:12px;">${info}</div><div style="margin-top: 15px; display: flex; gap: 10px;"><button class="btn-kecil" style="background: rgba(59, 130, 246, 0.2); color: #93c5fd; border: 1px solid rgba(59, 130, 246, 0.3);" onclick="editRiwayat(${index})">✏️ Edit</button><button class="btn-kecil" style="background: rgba(239, 68, 68, 0.2); color: #fca5a5; border: 1px solid rgba(239, 68, 68, 0.3);" onclick="hapusRiwayat(${index})">🗑️ Hapus</button></div></div>`;
             }); kotakArea.innerHTML = htmlHTML;
@@ -695,30 +668,15 @@
         function aturFormLaporan() { let j = document.getElementById('jenis-laporan').value; let bh = document.getElementById('opsi-halaqah-laporan'); let bs = document.getElementById('opsi-santri-laporan'); if(j === 'semua') { bh.classList.add('hidden'); bs.classList.add('hidden'); } else if(j === 'halaqah') { bh.classList.remove('hidden'); bs.classList.add('hidden'); } else if(j === 'santri') { bh.classList.remove('hidden'); bs.classList.remove('hidden'); updateSantriLaporan(); } }
         function updateSantriLaporan() { let h = document.getElementById('pilih-halaqah-laporan').value; let s = document.getElementById('pilih-santri-laporan'); s.innerHTML = '<option value="">-- Pilih Santri --</option>'; if(h !== "") { let ds = databasePesantren[h]; if(ds.length > 0) { ds.forEach(n => s.appendChild(new Option(n, n))); } } }
         
-        // PERBAIKAN FUNGSI CETAK LAPORAN
         function prosesCetak(tipeExport) {
             let j = document.getElementById('jenis-laporan').value; let th = document.getElementById('pilih-halaqah-laporan').value; let ts = document.getElementById('pilih-santri-laporan').value; let pj = document.getElementById('penanggung-jawab').value || "Admin Pondok"; let tgl = document.getElementById('tanggal-laporan').value || new Date().toLocaleDateString('id-ID');
             let sumber = dataRiwayatServer.length > 0 ? dataRiwayatServer : dataRiwayat; let dataCetak = sumber.filter(i => { if (j === 'halaqah') return i.halaqah === th; if (j === 'santri') return i.halaqah === th && i.santri === ts; return true; });
             if (dataCetak.length === 0) { alert("⚠️ Tidak ada data untuk dicetak."); return; }
             
-            // PERUBAHAN: Tambah Header "Jenis" (Ziyadah/Murojaah)
             let head = [["No", "Waktu", "Halaqah", "Nama Santri", "Kehadiran", "Jenis", "Juz", "Surah/Ayat", "Nilai (T,L,M)", "Status", "Catatan"]];
-            
-            // FIX BUG MAP INDEX: Gunakan nama variabel parameter (item, idx)
-            let body = dataCetak.map((item, idx) => [ 
-                idx + 1, 
-                item.tgl, item.halaqah, item.santri, item.kehadiran, item.jenis, item.juz, 
-                item.kehadiran === 'Hadir' ? `${item.surah} : ${item.ayat}` : "-", 
-                item.kehadiran === 'Hadir' ? `T:${item.tajwid}, L:${item.lancar}, M:${item.makhraj}` : "-", 
-                item.status, item.catatan 
-            ]);
-
-            if (tipeExport === 'Excel') { 
-                let wb = XLSX.utils.book_new(); let ws = XLSX.utils.aoa_to_sheet([...head, ...body]); XLSX.utils.book_append_sheet(wb, ws, "Laporan"); XLSX.writeFile(wb, `Laporan_${tgl}.xlsx`);
-            } else if (tipeExport === 'PDF') { 
-                const { jsPDF } = window.jspdf; const doc = new jsPDF('landscape'); doc.setFontSize(16); doc.setTextColor(251, 191, 36); doc.text("Laporan Setoran", 14, 15); doc.setFontSize(11); doc.setTextColor(55, 65, 81); doc.text(`Tanggal: ${tgl} | Penanggung Jawab: ${pj}`, 14, 23); doc.autoTable({ head: head, body: body, startY: 28, theme: 'grid', headStyles: { fillColor: [217, 119, 6] }, styles: { fontSize: 9, cellPadding: 3 } }); doc.save(`Laporan_${tgl}.pdf`); 
-            } 
-            tutupModalLaporan();
+            let body = dataCetak.map((item, idx) => [ idx + 1, item.tgl, item.halaqah, item.santri, item.kehadiran, item.jenis, item.juz, item.kehadiran === 'Hadir' ? `${item.surah} : ${item.ayat}` : "-", item.kehadiran === 'Hadir' ? `T:${item.tajwid}, L:${item.lancar}, M:${item.makhraj}` : "-", item.status, item.catatan ]);
+            if (tipeExport === 'Excel') { let wb = XLSX.utils.book_new(); let ws = XLSX.utils.aoa_to_sheet([...head, ...body]); XLSX.utils.book_append_sheet(wb, ws, "Laporan"); XLSX.writeFile(wb, `Laporan_${tgl}.xlsx`);
+            } else if (tipeExport === 'PDF') { const { jsPDF } = window.jspdf; const doc = new jsPDF('landscape'); doc.setFontSize(16); doc.setTextColor(251, 191, 36); doc.text("Laporan Setoran", 14, 15); doc.setFontSize(11); doc.setTextColor(55, 65, 81); doc.text(`Tanggal: ${tgl} | Penanggung Jawab: ${pj}`, 14, 23); doc.autoTable({ head: head, body: body, startY: 28, theme: 'grid', headStyles: { fillColor: [217, 119, 6] }, styles: { fontSize: 9, cellPadding: 3 } }); doc.save(`Laporan_${tgl}.pdf`); } tutupModalLaporan();
         }
     </script>
 </body>
