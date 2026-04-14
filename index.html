@@ -58,12 +58,15 @@
         h2 { text-align: center; color: var(--tema-warna); font-weight: 800; letter-spacing: -0.5px; margin-bottom: 25px; text-shadow: 0 2px 10px rgba(251,191,36,0.3);}
         h3 { color: var(--teks-utama); font-weight: 700; margin-top: 0; font-size: 18px; border-bottom: 1px solid var(--border-halus); padding-bottom: 12px; margin-bottom: 20px;}
         
-        .box { background: var(--bg-elemen); padding: 24px; border-radius: 20px; margin-bottom: 25px; border: 1px solid var(--border-halus); box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.2); transition: transform 0.3s ease, box-shadow 0.3s ease; }
+        .box { 
+            background: var(--bg-elemen); padding: 24px; border-radius: 20px; margin-bottom: 25px; border: 1px solid var(--border-halus);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.2); transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
         .box:hover { transform: translateY(-3px); box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.3); border-color: rgba(255,255,255,0.15); }
         
         input:not([type="color"]):not([type="radio"]):not([type="file"]), select, textarea { 
             width: 100%; padding: 14px 16px; margin: 8px 0 15px 0; background: var(--bg-input); border: 1px solid var(--border-halus);
-            border-radius: 12px; box-sizing: border-box; font-size: 15px; color: var(--teks-utama); font-weight: 600; outline: none; transition: all 0.2s ease;
+            border-radius: 12px; box-sizing: border-box; font-size: 15px; color: var(--teks-utama); font-weight: 600; outline: none; transition: all 0.3s ease;
             appearance: none; -moz-appearance: none; -webkit-appearance: none;
         }
         select { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 15px center; background-size: 16px; padding-right: 40px; }
@@ -73,10 +76,10 @@
         button { 
             width: 100%; background: linear-gradient(135deg, var(--tema-warna), var(--tema-gelap)); color: var(--teks-dalam-tombol); border: none; cursor: pointer; 
             font-weight: 800; padding: 16px; border-radius: 14px; font-size: 16px; margin-top: 10px;
-            box-shadow: 0 6px 0 #b45309, 0 8px 15px rgba(0,0,0,0.3); transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1); text-transform: uppercase; letter-spacing: 1px;
+            box-shadow: 0 6px 0 rgba(0,0,0,0.4), 0 8px 15px rgba(0,0,0,0.3); transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1); text-transform: uppercase; letter-spacing: 1px;
         }
-        button:hover { filter: brightness(1.15); transform: translateY(-1px); box-shadow: 0 7px 0 #b45309, 0 12px 20px rgba(0,0,0,0.4); }
-        button:active { transform: translateY(6px); box-shadow: 0 0 0 #b45309, 0 2px 4px rgba(0,0,0,0.2); }
+        button:hover { filter: brightness(1.15); transform: translateY(-1px); box-shadow: 0 7px 0 rgba(0,0,0,0.5), 0 12px 20px rgba(0,0,0,0.4); }
+        button:active { transform: translateY(6px); box-shadow: 0 0 0 rgba(0,0,0,0.6), 0 2px 4px rgba(0,0,0,0.2); }
         
         .btn-outline { background: transparent; color: var(--tema-warna); border: 2px solid var(--tema-warna); box-shadow: none; }
         .btn-logout { background: linear-gradient(135deg, #ef4444, #b91c1c); color: white; box-shadow: 0 6px 0 #991b1b, 0 8px 15px rgba(0,0,0,0.3); margin-top: 30px; }
@@ -85,13 +88,17 @@
         textarea { height: 100px; resize: none; margin-top: 5px; }
         .hidden { display: none !important; }
 
-        /* TABEL DATA MASTER (ADMIN) */
+        /* =========================================================
+           --- TABEL DATA MASTER (ADMIN) ---
+        ========================================================= */
         .list-container { margin-top:15px; max-height:280px; overflow-y:auto; border-top:1px solid var(--border-halus); padding-top:10px; }
         .list-item { display:flex; justify-content:space-between; align-items:center; background:var(--bg-input); padding:10px 15px; border-radius:10px; margin-bottom:8px; border:1px solid var(--border-halus); transition:all 0.2s;}
         .list-item:hover { border-color:var(--tema-warna); }
         .list-item-text { font-weight:700; font-size:14px; color:var(--teks-utama); }
 
-        /* DUAL MODE: ZIYADAH & MUROJAAH */
+        /* =========================================================
+           --- DUAL MODE: ZIYADAH & MUROJAAH ---
+        ========================================================= */
         .toggle-setoran { display: flex; background: rgba(0,0,0,0.5); border-radius: 12px; padding: 6px; margin-bottom: 20px; border: 1px solid var(--border-halus); }
         .toggle-btn { flex: 1; padding: 12px; text-align: center; font-weight: 800; cursor: pointer; border-radius: 8px; transition: all 0.3s ease; color: var(--teks-sekunder); font-size: 15px; letter-spacing: 0.5px; }
         .toggle-btn.aktif-ziyadah { background: linear-gradient(135deg, #fbbf24, #d97706); color: #451a03; box-shadow: 0 4px 10px rgba(251,191,36,0.3); }
@@ -101,7 +108,9 @@
         .badge-mode.Ziyadah { background: rgba(251, 191, 36, 0.2); color: #fbbf24; border: 1px solid rgba(251, 191, 36, 0.4); }
         .badge-mode.Murojaah { background: rgba(16, 185, 129, 0.2); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.4); }
 
-        /* GRID RESPONSIF */
+        /* =========================================================
+           --- GRID RESPONSIF (HP vs PC) ---
+        ========================================================= */
         .grid-juz-surah { display: grid; grid-template-columns: 80px 1fr; gap: 12px; margin-bottom: 12px; }
         .grid-ayat { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 15px; }
         .form-label-small { font-size: 13px; color: var(--teks-sekunder); font-weight: 700; margin-bottom: 4px; display: block; text-transform: uppercase; letter-spacing: 0.5px;}
@@ -142,12 +151,13 @@
         .btn-batal { background: linear-gradient(135deg, #64748b, #475569); color: white; box-shadow: 0 6px 0 #334155, 0 8px 15px rgba(0,0,0,0.3); }
 
         .kartu-riwayat { background: var(--bg-elemen); padding: 20px; border-radius: 16px; margin-bottom: 16px; font-size: 14px; border: 1px solid var(--border-halus); border-left: 6px solid var(--tema-warna); transition: all 0.2s ease; }
-        .kartu-riwayat:hover { transform: translateX(4px); border-color: rgba(251,191,36,0.3); }
+        .kartu-riwayat:hover { transform: translateX(4px); box-shadow: 0 8px 25px rgba(0,0,0,0.4); border-color: rgba(251,191,36,0.3); }
         .riwayat-bintang-grid { display: grid; grid-template-columns: 1fr; gap: 6px; margin: 12px 0; background: var(--bg-input); padding: 12px; border-radius: 10px; border: 1px solid var(--border-halus); }
         .rb-item { display: flex; justify-content: space-between; align-items: center; font-weight: 600; color: var(--teks-sekunder);}
         .rb-stars { font-size: 15px; letter-spacing: 2px;}
 
-        .btn-kecil { padding: 10px 14px; font-size: 13px; width: auto; margin: 0; border-radius: 10px; color: white; font-weight: bold; flex: 1; display:flex; justify-content:center; align-items:center; gap: 5px; border:none; cursor:pointer;}
+        .btn-kecil { padding: 10px 14px; font-size: 13px; width: auto; margin: 0; border-radius: 10px; color: white; border: none; cursor: pointer; font-weight: bold; text-transform: none; letter-spacing: normal; transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1); flex: 1; display:flex; justify-content:center; align-items:center; gap: 5px; }
+        .btn-kecil:active { transform: translateY(4px); }
 
         .kartu-prestasi { display: none; background: rgba(251, 191, 36, 0.05); padding: 18px; border-radius: 14px; margin-top: -5px; margin-bottom: 20px; border: 1px solid rgba(251, 191, 36, 0.2); font-size: 14px; }
         .kartu-prestasi h4 { margin: 0 0 10px 0; color: var(--tema-warna); font-size: 16px; display:flex; align-items:center; gap:8px;}
@@ -156,7 +166,7 @@
         .absensi-group { display: flex; gap: 12px; margin-top: 5px; margin-bottom: 20px; flex-wrap: wrap; background: var(--bg-input); padding: 15px; border-radius: 14px; border: 1px solid var(--border-halus); }
         .absensi-group label { cursor: pointer; font-size: 15px; display: flex; align-items: center; gap: 8px; font-weight: 600; color: var(--teks-utama); }
         input[type="radio"] { accent-color: var(--warna-input-aktif); transform: scale(1.3); }
-        .badge-absen { padding: 4px 12px; border-radius: 8px; font-size: 12px; color: var(--teks-dalam-tombol); font-weight: bold; text-transform: uppercase; letter-spacing: 0.5px;}
+        .badge-absen { padding: 4px 12px; border-radius: 8px; font-size: 12px; color: var(--teks-dalam-tombol); font-weight: bold; text-transform: uppercase; }
 
         .btn-status-container { display: flex; gap: 15px; margin-top: 10px; }
         .btn-status { flex: 1; padding: 14px; border-radius: 12px; font-weight: 800; font-size: 15px; margin-top: 0; transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1); cursor: pointer; border: none; text-align: center; display: flex; justify-content: center; align-items: center; gap: 8px; text-transform: none; letter-spacing: normal;}
@@ -429,7 +439,6 @@
         // --- ⚠️ URL GOOGLE APPS SCRIPT ANTUM ---
         const scriptURL = 'https://script.google.com/macros/s/AKfycbxoNJfz3VozPWYHaRn-Q0WVL5d284j3_Q8LpzprKnpiP0NTaCltDclmGrmpNbHAbRBH/exec';
 
-        // --- DATA QUR'AN OTOMATIS ---
         const dataSurahLengkap = {
             "Al-Fatihah": 7, "Al-Baqarah": 286, "Ali 'Imran": 200, "An-Nisa'": 176, "Al-Ma'idah": 120, "Al-An'am": 165, "Al-A'raf": 206, "Al-Anfal": 75, "At-Taubah": 129, "Yunus": 109,
             "Hud": 123, "Yusuf": 111, "Ar-Ra'd": 43, "Ibrahim": 52, "Al-Hijr": 99, "An-Nahl": 128, "Al-Isra'": 111, "Al-Kahf": 110, "Maryam": 98, "Taha": 135,
@@ -446,7 +455,11 @@
         };
 
         // VARIABEL GLOBAL MASTER
-        let databasePesantren = {}; let dataProgresGlobal = {}; let dataRiwayatServer = []; let dataAkunGlobal = {}; let namaMuhaffizAktif = ""; 
+        let databasePesantren = {}; // Semua halaqah dan santri ditarik dari Spreadsheet!
+        let dataProgresGlobal = {}; 
+        let dataRiwayatServer = []; 
+        let dataAkunGlobal = {}; 
+        let namaMuhaffizAktif = ""; 
 
         // =========================================================
         // --- LOGIKA AWAL SAAT APLIKASI DIBUKA ---
@@ -458,6 +471,7 @@
             fetch(scriptURL).then(r => r.json()).then(data => {
                 dataProgresGlobal = data.progres || {}; dataRiwayatServer = data.riwayat || []; dataAkunGlobal = data.akun || {};
                 
+                // MENGISI DATABASE PESANTREN DARI SPREADSHEETS
                 databasePesantren = {};
                 if(data.halaqah && data.halaqah.length > 0) {
                     data.halaqah.forEach(h => databasePesantren[h] = []);
@@ -470,7 +484,6 @@
                 document.getElementById('teks-loading').innerText = "Mode Offline";
                 console.error("Error Tarik Data Server: ", e);
             }).finally(() => {
-                // TIMER PENUTUP SPLASH SCREEN DI SINI
                 setTimeout(function() {
                     document.getElementById('splash-screen').classList.add('fade-out');
                     setTimeout(function() { 
@@ -489,7 +502,7 @@
         }
 
         // =========================================================
-        // --- LOGIKA ADMIN MASTER DATA (GURU, HALAQAH, SANTRI & IMPORT) ---
+        // --- LOGIKA ADMIN MASTER DATA (GURU, HALAQAH, SANTRI) ---
         // =========================================================
         function renderMuhaffizDropdown() {
             let selectMuhaffiz = document.getElementById('select-muhaffiz'); selectMuhaffiz.innerHTML = '<option value="">-- Pilih Nama Antum --</option>';
@@ -508,7 +521,6 @@
             renderTabelSantriAdmin(); renderHalaqahDropdowns(); 
         }
 
-        // CRUD Guru
         function tambahGuru() {
             let n = document.getElementById('nama-muhaffiz-baru').value.trim();
             if(!n) return alert("⚠️ Nama tidak boleh kosong!"); if(dataAkunGlobal[n]) return alert("⚠️ Nama sudah terdaftar!");
@@ -526,7 +538,6 @@
             if(confirm(`Yakin ingin menghapus Muhaffizh '${nama}'?`)) { eksekusiCRUD('crud_hapus', 'Akun', nama, []); delete dataAkunGlobal[nama]; renderTabelAdmin(); renderMuhaffizDropdown(); }
         }
 
-        // CRUD Halaqah
         function tambahHalaqah() {
             let n = document.getElementById('nama-halaqah-baru').value.trim();
             if(!n) return alert("⚠️ Nama Halaqah tidak boleh kosong!"); if(databasePesantren[n]) return alert("⚠️ Halaqah sudah ada!");
@@ -544,7 +555,6 @@
             if(confirm(`Yakin menghapus Halaqah '${nama}'?`)) { eksekusiCRUD('crud_hapus', 'Halaqah', nama, []); delete databasePesantren[nama]; renderTabelAdmin(); }
         }
 
-        // CRUD Santri
         function renderTabelSantriAdmin() {
             let h = document.getElementById('admin-pilih-halaqah').value; let tmp = document.getElementById('tabel-santri');
             if(!h) { tmp.innerHTML = '<p style="color:var(--teks-sekunder); text-align:center; font-size:13px;">Pilih halaqah di atas untuk melihat daftar santri.</p>'; return; }
@@ -667,6 +677,7 @@
         function tarikDataServer(asal) {
             fetch(scriptURL).then(r => r.json()).then(data => {
                 dataProgresGlobal = data.progres; dataRiwayatServer = data.riwayat;
+                
                 if(data.halaqah && data.halaqah.length > 0) {
                     databasePesantren = {}; data.halaqah.forEach(h => databasePesantren[h] = []);
                     if(data.santri) { data.santri.forEach(s => { if(databasePesantren[s.halaqah]) databasePesantren[s.halaqah].push(s.nama); }); }
@@ -696,7 +707,7 @@
                         let wt = item.kehadiran === 'Hadir' ? 'var(--teks-dalam-tombol)' : '#ffffff';
                         let badgeJenis = item.jenis === 'Murojaah' ? `<span class="badge-mode Murojaah">Muroja'ah</span>` : `<span class="badge-mode Ziyadah">Ziyadah</span>`;
                         let infoSetoran = item.kehadiran === 'Hadir' ? `<div style="font-size: 17px; font-weight: 800; color: var(--teks-utama); margin-bottom: 5px;">📖 Juz ${item.juz} - ${item.surah} : ${item.ayat} ${badgeJenis}</div><div class="riwayat-bintang-grid"><div class="rb-item"><span>Tajwid</span> <span class="rb-stars">${drawStars(item.tajwid)}</span></div><div class="rb-item"><span>Lancar</span> <span class="rb-stars">${drawStars(item.lancar)}</span></div><div class="rb-item"><span>Makhraj</span> <span class="rb-stars">${drawStars(item.makhraj)}</span></div></div><div style="font-size:14px; font-weight:800; color: ${item.status === 'Lanjut' ? 'var(--tema-warna)' : '#ef4444'}; margin-top:10px;">${item.status === 'Lanjut' ? '✅ BOLEH LANJUT' : '🔄 HARUS ULANGI'}</div>${item.catatan !== '-' ? `<div style="margin-top:10px; font-size:13px; font-style:italic; color:var(--teks-sekunder); background: rgba(0,0,0,0.2); padding: 10px; border-radius: 8px; border-left: 3px solid rgba(255,255,255,0.2);">📝 Pesan: ${item.catatan}</div>` : ''}` : `<div style="color: var(--teks-sekunder); font-style: italic; font-weight:600; margin-top:10px;">Tidak setoran (Absen)</div>`;
-                        h += `<div class="kartu-riwayat" style="border-left-color: ${w};"><div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:12px;"><div><span style="font-size:12px; color:var(--teks-sekunder); font-weight:700;">${item.tgl}</span></div><div style="text-align:right;"><span class="badge-absen" style="background-color: ${w}; color: ${wt}; margin:0;">${item.kehadiran}</span></div></div><div style="border-top: 1px dashed var(--border-halus); padding-top:12px;">${infoSetoran}</div></div>`;
+                        h += `<div class="kartu-riwayat" style="border-left-color: ${w};"><div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:12px;"><div><span style="font-size:12px; color:var(--teks-sekunder); font-weight:700;">${item.tgl}</span></div><div style="text-align:right;"><span class="badge-absen" style="background-color: ${w}; color: ${warnaTeksBadge}; margin:0;">${item.kehadiran}</span></div></div><div style="border-top: 1px dashed var(--border-halus); padding-top:12px;">${infoSetoran}</div></div>`;
                     }); tmp.innerHTML = h;
                 }
             } else { kartu.style.display = "none"; tmp.innerHTML = '<div style="background: var(--bg-elemen); padding: 30px 20px; border-radius: 20px; text-align: center; border: 2px dashed var(--border-halus);"><p style="color:var(--teks-sekunder); font-size:14px; font-weight: 600;">Silakan pilih nama santri di atas.</p></div>'; }
