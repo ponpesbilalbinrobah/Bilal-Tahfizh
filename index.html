@@ -115,7 +115,7 @@
         .admin-trigger { display: flex; justify-content: center; align-items: center; gap: 8px; margin-top: 25px; color: var(--teks-sekunder); font-weight: bold; cursor: pointer; transition: all 0.3s; background: var(--bg-elemen); padding: 12px 24px; border-radius: 50px; width: max-content; margin-inline: auto; border: 1px solid var(--border-halus); box-shadow: 0 5px 15px rgba(0,0,0,0.3); }
         
         .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(2, 6, 23, 0.8); display: flex; justify-content: center; align-items: center; z-index: 1000; backdrop-filter: blur(10px); }
-        .modal-content { background: #0f172a; padding: 35px; border-radius: 24px; width: 90%; max-width: 420px; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8); border: 1px solid var(--border-halus); animation: modalMuncul 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        .modal-content { background: #0f172a; padding: 35px; border-radius: 24px; width: 90%; max-width: 440px; max-height: 90vh; overflow-y: auto; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8); border: 1px solid var(--border-halus); animation: modalMuncul 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
         @keyframes modalMuncul { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
         .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; }
         .modal-header h3 { margin: 0; color: var(--teks-utama); font-size: 22px; border: none; padding: 0;}
@@ -431,9 +431,30 @@
     <div id="modal-laporan" class="modal-overlay hidden">
         <div class="modal-content">
             <div class="modal-header"><h3>Cetak Laporan</h3><button class="close-btn" onclick="tutupModalLaporan()">×</button></div>
-            <label class="form-label">Tanggal Cetak:</label><input type="date" id="tanggal-laporan">
+            <label class="form-label">Tanggal Cetak Dokumen:</label><input type="date" id="tanggal-laporan">
             <label class="form-label">Penanggung Jawab:</label><input type="text" id="penanggung-jawab" placeholder="Misal: Admin Pondok">
-            <label class="form-label">Cakupan Data:</label>
+            
+            <label class="form-label">Periode Waktu Laporan (Filter Tanggal):</label>
+            <select id="pilihan-periode" onchange="aturPilihanPeriode()">
+                <option value="semua">Semua Waktu (Seluruh Riwayat)</option>
+                <option value="hari_ini">Hari Ini</option>
+                <option value="pekan_ini">7 Hari Terakhir</option>
+                <option value="bulan_ini">Bulan Ini</option>
+                <option value="bulan_lalu">Bulan Lalu</option>
+                <option value="kustom">Rentang Tanggal Kustom...</option>
+            </select>
+            <div id="wadah-rentang-tanggal" style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: -5px; margin-bottom: 12px; transition: all 0.2s;">
+                <div>
+                    <span class="form-label-small" style="margin-bottom: 4px;">Dari Tanggal:</span>
+                    <input type="date" id="tanggal-mulai" onchange="pilihTanggalKustom()" style="margin: 0; padding: 10px 12px; font-size: 13px;">
+                </div>
+                <div>
+                    <span class="form-label-small" style="margin-bottom: 4px;">Sampai Tanggal:</span>
+                    <input type="date" id="tanggal-selesai" onchange="pilihTanggalKustom()" style="margin: 0; padding: 10px 12px; font-size: 13px;">
+                </div>
+            </div>
+
+            <label class="form-label">Cakupan Halaqah / Santri:</label>
             <select id="jenis-laporan" onchange="aturFormLaporan()"><option value="semua">Seluruh Halaqah</option><option value="halaqah">Halaqah Tertentu Saja</option><option value="santri">Santri Tertentu</option></select>
             <div id="opsi-halaqah-laporan" class="hidden"><label class="form-label">Pilih Halaqah:</label><select id="pilih-halaqah-laporan" onchange="updateSantriLaporan()"></select></div>
             <div id="opsi-santri-laporan" class="hidden"><label class="form-label">Pilih Santri:</label><select id="pilih-santri-laporan"><option value="">-- Pilih Halaqah Dulu --</option></select></div>
@@ -961,7 +982,92 @@
             }); kotakArea.innerHTML = htmlHTML;
         }
 
-        function bukaModalLaporan() { document.getElementById('tanggal-laporan').valueAsDate = new Date(); document.getElementById('modal-laporan').classList.remove('hidden'); aturFormLaporan(); }
+        function parseTanggalItem(tglStr) {
+            if (!tglStr || typeof tglStr !== 'string') return null;
+            let datePart = tglStr.trim().split(' ')[0];
+            let parts = datePart.split(/[/.-]/);
+            if (parts.length >= 3) {
+                let p0 = parseInt(parts[0], 10);
+                let p1 = parseInt(parts[1], 10);
+                let p2 = parseInt(parts[2], 10);
+                if (p0 > 1000) {
+                    let dt = new Date(p0, p1 - 1, p2);
+                    dt.setHours(0, 0, 0, 0);
+                    return dt;
+                }
+                if (!isNaN(p0) && !isNaN(p1) && !isNaN(p2)) {
+                    let y = p2 < 100 ? p2 + 2000 : p2;
+                    let dt = new Date(y, p1 - 1, p0);
+                    dt.setHours(0, 0, 0, 0);
+                    return dt;
+                }
+            }
+            let parsed = new Date(tglStr);
+            if (!isNaN(parsed.getTime())) {
+                parsed.setHours(0, 0, 0, 0);
+                return parsed;
+            }
+            return null;
+        }
+
+        function formatTglYMD(d) {
+            let year = d.getFullYear();
+            let month = String(d.getMonth() + 1).padStart(2, '0');
+            let day = String(d.getDate()).padStart(2, '0');
+            return `${year}-${month}-${day}`;
+        }
+
+        function aturPilihanPeriode() {
+            let opt = document.getElementById('pilihan-periode').value;
+            let wadah = document.getElementById('wadah-rentang-tanggal');
+            let inputMulai = document.getElementById('tanggal-mulai');
+            let inputSelesai = document.getElementById('tanggal-selesai');
+            let now = new Date();
+
+            if (opt === 'semua') {
+                wadah.style.opacity = '0.35';
+                inputMulai.disabled = true;
+                inputSelesai.disabled = true;
+            } else {
+                wadah.style.opacity = '1';
+                inputMulai.disabled = false;
+                inputSelesai.disabled = false;
+            }
+
+            if (opt === 'hari_ini') {
+                inputMulai.value = formatTglYMD(now);
+                inputSelesai.value = formatTglYMD(now);
+            } else if (opt === 'pekan_ini') {
+                let tujuhHariLalu = new Date(now);
+                tujuhHariLalu.setDate(now.getDate() - 6);
+                inputMulai.value = formatTglYMD(tujuhHariLalu);
+                inputSelesai.value = formatTglYMD(now);
+            } else if (opt === 'bulan_ini') {
+                let awalBulan = new Date(now.getFullYear(), now.getMonth(), 1);
+                let akhirBulan = new Date(now.getFullYear(), now.getMonth() + 1, 0);
+                inputMulai.value = formatTglYMD(awalBulan);
+                inputSelesai.value = formatTglYMD(akhirBulan);
+            } else if (opt === 'bulan_lalu') {
+                let awalBulanLalu = new Date(now.getFullYear(), now.getMonth() - 1, 1);
+                let akhirBulanLalu = new Date(now.getFullYear(), now.getMonth(), 0);
+                inputMulai.value = formatTglYMD(awalBulanLalu);
+                inputSelesai.value = formatTglYMD(akhirBulanLalu);
+            }
+        }
+
+        function pilihTanggalKustom() {
+            let opt = document.getElementById('pilihan-periode');
+            if (opt.value !== 'kustom' && opt.value !== 'semua') {
+                opt.value = 'kustom';
+            }
+        }
+
+        function bukaModalLaporan() { 
+            document.getElementById('tanggal-laporan').valueAsDate = new Date(); 
+            document.getElementById('modal-laporan').classList.remove('hidden'); 
+            aturFormLaporan(); 
+            aturPilihanPeriode();
+        }
         function tutupModalLaporan() { document.getElementById('modal-laporan').classList.add('hidden'); }
         function aturFormLaporan() { let j = document.getElementById('jenis-laporan').value; let bh = document.getElementById('opsi-halaqah-laporan'); let bs = document.getElementById('opsi-santri-laporan'); if(j === 'semua') { bh.classList.add('hidden'); bs.classList.add('hidden'); } else if(j === 'halaqah') { bh.classList.remove('hidden'); bs.classList.add('hidden'); } else if(j === 'santri') { bh.classList.remove('hidden'); bs.classList.remove('hidden'); updateSantriLaporan(); } }
         function updateSantriLaporan() { let h = document.getElementById('pilih-halaqah-laporan').value; let s = document.getElementById('pilih-santri-laporan'); s.innerHTML = '<option value="">-- Pilih Santri --</option>'; if(h !== "") { let ds = databasePesantren[h]; if(ds && ds.length > 0) { ds.forEach(n => s.appendChild(new Option(n, n))); } } }
@@ -972,13 +1078,52 @@
             let ts = document.getElementById('pilih-santri-laporan').value; 
             let pj = document.getElementById('penanggung-jawab').value || "Admin Pondok"; 
             let tgl = document.getElementById('tanggal-laporan').value || new Date().toLocaleDateString('id-ID');
+            
+            let optPeriode = document.getElementById('pilihan-periode').value;
+            let tglMulaiStr = document.getElementById('tanggal-mulai').value;
+            let tglSelesaiStr = document.getElementById('tanggal-selesai').value;
+            let tglMulai = (optPeriode !== 'semua' && tglMulaiStr) ? parseTanggalItem(tglMulaiStr) : null;
+            let tglSelesai = (optPeriode !== 'semua' && tglSelesaiStr) ? parseTanggalItem(tglSelesaiStr) : null;
+
             let sumber = dataRiwayatServer.length > 0 ? dataRiwayatServer : dataRiwayat; 
             let dataCetak = sumber.filter(i => { 
-                if (j === 'halaqah') return i.halaqah === th; 
-                if (j === 'santri') return i.halaqah === th && i.santri === ts; 
+                // 1. Filter Cakupan Halaqah / Santri
+                if (j === 'halaqah' && i.halaqah !== th) return false; 
+                if (j === 'santri' && (i.halaqah !== th || i.santri !== ts)) return false; 
+                
+                // 2. Filter Periode Tanggal
+                if (optPeriode !== 'semua') {
+                    let dt = parseTanggalItem(i.tgl);
+                    if (dt) {
+                        if (tglMulai && dt < tglMulai) return false;
+                        if (tglSelesai && dt > tglSelesai) return false;
+                    }
+                }
                 return true; 
             });
-            if (dataCetak.length === 0) { alert("⚠️ Tidak ada data untuk dicetak."); return; }
+            if (dataCetak.length === 0) { 
+                alert("⚠️ Tidak ada data untuk dicetak pada periode/cakupan yang dipilih."); 
+                return; 
+            }
+
+            // Keterangan teks periode untuk header laporan & nama file
+            let teksPeriode = "Semua Waktu";
+            if (optPeriode !== 'semua') {
+                if (tglMulaiStr && tglSelesaiStr) {
+                    teksPeriode = (tglMulaiStr === tglSelesaiStr) ? tglMulaiStr : `${tglMulaiStr} s/d ${tglSelesaiStr}`;
+                } else if (tglMulaiStr) {
+                    teksPeriode = `Mulai ${tglMulaiStr}`;
+                } else if (tglSelesaiStr) {
+                    teksPeriode = `Hingga ${tglSelesaiStr}`;
+                }
+            }
+
+            let namaFileExport = "Laporan";
+            if (optPeriode !== 'semua' && tglMulaiStr && tglSelesaiStr) {
+                namaFileExport = (tglMulaiStr === tglSelesaiStr) ? `Laporan_${tglMulaiStr}` : `Laporan_${tglMulaiStr}_sd_${tglSelesaiStr}`;
+            } else {
+                namaFileExport = `Laporan_${tgl}`;
+            }
             
             let head = [["No", "Waktu", "Halaqah", "Nama Santri", "Kehadiran", "Jenis", "Juz", "Total Juz", "Surah/Ayat", "Nilai (T,L,M)", "Status", "Catatan"]];
             let body = dataCetak.map((item, idx) => {
@@ -1058,7 +1203,7 @@
                     }
                 }
 
-                // Akumulasikan seluruh setoran santri
+                // Akumulasikan data riwayat dalam periode filter
                 dataCetak.forEach(item => {
                     let r = rekapSantriMap[item.santri];
                     if (r) {
@@ -1114,16 +1259,16 @@
                 ];
                 XLSX.utils.book_append_sheet(wb, wsRekap, "Rekap Santri");
 
-                XLSX.writeFile(wb, `Laporan_${tgl}.xlsx`);
+                XLSX.writeFile(wb, `${namaFileExport}.xlsx`);
             } else if (tipeExport === 'PDF') { 
                 const { jsPDF } = window.jspdf; 
                 const doc = new jsPDF('landscape'); 
                 doc.setFontSize(16); 
                 doc.setTextColor(251, 191, 36); 
-                doc.text("Laporan Setoran", 14, 15); 
-                doc.setFontSize(11); 
+                doc.text("Laporan Setoran Tahfiz Bilal", 14, 15); 
+                doc.setFontSize(10); 
                 doc.setTextColor(55, 65, 81); 
-                doc.text(`Tanggal: ${tgl} | Penanggung Jawab: ${pj}`, 14, 23); 
+                doc.text(`Periode: ${teksPeriode} | Tanggal Cetak: ${tgl} | Penanggung Jawab: ${pj}`, 14, 23); 
                 doc.autoTable({ 
                     head: head, 
                     body: body, 
@@ -1132,7 +1277,7 @@
                     headStyles: { fillColor: [217, 119, 6], fontSize: 8 }, 
                     styles: { fontSize: 8, cellPadding: 2.5 } 
                 }); 
-                doc.save(`Laporan_${tgl}.pdf`); 
+                doc.save(`${namaFileExport}.pdf`); 
             } 
             tutupModalLaporan();
         }
