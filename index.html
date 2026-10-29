@@ -418,6 +418,10 @@
         </div>
         <p style="text-align: center; color: var(--teks-sekunder); margin-bottom: 25px;">Silakan pilih nama anak Anda untuk melihat perkembangan hafalannya secara real-time.</p>
 
+        <button type="button" onclick="bukaModalPeringkatPondok()" class="btn-outline" style="margin-top: -12px; margin-bottom: 22px; font-size: 14px; padding: 12px; display: flex; align-items: center; justify-content: center; gap: 8px; border-radius: 14px; font-weight: 800;">
+            <span>🏆</span> Buka Peringkat & Capaian Pondok
+        </button>
+
         <div class="box">
             <label class="form-label">Pilih Halaqah:</label><select id="ortu-pilih-halaqah" onchange="updateSantriOrtu()"></select>
             <label class="form-label" style="margin-top: 10px;">Pilih Nama Santri:</label><select id="ortu-pilih-santri" onchange="tampilkanDataOrtu()"><option value="">-- Pilih Halaqah Dulu --</option></select>
@@ -432,6 +436,16 @@
                 <div style="margin-top: 15px; border-top: 1px dashed rgba(251,191,36,0.2); padding-top:10px;">
                     <div style="font-size:12px; color:var(--teks-sekunder); margin-bottom:5px; font-weight:bold;">Pencapaian Juz Detail:</div>
                     <div class="grid-juz-30 mode-z" id="ortu-grid-juz-30" style="pointer-events: none;"></div>
+                </div>
+
+                <div id="ortu-kotak-ranking" style="margin-top: 15px; background: rgba(251,191,36,0.1); border: 1px solid rgba(251,191,36,0.25); border-radius: 12px; padding: 12px 14px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;">
+                    <div>
+                        <span style="font-size: 11px; color: var(--teks-sekunder); font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;">🎖️ Peringkat Capaian Pondok:</span>
+                        <div id="ortu-rank-teks" style="font-size: 16px; font-weight: 900; color: var(--tema-warna); margin-top: 2px;">-</div>
+                    </div>
+                    <button type="button" onclick="bukaModalPeringkatPondokDenganSantri()" class="btn-kecil" style="width: auto; padding: 8px 14px; font-size: 12px; background: linear-gradient(135deg, var(--tema-warna), var(--tema-gelap)); color: var(--teks-dalam-tombol); border: none; font-weight: 800; border-radius: 8px;">
+                        Lihat Posisi di Leaderboard 🏆
+                    </button>
                 </div>
             </div>
         </div>
@@ -1290,6 +1304,20 @@
             document.getElementById('modal-peringkat-pondok').classList.add('hidden');
         }
 
+        function bukaModalPeringkatPondokDenganSantri() {
+            let santri = document.getElementById('ortu-pilih-santri').value;
+            bukaModalPeringkatPondok();
+            if (santri) {
+                setTimeout(() => {
+                    let inputCari = document.getElementById('modal-dash-cari-santri');
+                    if (inputCari) {
+                        inputCari.value = santri;
+                        filterLeaderboardSantri('modal-');
+                    }
+                }, 50);
+            }
+        }
+
         function renderModalDashboardContent(data) {
             let container = document.getElementById('wadah-dashboard-modal');
             if (!container) return;
@@ -1503,6 +1531,21 @@
                 } else { 
                     setJuzUI("", true);
                     document.getElementById('ortu-infoJuz').innerText = "Belum Ada Data"; document.getElementById('ortu-infoJuz').style.color = "var(--teks-sekunder)"; document.getElementById('ortu-infoSurah').innerText = "-"; 
+                }
+
+                // Hitung posisi ranking ananda se-pondok
+                let dataStats = hitungDataStatistikPondok();
+                let santriItem = dataStats.rankingSantri.find(s => s.nama === santri);
+                let elRank = document.getElementById('ortu-rank-teks');
+                if (elRank) {
+                    if (santriItem) {
+                        let rankText = santriItem.originalRank === 1 ? '🥇 Juara 1 (Tertinggi se-Pondok)' : 
+                                       (santriItem.originalRank === 2 ? '🥈 Juara 2 se-Pondok' : 
+                                       (santriItem.originalRank === 3 ? '🥉 Juara 3 se-Pondok' : `Peringkat #${santriItem.originalRank}`));
+                        elRank.innerText = `${rankText} dari ${dataStats.totalSantri} Santri (${santriItem.juzCount} Juz)`;
+                    } else {
+                        elRank.innerText = "-";
+                    }
                 }
                 
                 let riwayatAnak = dataRiwayatServer.filter(i => i.santri === santri);
