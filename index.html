@@ -213,6 +213,23 @@
         .halaqah-stat-lbl { font-size: 10px; color: var(--teks-sekunder); font-weight: 600; text-transform: uppercase; margin-top: 2px; }
 
         .modal-content-large { max-width: 650px !important; width: 92% !important; }
+
+        /* =========================================================
+           --- PROGRAM MULTI-MATERI (AL-QUR'AN / HADITS / DOA) ---
+        ========================================================= */
+        .program-tabs { display: flex; background: rgba(0, 0, 0, 0.45); border-radius: 14px; padding: 5px; border: 1px solid var(--border-halus); gap: 6px; margin-bottom: 18px; }
+        .prog-tab-btn { flex: 1; padding: 12px 6px; text-align: center; font-weight: 800; cursor: pointer; border-radius: 10px; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); color: var(--teks-sekunder); font-size: 13px; border: none; background: transparent; box-shadow: none; margin: 0; text-transform: none; letter-spacing: normal; display: flex; align-items: center; justify-content: center; gap: 6px; }
+        .prog-tab-btn:hover { color: var(--teks-utama); background: rgba(255, 255, 255, 0.05); transform: none; box-shadow: none; }
+        .prog-tab-btn.aktif-quran { background: linear-gradient(135deg, #fbbf24, #d97706); color: #451a03; box-shadow: 0 4px 12px rgba(251, 191, 36, 0.35); }
+        .prog-tab-btn.aktif-hadits { background: linear-gradient(135deg, #38bdf8, #0284c7); color: white; box-shadow: 0 4px 12px rgba(56, 189, 248, 0.35); }
+        .prog-tab-btn.aktif-doa { background: linear-gradient(135deg, #34d399, #059669); color: white; box-shadow: 0 4px 12px rgba(52, 211, 153, 0.35); }
+        
+        .box.mode-hadits { border-color: rgba(56, 189, 248, 0.4) !important; box-shadow: 0 8px 32px rgba(56, 189, 248, 0.15); }
+        .box.mode-doa { border-color: rgba(52, 211, 153, 0.4) !important; box-shadow: 0 8px 32px rgba(52, 211, 153, 0.15); }
+        
+        .materi-preview-card { background: rgba(0, 0, 0, 0.3); border: 1px solid var(--border-halus); border-radius: 14px; padding: 16px; margin-top: 12px; margin-bottom: 15px; }
+        .teks-arab-box { font-family: 'Amiri', 'Traditional Arabic', 'Scheherazade New', serif; font-size: 22px; text-align: right; line-height: 2.1; color: #fde68a; direction: rtl; margin-bottom: 12px; padding: 12px 16px; background: rgba(0,0,0,0.3); border-radius: 10px; border-right: 4px solid var(--tema-warna); }
+        .teks-arti-box { font-size: 13px; color: var(--teks-utama); line-height: 1.6; font-style: italic; background: rgba(255,255,255,0.03); padding: 10px 14px; border-radius: 10px; border-left: 3px solid rgba(255,255,255,0.2); }
     </style>
 </head>
 <body>
@@ -408,6 +425,16 @@
                 <input type="file" id="input-restore-json" accept=".json" style="display:none" onchange="pulihkanBackupJSON(event)">
             </div>
         </div>
+
+        <div class="box" style="border-left: 6px solid #3b82f6; background: rgba(59, 130, 246, 0.05);">
+            <h3 style="color: #60a5fa; border-color: rgba(59, 130, 246, 0.2);">7. Referensi Materi Hadits & Doa (Link Web / PDF)</h3>
+            <p style="color:var(--teks-sekunder); font-size:13px; margin-top:-5px; margin-bottom:12px;">Atur tautan buku PDF (Google Drive/Cloud) atau website referensi agar Muhaffiz dapat membukanya langsung saat menyimak hafalan.</p>
+            <label class="form-label-small" style="margin-bottom: 4px;">Link Web / PDF Hadits Arba'in:</label>
+            <input type="text" id="setting-link-hadits" placeholder="https://..." style="margin-bottom: 10px; background:var(--bg-elemen);">
+            <label class="form-label-small" style="margin-bottom: 4px;">Link Web / PDF Doa & Dzikir:</label>
+            <input type="text" id="setting-link-doa" placeholder="https://..." style="margin-bottom: 12px; background:var(--bg-elemen);">
+            <button type="button" onclick="simpanPengaturanLinkReferensi()" style="background: linear-gradient(135deg, #3b82f6, #1d4ed8); color: white; box-shadow: 0 6px 0 #1e40af;">💾 Simpan Tautan Referensi</button>
+        </div>
         <button class="btn-logout" onclick="logout()">Keluar dari Admin</button>
     </div>
 
@@ -485,6 +512,10 @@
                     <div><span style="font-size:12px; color:var(--teks-sekunder);">Total Hafalan (Juz)</span><br><span id="infoTotalJuz" style="font-size:16px; font-weight:800; color:var(--teks-utama);">-</span></div>
                     <div style="text-align:right;"><span style="font-size:12px; color:var(--teks-sekunder);">Surah Terakhir</span><br><span id="infoSurah" style="font-size:16px; font-weight:800; color:var(--teks-utama);">-</span></div>
                 </div>
+                <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px; margin-top:8px; border-top:1px dashed rgba(251,191,36,0.15); padding-top:8px;">
+                    <div><span style="font-size:11px; color:var(--teks-sekunder); font-weight:700;">📜 Hadits Terakhir</span><br><span id="infoHadits" style="font-size:13px; font-weight:700; color:#60a5fa;">-</span></div>
+                    <div style="text-align:right;"><span style="font-size:11px; color:var(--teks-sekunder); font-weight:700;">🤲 Doa Terakhir</span><br><span id="infoDoa" style="font-size:13px; font-weight:700; color:#34d399;">-</span></div>
+                </div>
             </div>
         </div>
 
@@ -496,7 +527,16 @@
             </div>
             <input type="hidden" id="jenis-setoran-aktif" value="Ziyadah">
 
-            <label class="form-label">Status Kehadiran:</label>
+            <!-- SELECTOR PROGRAM MATERI HAFALAN -->
+            <label class="form-label" style="margin-top: 15px;">Program / Materi Hafalan:</label>
+            <div class="program-tabs">
+                <button type="button" id="tab-prog-quran" class="prog-tab-btn aktif-quran" onclick="pilihProgramHafalan('quran')">📖 Al-Qur'an</button>
+                <button type="button" id="tab-prog-hadits" class="prog-tab-btn" onclick="pilihProgramHafalan('hadits')">📜 Hadits</button>
+                <button type="button" id="tab-prog-doa" class="prog-tab-btn" onclick="pilihProgramHafalan('doa')">🤲 Doa & Dzikir</button>
+            </div>
+            <input type="hidden" id="program-hafalan-aktif" value="quran">
+
+            <label class="form-label" style="margin-top: 15px;">Status Kehadiran:</label>
             <div class="absensi-group">
                 <label><input type="radio" name="kehadiran" value="Hadir" checked onchange="toggleFormSetoran()"> Hadir</label>
                 <label><input type="radio" name="kehadiran" value="Sakit" onchange="toggleFormSetoran()"> Sakit</label>
@@ -506,46 +546,103 @@
 
             <div id="area-form-setoran" style="transition: all 0.3s ease;">
                 
-                <div style="margin-bottom: 25px; border-bottom: 1px dashed var(--border-halus); padding-bottom: 15px;">
-                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
-                        <label class="form-label-small" style="margin:0;">Pencapaian Juz (Ketuk untuk centang):</label>
-                        <div style="font-size:12px; color:var(--teks-dalam-tombol); font-weight:800; background:var(--warna-input-aktif); padding:4px 10px; border-radius:20px; transition: all 0.3s;">
-                            Total: <span id="total-juz-teks">0</span>
+                <!-- WADAH MATERI AL-QUR'AN -->
+                <div id="wadah-materi-quran">
+                    <div style="margin-bottom: 25px; border-bottom: 1px dashed var(--border-halus); padding-bottom: 15px;">
+                        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+                            <label class="form-label-small" style="margin:0;">Pencapaian Juz (Ketuk untuk centang):</label>
+                            <div style="font-size:12px; color:var(--teks-dalam-tombol); font-weight:800; background:var(--warna-input-aktif); padding:4px 10px; border-radius:20px; transition: all 0.3s;">
+                                Total: <span id="total-juz-teks">0</span>
+                            </div>
+                        </div>
+                        <div class="grid-juz-30" id="muhaffiz-grid-juz-30"></div>
+                        <input type="hidden" id="input-juz-hidden" value="">
+                    </div>
+
+                    <div style="margin-bottom: 15px;">
+                        <label class="form-label-small" style="margin-bottom:8px;">Materi Setoran (Surah & Ayat):</label>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 10px;">
+                            <div>
+                                <div style="font-size:11px; color:var(--teks-sekunder); font-weight:700; margin-bottom:4px; text-transform:uppercase;">Surah Awal</div>
+                                <select id="input-surah" onchange="updateMateriUI()" style="font-weight: 700; margin:0;"><option value="">-- Mulai --</option></select>
+                            </div>
+                            <div>
+                                <div style="font-size:11px; color:var(--teks-sekunder); font-weight:700; margin-bottom:4px; text-transform:uppercase;">Surah Akhir (Opsional)</div>
+                                <select id="input-surah-akhir" onchange="updateMateriUI()" style="font-weight: 700; margin:0;"><option value="">-- Sampai --</option></select>
+                            </div>
+                        </div>
+
+                        <div id="wadah-ayat" class="grid-ayat">
+                            <div>
+                                <div style="font-size:11px; color:var(--teks-sekunder); font-weight:700; margin-bottom:4px; text-transform:uppercase;">Ayat Awal</div>
+                                <select id="input-ayat-awal" style="font-weight: 700; text-align: center; margin:0;"><option value="">-</option></select>
+                            </div>
+                            <div>
+                                <div style="font-size:11px; color:var(--teks-sekunder); font-weight:700; margin-bottom:4px; text-transform:uppercase;">Ayat Akhir</div>
+                                <select id="input-ayat-akhir" style="font-weight: 700; text-align: center; margin:0;"><option value="">-</option></select>
+                            </div>
                         </div>
                     </div>
-                    <div class="grid-juz-30" id="muhaffiz-grid-juz-30"></div>
-                    <input type="hidden" id="input-juz-hidden" value="">
                 </div>
 
-                <div style="margin-bottom: 15px;">
-                    <label class="form-label-small" style="margin-bottom:8px;">Materi Setoran (Surah & Ayat):</label>
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 10px;">
-                        <div>
-                            <div style="font-size:11px; color:var(--teks-sekunder); font-weight:700; margin-bottom:4px; text-transform:uppercase;">Surah Awal</div>
-                            <select id="input-surah" onchange="updateMateriUI()" style="font-weight: 700; margin:0;"><option value="">-- Mulai --</option></select>
-                        </div>
-                        <div>
-                            <div style="font-size:11px; color:var(--teks-sekunder); font-weight:700; margin-bottom:4px; text-transform:uppercase;">Surah Akhir (Opsional)</div>
-                            <select id="input-surah-akhir" onchange="updateMateriUI()" style="font-weight: 700; margin:0;"><option value="">-- Sampai --</option></select>
+                <!-- WADAH MATERI HADITS -->
+                <div id="wadah-materi-hadits" class="hidden">
+                    <div style="margin-bottom: 15px; background: rgba(59, 130, 246, 0.05); padding: 16px; border-radius: 16px; border: 1px solid rgba(59, 130, 246, 0.2);">
+                        <label class="form-label-small" style="margin-bottom: 6px; color: #60a5fa;">1. Pilih Kitab Hadits:</label>
+                        <select id="input-kitab-hadits" onchange="updateKitabHaditsUI()" style="font-weight: 700; border-color: rgba(59, 130, 246, 0.4);"></select>
+                        <input type="text" id="input-kitab-hadits-manual" class="hidden" placeholder="Ketik nama kitab hadits..." style="margin-top: 8px;">
+
+                        <label class="form-label-small" style="margin-top: 12px; margin-bottom: 6px; color: #60a5fa;">2. Pilih Nomor & Tema Hadits:</label>
+                        <select id="input-nomor-hadits" onchange="updateDetailHaditsUI()" style="font-weight: 700; border-color: rgba(59, 130, 246, 0.4);"></select>
+                        <input type="text" id="input-nomor-hadits-manual" class="hidden" placeholder="Misal: Hadits No. 1 tentang Niat..." style="margin-top: 8px;">
+
+                        <!-- PREVIEW MATAN & TOMBOL REFERENSI -->
+                        <div id="kartu-preview-hadits" class="materi-preview-card" style="margin-top: 14px;">
+                            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 8px;">
+                                <span style="font-size: 11px; font-weight: 800; color: #60a5fa; text-transform: uppercase;">📜 Preview Teks Hadits:</span>
+                                <span id="label-perawi-hadits" style="font-size: 11px; color: var(--teks-sekunder); font-style: italic;">HR. Bukhari & Muslim</span>
+                            </div>
+                            <div id="preview-teks-hadits-arab" class="teks-arab-box">إِنَّمَا الْأَعْمَالُ بِالنِّيَّاتِ...</div>
+                            <div id="preview-teks-hadits-arti" class="teks-arti-box">"Sesungguhnya setiap amalan tergantung pada niatnya..."</div>
+                            <div style="display:flex; gap: 8px; margin-top: 12px; flex-wrap: wrap;">
+                                <button type="button" class="btn-kecil" style="flex:1; background: linear-gradient(135deg, #2563eb, #1d4ed8); color: white; border: none; padding: 10px;" onclick="bukaModalReferensiTeks('hadits')">📖 Teks Arab & Arti Lengkap</button>
+                                <button type="button" class="btn-kecil" style="background: rgba(255,255,255,0.08); color: #93c5fd; border: 1px solid rgba(59,130,246,0.3); padding: 10px 14px;" onclick="bukaLinkReferensi('hadits')">🔗 Link Web / PDF</button>
+                            </div>
                         </div>
                     </div>
+                </div>
 
-                    <div id="wadah-ayat" class="grid-ayat">
-                        <div>
-                            <div style="font-size:11px; color:var(--teks-sekunder); font-weight:700; margin-bottom:4px; text-transform:uppercase;">Ayat Awal</div>
-                            <select id="input-ayat-awal" style="font-weight: 700; text-align: center; margin:0;"><option value="">-</option></select>
-                        </div>
-                        <div>
-                            <div style="font-size:11px; color:var(--teks-sekunder); font-weight:700; margin-bottom:4px; text-transform:uppercase;">Ayat Akhir</div>
-                            <select id="input-ayat-akhir" style="font-weight: 700; text-align: center; margin:0;"><option value="">-</option></select>
+                <!-- WADAH MATERI DOA & DZIKIR -->
+                <div id="wadah-materi-doa" class="hidden">
+                    <div style="margin-bottom: 15px; background: rgba(16, 185, 129, 0.05); padding: 16px; border-radius: 16px; border: 1px solid rgba(16, 185, 129, 0.2);">
+                        <label class="form-label-small" style="margin-bottom: 6px; color: #34d399;">1. Pilih Kategori Doa / Dzikir:</label>
+                        <select id="input-kategori-doa" onchange="updateKategoriDoaUI()" style="font-weight: 700; border-color: rgba(16, 185, 129, 0.4);"></select>
+                        <input type="text" id="input-kategori-doa-manual" class="hidden" placeholder="Ketik kategori doa..." style="margin-top: 8px;">
+
+                        <label class="form-label-small" style="margin-top: 12px; margin-bottom: 6px; color: #34d399;">2. Pilih Nama Doa / Dzikir:</label>
+                        <select id="input-nama-doa" onchange="updateDetailDoaUI()" style="font-weight: 700; border-color: rgba(16, 185, 129, 0.4);"></select>
+                        <input type="text" id="input-nama-doa-manual" class="hidden" placeholder="Misal: Doa Masuk Kamar Mandi..." style="margin-top: 8px;">
+
+                        <!-- PREVIEW MATAN & TOMBOL REFERENSI -->
+                        <div id="kartu-preview-doa" class="materi-preview-card" style="margin-top: 14px;">
+                            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 8px;">
+                                <span style="font-size: 11px; font-weight: 800; color: #34d399; text-transform: uppercase;">🤲 Preview Teks Doa / Dzikir:</span>
+                                <span id="label-info-doa" style="font-size: 11px; color: var(--teks-sekunder); font-style: italic;">Shahih / Sunnah</span>
+                            </div>
+                            <div id="preview-teks-doa-arab" class="teks-arab-box">بِاسْمِكَ اللّٰهُمَّ أَحْيَا وَأَمُوتُ</div>
+                            <div id="preview-teks-doa-arti" class="teks-arti-box">"Dengan nama-Mu ya Allah, aku hidup dan aku mati."</div>
+                            <div style="display:flex; gap: 8px; margin-top: 12px; flex-wrap: wrap;">
+                                <button type="button" class="btn-kecil" style="flex:1; background: linear-gradient(135deg, #059669, #047857); color: white; border: none; padding: 10px;" onclick="bukaModalReferensiTeks('doa')">🤲 Teks Arab & Arti Lengkap</button>
+                                <button type="button" class="btn-kecil" style="background: rgba(255,255,255,0.08); color: #6ee7b7; border: 1px solid rgba(16,185,129,0.3); padding: 10px 14px;" onclick="bukaLinkReferensi('doa')">🔗 Link Web / PDF</button>
+                            </div>
                         </div>
                     </div>
                 </div>
 
                 <div style="background: var(--bg-elemen); padding: 10px 20px; border-radius: 16px; margin-top: 20px; border: 1px solid var(--border-halus);">
-                    <div class="rating-container"><span class="rating-label">Tajwid:</span><div class="rating"><input type="radio" id="star5-tajwid" name="tajwid" value="5"><label for="star5-tajwid">★</label><input type="radio" id="star4-tajwid" name="tajwid" value="4"><label for="star4-tajwid">★</label><input type="radio" id="star3-tajwid" name="tajwid" value="3"><label for="star3-tajwid">★</label><input type="radio" id="star2-tajwid" name="tajwid" value="2"><label for="star2-tajwid">★</label><input type="radio" id="star1-tajwid" name="tajwid" value="1"><label for="star1-tajwid">★</label></div></div>
-                    <div class="rating-container"><span class="rating-label">Kelancaran:</span><div class="rating"><input type="radio" id="star5-lancar" name="lancar" value="5"><label for="star5-lancar">★</label><input type="radio" id="star4-lancar" name="lancar" value="4"><label for="star4-lancar">★</label><input type="radio" id="star3-lancar" name="lancar" value="3"><label for="star3-lancar">★</label><input type="radio" id="star2-lancar" name="lancar" value="2"><label for="star2-lancar">★</label><input type="radio" id="star1-lancar" name="lancar" value="1"><label for="star1-lancar">★</label></div></div>
-                    <div class="rating-container"><span class="rating-label">Makhraj:</span><div class="rating"><input type="radio" id="star5-makhraj" name="makhraj" value="5"><label for="star5-makhraj">★</label><input type="radio" id="star4-makhraj" name="makhraj" value="4"><label for="star4-makhraj">★</label><input type="radio" id="star3-makhraj" name="makhraj" value="3"><label for="star3-makhraj">★</label><input type="radio" id="star2-makhraj" name="makhraj" value="2"><label for="star2-makhraj">★</label><input type="radio" id="star1-makhraj" name="makhraj" value="1"><label for="star1-makhraj">★</label></div></div>
+                    <div class="rating-container"><span class="rating-label" id="label-rating-1">Tajwid:</span><div class="rating"><input type="radio" id="star5-tajwid" name="tajwid" value="5"><label for="star5-tajwid">★</label><input type="radio" id="star4-tajwid" name="tajwid" value="4"><label for="star4-tajwid">★</label><input type="radio" id="star3-tajwid" name="tajwid" value="3"><label for="star3-tajwid">★</label><input type="radio" id="star2-tajwid" name="tajwid" value="2"><label for="star2-tajwid">★</label><input type="radio" id="star1-tajwid" name="tajwid" value="1"><label for="star1-tajwid">★</label></div></div>
+                    <div class="rating-container"><span class="rating-label" id="label-rating-2">Kelancaran:</span><div class="rating"><input type="radio" id="star5-lancar" name="lancar" value="5"><label for="star5-lancar">★</label><input type="radio" id="star4-lancar" name="lancar" value="4"><label for="star4-lancar">★</label><input type="radio" id="star3-lancar" name="lancar" value="3"><label for="star3-lancar">★</label><input type="radio" id="star2-lancar" name="lancar" value="2"><label for="star2-lancar">★</label><input type="radio" id="star1-lancar" name="lancar" value="1"><label for="star1-lancar">★</label></div></div>
+                    <div class="rating-container"><span class="rating-label" id="label-rating-3">Makhraj:</span><div class="rating"><input type="radio" id="star5-makhraj" name="makhraj" value="5"><label for="star5-makhraj">★</label><input type="radio" id="star4-makhraj" name="makhraj" value="4"><label for="star4-makhraj">★</label><input type="radio" id="star3-makhraj" name="makhraj" value="3"><label for="star3-makhraj">★</label><input type="radio" id="star2-makhraj" name="makhraj" value="2"><label for="star2-makhraj">★</label><input type="radio" id="star1-makhraj" name="makhraj" value="1"><label for="star1-makhraj">★</label></div></div>
                 </div>
 
                 <div style="margin-top: 25px;">
@@ -652,9 +749,460 @@
         </div>
     </div>
 
+    <!-- MODAL REFERENSI MATERI (TEKS ARAB & TERJEMAH + LINK REFERENSI) -->
+    <div id="modal-referensi-materi" class="modal-overlay hidden">
+        <div class="modal-content modal-content-large" style="padding: 24px; max-width: 650px;">
+            <div class="modal-header" style="margin-bottom: 12px;">
+                <h3 id="modal-ref-judul" style="color: var(--tema-warna); margin: 0; border: none; font-size: 20px; display: flex; align-items: center; gap: 8px;">
+                    <span id="modal-ref-ikon">📖</span> <span id="modal-ref-judul-teks">Referensi Teks</span>
+                </h3>
+                <button class="close-btn" onclick="tutupModalReferensiTeks()">×</button>
+            </div>
+            
+            <div style="font-size: 13px; color: var(--teks-sekunder); margin-bottom: 14px; font-weight: 600;" id="modal-ref-subjudul">-</div>
+            
+            <div style="background: rgba(0,0,0,0.3); border-radius: 14px; padding: 18px; border: 1px solid var(--border-halus); margin-bottom: 14px;">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 8px;">
+                    <span style="font-size: 11px; text-transform:uppercase; color:var(--tema-warna); font-weight:800; letter-spacing:0.5px;">Matan / Teks Arab:</span>
+                    <button type="button" class="btn-kecil" style="padding: 4px 10px; font-size: 11px; background: rgba(255,255,255,0.06); border: 1px solid var(--border-halus); color: var(--teks-sekunder);" onclick="salinTeksArab()">📋 Salin Arab</button>
+                </div>
+                <div class="teks-arab-box" id="modal-ref-teks-arab" style="font-size: 26px; line-height: 2.2; max-height: 260px; overflow-y: auto; padding: 12px 16px; text-align: right;"></div>
+            </div>
+
+            <div style="background: rgba(0,0,0,0.2); border-radius: 14px; padding: 14px 18px; border: 1px solid var(--border-halus); margin-bottom: 18px;">
+                <div style="font-size: 11px; text-transform:uppercase; color:var(--teks-sekunder); font-weight:800; letter-spacing:0.5px; margin-bottom: 6px;">Terjemah / Arti:</div>
+                <div class="teks-arti-box" id="modal-ref-teks-arti" style="font-size: 14px; line-height: 1.6; max-height: 180px; overflow-y: auto; color: var(--teks-utama); font-style: italic;"></div>
+            </div>
+
+            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap: wrap; gap: 10px; border-top: 1px dashed var(--border-halus); padding-top: 15px;">
+                <button type="button" class="btn-outline" style="width: auto; padding: 10px 18px; font-size: 13px;" onclick="salinSemuaReferensi()">📋 Salin Teks & Arti</button>
+                <div style="display: flex; gap: 8px;">
+                    <button type="button" class="btn-kecil" id="modal-ref-btn-link" style="width: auto; padding: 10px 18px; font-size: 13px; background: linear-gradient(135deg, var(--tema-warna), var(--tema-gelap)); color: var(--teks-dalam-tombol); border:none; font-weight: 800;" onclick="bukaLinkReferensiDariModal()">🌐 Buka Link / PDF</button>
+                    <button type="button" class="btn-batal" style="width: auto; padding: 10px 18px; font-size: 13px; color: white;" onclick="tutupModalReferensiTeks()">Tutup</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script>
         // --- ⚠️ URL GOOGLE APPS SCRIPT ANTUM ---
         const scriptURL = 'https://script.google.com/macros/s/AKfycbxoNJfz3VozPWYHaRn-Q0WVL5d284j3_Q8LpzprKnpiP0NTaCltDclmGrmpNbHAbRBH/exec';
+
+
+        // =========================================================
+        // --- DATASET PRESET PROGRAM HADITS & DOA / DZIKIR ---
+        // =========================================================
+        const DEFAULT_LINK_HADITS = "https://litequran.net/hadits-arbain-nawawi";
+        const DEFAULT_LINK_DOA = "https://rumaysho.com/1638-bacaan-dzikir-pagi.html";
+        let linkReferensiHadits = localStorage.getItem('bilal_link_hadits') || DEFAULT_LINK_HADITS;
+        let linkReferensiDoa = localStorage.getItem('bilal_link_doa') || DEFAULT_LINK_DOA;
+
+        let materiAktifReferensi = {
+            tipe: 'hadits',
+            judul: '',
+            subjudul: '',
+            arab: '',
+            arti: '',
+            link: ''
+        };
+
+        const DATASET_HADITS = {
+            "Arba'in An-Nawawi (42 Hadits)": [
+                { no: 1, judul: "Hadits 1: Niat dan Ikhlas", arab: "إِنَّمَا الْأَعْمَالُ بِالنِّيَّاتِ، وَإِنَّمَا لِكُلِّ امْرِئٍ مَا نَوَى", arti: "Sesungguhnya setiap amalan tergantung pada niatnya, dan setiap orang akan mendapatkan sesuai apa yang ia niatkan.", perawi: "HR. Bukhari & Muslim" },
+                { no: 2, judul: "Hadits 2: Islam, Iman, dan Ihsan (Hadits Jibril)", arab: "الْإِسْلَامُ أَنْ تَشْهَدَ أَنْ لَا إِلَهَ إِلَّا اللَّهُ وَأَنَّ مُحَمَّدًا رَسُولُ اللَّهِ، وَتُقِيمَ الصَّلَاةَ، وَتُؤْتِيَ الزَّكَاةَ، وَتَصُومَ رَمَضَانَ، وَتَحُجَّ الْبَيْتَ إِنِ اسْتَطَعْتَ إِلَيْهِ سَبِيلًا", arti: "Islam adalah engkau bersaksi tiada ilah selain Allah dan Muhammad utusan Allah, mendirikan shalat, menunaikan zakat, berpuasa Ramadhan, dan haji ke Baitullah jika mampu.", perawi: "HR. Muslim" },
+                { no: 3, judul: "Hadits 3: Rukun Islam", arab: "بُنِيَ الْإِسْلَامُ عَلَى خَمْسٍ: شَهَادَةِ أَنْ لَا إِلَهَ إِلَّا اللَّهُ وَأَنَّ مُحَمَّدًا رَسُولُ اللَّهِ، وَإِقَامِ الصَّلَاةِ، وَإِيتَاءِ الزَّكَاةِ، وَحَجِّ الْبَيْتِ، وَصَوْمِ رَمَضَانَ", arti: "Islam dibangun di atas lima perkara: syahadat tiada ilah selain Allah & Muhammad utusan Allah, mendirikan shalat, menunaikan zakat, haji, dan puasa Ramadhan.", perawi: "HR. Bukhari & Muslim" },
+                { no: 4, judul: "Hadits 4: Penciptaan Manusia & Takdir", arab: "إِنَّ أَحَدَكُمْ يُجْمَعُ خَلْقُهُ فِي بَطْنِ أُمِّهِ أَرْبَعِينَ يَوْمًا نُطْفَةً، ثُمَّ يَكُونُ عَلَقَةً مِثْلَ ذَلِكَ، ثُمَّ يَكُونُ مُضْغَةً مِثْلَ ذَلِكَ، ثُمَّ يُرْسَلُ إِلَيْهِ الْمَلَكُ فَيَنْفُخُ فِيهِ الرُّوحَ...", arti: "Sesungguhnya setiap kalian dikumpulkan penciptaannya dalam rahim ibunya selama 40 hari sebagai nuthfah, lalu 'alaqah, lalu mudhghah, kemudian diutus malaikat meniupkan ruh dan menetapkan 4 perkara: rezeki, ajal, amal, dan celaka atau bahagianya.", perawi: "HR. Bukhari & Muslim" },
+                { no: 5, judul: "Hadits 5: Larangan Berbuat Bid'ah", arab: "مَنْ أَحْدَثَ فِي أَمْرِنَا هَذَا مَا لَيْسَ فِيهِ فَهُوَ رَدٌّ", arti: "Barangsiapa membuat perkara baru dalam urusan (agama) kami ini yang tidak ada asal darinya, maka perkara tersebut tertolak.", perawi: "HR. Bukhari & Muslim" },
+                { no: 6, judul: "Hadits 6: Menjauhi Syubhat & Kebaikan Hati", arab: "إِنَّ الْحَلَالَ بَيِّنٌ وَإِنَّ الْحَرَامَ بَيِّنٌ، وَبَيْنَهُمَا أُمُورٌ مُشْتَبِهَاتٌ... أَلَا وَإِنَّ فِي الْجَسَدِ مُضْغَةً إِذَا صَلَحَتْ صَلَحَ الْجَسَدُ كُلُّهُ، وَإِذَا فَسَدَتْ فَسَدَ الْجَسَدُ كُلُّهُ، أَلَا وَهِيَ الْقَلْبُ", arti: "Sesungguhnya yang halal itu jelas dan yang haram itu jelas, dan di antara keduanya ada syubhat. Ketahuilah di dalam tubuh ada segumpal daging, jika baik maka baik seluruh tubuhnya, jika rusak maka rusak seluruhnya, ketahuilah itu adalah hati.", perawi: "HR. Bukhari & Muslim" },
+                { no: 7, judul: "Hadits 7: Agama adalah Nasihat", arab: "الدِّينُ النَّصِيحَةُ، قُلْنَا: لِمَنْ؟ قَالَ: لِلَّهِ، وَلِكِتَابِهِ، وَلِرَسُولِهِ، وَلِأَئِمَّةِ الْمُسْلِمِينَ، وَعَامَّتِهِمْ", arti: "Agama adalah nasihat. Kami bertanya: Untuk siapa? Beliau bersabda: Untuk Allah, Kitab-Nya, Rasul-Nya, para pemimpin kaum muslimin, dan kaum muslimin pada umumnya.", perawi: "HR. Muslim" },
+                { no: 8, judul: "Hadits 8: Kehormatan Darah & Harta Muslim", arab: "أُمِرْتُ أَنْ أُقَاتِلَ النَّاسَ حَتَّى يَشْهَدُوا أَنْ لَا إِلَهَ إِلَّا اللَّهُ وَأَنَّ مُحَمَّدًا رَسُولُ اللَّهِ، وَيُقِيمُوا الصَّلَاةَ، وَيُؤْتُوا الزَّكَاةَ...", arti: "Aku diperintahkan memerangi manusia hingga mereka bersaksi tiada ilah selain Allah & Muhammad utusan Allah, mendirikan shalat, dan menunaikan zakat.", perawi: "HR. Bukhari & Muslim" },
+                { no: 9, judul: "Hadits 9: Menjalankan Perintah Semampunya", arab: "مَا نَهَيْتُكُمْ عَنْهُ فَاجْتَنِبُوهُ، وَمَا أَمَرْتُكُمْ بِهِ فَأْتُوا مِنْهُ مَا اسْتَطَعْتُمْ", arti: "Apa yang aku larang maka jauhilah, dan apa yang aku perintahkan maka laksanakanlah semampu kalian.", perawi: "HR. Bukhari & Muslim" },
+                { no: 10, judul: "Hadits 10: Makanan Halal & Doa Terkabul", arab: "إِنَّ اللَّهَ تَعَالَى طَيِّبٌ لَا يَقْبَلُ إِلَّا طَيِّبًا...", arti: "Sesungguhnya Allah Ta'ala itu Maha Baik dan tidak menerima kecuali yang baik-baik.", perawi: "HR. Muslim" },
+                { no: 11, judul: "Hadits 11: Tinggalkan yang Meragukan", arab: "دَعْ مَا يَرِيبُكَ إِلَى مَا لَا يَرِيبُكَ", arti: "Tinggalkanlah apa yang meragukanmu menuju apa yang tidak meragukanmu.", perawi: "HR. Tirmidzi & An-Nasa'i" },
+                { no: 12, judul: "Hadits 12: Meninggalkan yang Tak Bermanfaat", arab: "مِنْ حُسْنِ إِسْلَامِ الْمَرْءِ تَرْكُهُ مَا لَا يَعْنِيهِ", arti: "Di antara tanda kebaikan keislaman seseorang adalah ia meninggalkan apa yang tidak bermanfaat baginya.", perawi: "HR. Tirmidzi" },
+                { no: 13, judul: "Hadits 13: Mencintai Saudara Seiman", arab: "لَا يُؤْمِنُ أَحَدُكُمْ حَتَّى يُحِبَّ لِأَخِيهِ مَا يُحِبُّ لِنَفْسِهِ", arti: "Tidak beriman salah seorang di antara kalian sampai ia mencintai bagi saudaranya apa yang ia cintai bagi dirinya sendiri.", perawi: "HR. Bukhari & Muslim" },
+                { no: 14, judul: "Hadits 14: Larangan Menumpahkan Darah Muslim", arab: "لَا يَحِلُّ دَمُ امْرِئٍ مُسْلِمٍ إِلَّا بِإِحْدَى ثَلَاثٍ: الثَّيِّبُ الزَّانِي، وَالنَّفْسُ بِالنَّفْسِ، وَالتَّارِكُ لِدِينِهِ الْمُفَارِقُ لِلْجَمَاعَةِ", arti: "Tidak halal darah seorang muslim kecuali karena satu dari tiga sebab: pezina mukhshan, membunuh jiwa, dan orang murtad meninggalkan jamaah.", perawi: "HR. Bukhari & Muslim" },
+                { no: 15, judul: "Hadits 15: Berkata Baik, Muliakan Tamu & Tetangga", arab: "مَنْ كَانَ يُؤْمِنُ بِاللَّهِ وَالْيَوْمِ الْآخِرِ فَلْيَقُلْ خَيْرًا أَوْ لِيَصْمُتْ، وَمَنْ كَانَ يُؤْمِنُ بِاللَّهِ وَالْيَوْمِ الْآخِرِ فَلْيُكْرِمْ جَارَهُ، وَمَنْ كَانَ يُؤْمِنُ بِاللَّهِ وَالْيَوْمِ الْآخِرِ فَلْيُكْرِمْ ضَيْفَهُ", arti: "Barangsiapa beriman kepada Allah dan hari akhir, hendaklah berkata baik atau diam; muliakan tetangganya; dan muliakan tamunya.", perawi: "HR. Bukhari & Muslim" },
+                { no: 16, judul: "Hadits 16: Larangan Marah", arab: "لَا تَغْضَبْ، فَرَدَّدَ مِرَارًا، قَالَ: لَا تَغْضَبْ", arti: "Jangan marah! Beliau mengulanginya beberapa kali: Jangan marah!", perawi: "HR. Bukhari" },
+                { no: 17, judul: "Hadits 17: Wajib Ihsan dalam Segala Hal", arab: "إِنَّ اللَّهَ كَتَبَ الْإِحْسَانَ عَلَى كُلِّ شَيْءٍ، فَإِذَا قَتَلْتُمْ فَأَحْسِنُوا الْقِتْلَةَ، وَإِذَا ذَبَحْتُمْ فَأَحْسِنُوا الذَّبْحَ، وَلْيُحِدَّ أَحَدُكُمْ شَفْرَتَهُ، وَلْيُرِحْ ذَبِيحَتَهُ", arti: "Sesungguhnya Allah mewajibkan berlaku ihsan pada segala perkara. Maka bila menyembelih, tajamkan pisaumu dan tenangkan sembelihanmu.", perawi: "HR. Muslim" },
+                { no: 18, judul: "Hadits 18: Bertaqwa & Berakhlak Mulia", arab: "اتَّقِ اللَّهَ حَيْثُمَا كُنْتَ، وَأَتْبِعِ السَّيِّئَةَ الْحَسَنَةَ تَمْحُهَا، وَخَالِقِ النَّاسَ بِخُلُقٍ حَسَنٍ", arti: "Bertaqwalah kepada Allah di manapun engkau berada, iringilah keburukan dengan kebaikan niscaya menghapusnya, dan pergauililah manusia dengan akhlak mulia.", perawi: "HR. Tirmidzi" },
+                { no: 19, judul: "Hadits 19: Menjaga Batasan Allah (Wasiat Ibnu Abbas)", arab: "احْفَظِ اللَّهَ يَحْفَظْكَ، احْفَظِ اللَّهَ تَجِدْهُ تُجَاهَكَ، إِذَا سَأَلْتَ فَاسْأَلِ اللَّهَ، وَإِذَا اسْتَعَنْتَ فَاسْتَعِنْ بِاللَّهِ", arti: "Jagalah Allah niscaya Dia menjagamu. Jagalah Allah niscaya engkau mendapati-Nya di hadapanmu. Bila meminta mintalah kepada Allah, bila memohon pertolongan mohonlah kepada Allah.", perawi: "HR. Tirmidzi" },
+                { no: 20, judul: "Hadits 20: Malu Sebagian dari Iman", arab: "إِنَّ مِمَّا أَدْرَكَ النَّاسُ مِنْ كَلَامِ النُّبُوَّةِ الْأُولَى: إِذَا لَمْ تَسْتَحْيِ فَاصْنَعْ مَا شِئْتَ", arti: "Di antara warisan kenabian pertama yang ditemui manusia: Jika engkau tidak malu, maka berbuatlah sesukamu.", perawi: "HR. Bukhari" },
+                { no: 21, judul: "Hadits 21: Beriman lalu Istiqomah", arab: "قُلْتُ: يَا رَسُولَ اللَّهِ، قُلْ لِي فِي الْإِسْلَامِ قَوْلًا لَا أَسْأَلُ عَنْهُ أَحَدًا غَيْرَكَ. قَالَ: قُلْ: آمَنْتُ بِاللَّهِ ثُمَّ اسْتَقِمْ", arti: "Katakanlah: Aku beriman kepada Allah, kemudian istiqomahlah.", perawi: "HR. Muslim" },
+                { no: 22, judul: "Hadits 22: Kunci Masuk Surga", arab: "أَرَأَيْتَ إِذَا صَلَّيْتُ الْمَكْتُوبَاتِ، وَصُمْتُ رَمَضَانَ، وَأَحْلَلْتُ الْحَلَالَ، وَحَرَّمْتُ الْحَرَامَ، وَلَمْ أَزِدْ عَلَى ذَلِكَ شَيْئًا، أَأَدْخُلُ الْجَنَّةَ؟ قَالَ: نَعَمْ", arti: "Jika aku shalat lima waktu, puasa Ramadhan, menghalalkan yang halal, mengharamkan yang haram tanpa menambah apapun, apakah aku masuk surga? Beliau menjawab: Ya.", perawi: "HR. Muslim" },
+                { no: 23, judul: "Hadits 23: Bersuci & Keutamaan Dzikir", arab: "الطُّهُورُ شَطْرُ الْإِيمَانِ، وَالْحَمْدُ لِلَّهِ تَمْلَأُ الْمِيزَانَ، وَسُبْحَانَ اللَّهِ وَالْحَمْدُ لِلَّهِ تَمْلَآنِ مَا بَيْنَ السَّمَاءِ وَالْأَرْضِ...", arti: "Bersuci sebagian dari iman, alhamdulillah memenuhi timbangan, subhanallah wal hamdulillah memenuhi antara langit dan bumi, shalat adalah cahaya, sedekah adalah bukti, sabar adalah lentera, dan Al-Qur'an adalah pembela atau penuntutmu.", perawi: "HR. Muslim" },
+                { no: 24, judul: "Hadits 24: Keharaman Berbuat Zhalim (Hadits Qudsi)", arab: "يَا عِبَادِي إِنِّي حَرَّمْتُ الظُّلْمَ عَلَى نَفْسِي وَجَعَلْتُهُ بَيْنَكُمْ مُحَرَّمًا فَلَا تَظَالَمُوا...", arti: "Wahai hamba-Ku, sesungguhnya Aku mengharamkan kezhaliman atas diri-Ku dan menjadikannya haram di antara kalian, maka janganlah saling menzhalimi.", perawi: "HR. Muslim" },
+                { no: 25, judul: "Hadits 25: Luasnya Pintu Sedekah", arab: "إِنَّ بِكُلِّ تَسْبِيحَةٍ صَدَقَةً، وَكُلِّ تَكْبِيرَةٍ صَدَقَةً، وَكُلِّ تَحْمِيدَةٍ صَدَقَةً، وَكُلِّ تَهْلِيلَةٍ صَدَقَةً، وَأَمْرٌ بِالْمَعْرُوفِ صَدَقَةٌ، وَنَهْيٌ عَنْ مُنْكَرٍ صَدَقَةٌ...", arti: "Setiap tasbih adalah sedekah, setiap takbir sedekah, tahmid sedekah, tahlil sedekah, amar ma'ruf nahi munkar adalah sedekah.", perawi: "HR. Muslim" },
+                { no: 26, judul: "Hadits 26: Sedekah Persendian (Amal Sosial)", arab: "كُلُّ سُلَامَى مِنَ النَّاسِ عَلَيْهِ صَدَقَةٌ كُلَّ يَوْمٍ تَطْلُعُ فِيهِ الشَّمْسُ: تَعْدِلُ بَيْنَ الِاثْنَيْنِ صَدَقَةٌ، وَتُعِينُ الرَّجُلَ فِي دَابَّتِهِ صَدَقَةٌ...", arti: "Setiap persendian wajib disedekahi: mendamaikan dua orang adalah sedekah, menolong orang naik kendaraan sedekah, kata yang baik sedekah, langkah ke shalat sedekah, menyingkirkan gangguan dari jalan sedekah.", perawi: "HR. Bukhari & Muslim" },
+                { no: 27, judul: "Hadits 27: Hakikat Kebaikan dan Dosa", arab: "الْبِرُّ حُسْنُ الْخُلُقِ، وَالْإِثْمُ مَا حَاكَ فِي نَفْسِكَ وَكَرِهْتَ أَنْ يَطَّلِعَ عَلَيْهِ النَّاسُ", arti: "Kebajikan itu akhlak yang baik, sedangkan dosa adalah apa yang mengganjal dalam dadamu dan engkau benci bila diketahui orang lain.", perawi: "HR. Muslim" },
+                { no: 28, judul: "Hadits 28: Berpegang Teguh pada Sunnah", arab: "عَلَيْكُمْ بِسُنَّتِي وَسُنَّةِ الْخُلَفَاءِ الرَّاشِدِينَ الْمَهْدِيِّينَ مِنْ بَعْدِي، عَضُّوا عَلَيْهَا بِالنَّوَاجِذِ...", arti: "Wajib atas kalian berpegang pada sunnahku dan sunnah Khulafaur Rasyidin yang terbimbing setelahku, gigitlah ia dengan gigi geraham.", perawi: "HR. Abu Dawud & Tirmidzi" },
+                { no: 29, judul: "Hadits 29: Pintu-Pintu Kebaikan", arab: "أَلَا أَدُلُّكَ عَلَى أَبْوَابِ الْخَيْرِ؟ الصَّوْمُ جُنَّةٌ، وَالصَّدَقَةُ تُطْفِئُ الْخَطِيئَةَ كَمَا يُطْفِئُ الْمَاءُ النَّارَ، وَصَلَاةُ الرَّجُلِ فِي جَوْفِ اللَّيْلِ", arti: "Maukah kutunjukkan pintu kebaikan? Puasa adalah perisai, sedekah memadamkan dosa laksana air memadamkan api, dan shalat malam seseorang di keheningan.", perawi: "HR. Tirmidzi" },
+                { no: 30, judul: "Hadits 30: Menjaga Batas-Batas Syariat Allah", arab: "إِنَّ اللَّهَ فَرَضَ فَرَائِضَ فَلَا تُضَيِّعُوهَا، وَحَدَّ حُدُودًا فَلَا تَعْتَدُوهَا، وَحَرَّمَ أَشْيَاءَ فَلَا تَنْتَهِكُوهَا...", arti: "Sesungguhnya Allah mewajibkan hal fardhu maka jangan sia-siakan, menentukan batas-batas maka jangan lampaui, dan mengharamkan larangan maka jangan terjang.", perawi: "HR. Ad-Daraquthni" },
+                { no: 31, judul: "Hadits 31: Hakikat Zuhud", arab: "ازْهَدْ فِي الدُّنْيَا يُحِبَّكَ اللَّهُ، وَازْهَدْ فِيمَا فِي أَيْدِي النَّاسِ يُحِبَّكَ النَّاسُ", arti: "Zuhudlah terhadap dunia niscaya Allah mencintaimu, dan zuhudlah terhadap apa yang di tangan manusia niscaya manusia mencintaimu.", perawi: "HR. Ibnu Majah" },
+                { no: 32, judul: "Hadits 32: Larangan Menimbulkan Bahaya (Dharar)", arab: "لَا ضَرَرَ وَلَا ضِرَارَ", arti: "Tidak boleh membahayakan diri sendiri dan tidak boleh membahayakan orang lain.", perawi: "HR. Ibnu Majah & Malik" },
+                { no: 33, judul: "Hadits 33: Kaidah Pembuktian Perkara Hukum", arab: "الْبَيِّنَةُ عَلَى الْمُدَّعِي، وَالْيَمِينُ عَلَى مَنْ أَنْكَرَ", arti: "Bukti wajib bagi yang menuduh/mendakwa, dan sumpah wajib bagi yang mengingkari.", perawi: "HR. Al-Baihaqi" },
+                { no: 34, judul: "Hadits 34: Mengubah Kemungkaran", arab: "مَنْ رَأَى مِنْكُمْ مُنْكَرًا فَلْيُغَيِّرْهُ بِيَدِهِ، فَإِنْ لَمْ يَسْتَطِعْ فَبِلِسَانِهِ، فَإِنْ لَمْ يَسْتَطِعْ فَبِقَلْبِهِ، وَذَلِكَ أَضْعَفُ الْإِيمَانِ", arti: "Siapa melihat kemungkaran hendaklah mengubah dengan tangannya; jika tak sanggup maka lisannya; jika tak sanggup maka hatinya, dan itulah selemah-lemah iman.", perawi: "HR. Muslim" },
+                { no: 35, judul: "Hadits 35: Ukhuwah Islamiyah & Larangan Hasad", arab: "لَا تَحَاسَدُوا، وَلَا تَنَاجَشُوا، وَلَا تَبَاغَضُوا، وَلَا تَدَابَرُوا، وَكُونُوا عِبَادَ اللَّهِ إِخْوَانًا، الْمُسْلِمُ أَخُو الْمُسْلِمِ...", arti: "Jangan saling hasad, jangan saling menipu, jangan saling membenci, jangan saling membelakangi. Jadilah hamba Allah yang bersaudara. Muslim saudara bagi muslim lainnya.", perawi: "HR. Muslim" },
+                { no: 36, judul: "Hadits 36: Membantu Kesusahan & Mencari Ilmu", arab: "مَنْ نَفَّسَ عَنْ مُؤْمِنٍ كُرْبَةً مِنْ كُرَبِ الدُّنْيَا نَفَّسَ اللَّهُ عَنْهُ كُرْبَةً مِنْ كُرَبِ يَوْمِ الْقِيَامَةِ، وَمَنْ سَلَكَ طَرِيقًا يَلْتَمِسُ فِيهِ عِلْمًا سَهَّلَ اللَّهُ لَهُ بِهِ طَرِيقًا إِلَى الْجَنَّةِ...", arti: "Siapa melapangkan satu kesulitan dunia saudaranya niscaya Allah lapangkan kesulitannya di kiamat. Siapa menempuh jalan mencari ilmu Allah mudahkan jalan ke surga.", perawi: "HR. Muslim" },
+                { no: 37, judul: "Hadits 37: Kebaikan Dibalas Berlipat Ganda", arab: "إِنَّ اللَّهَ كَتَبَ الْحَسَنَاتِ وَالسَّيِّئَاتِ ثُمَّ بَيَّنَ ذَلِكَ: فَمَنْ هَمَّ بِحَسَنَةٍ فَلَمْ يَعْمَلْهَا كَتَبَهَا اللَّهُ عِنْدَهُ حَسَنَةً كَامِلَةً...", arti: "Jika seorang berniat kebaikan lalu tak mengerjakannya, Allah catat satu kebaikan utuh baginya; bila diamalkan, Allah lipatgandakan 10 hingga 700 kali lipat bahkan lebih.", perawi: "HR. Bukhari & Muslim" },
+                { no: 38, judul: "Hadits 38: Wali Allah & Cinta Sunnah", arab: "مَنْ عَادَى لِي وَلِيًّا فَقَدْ آذَنْتُهُ بِالْحَرْبِ، وَمَا تَقَرَّبَ إِلَيَّ عَبْدِي بِشَيْءٍ أَحَبَّ إِلَيَّ مِمَّا افْتَرَضْتُهُ عَلَيْهِ...", arti: "Siapa memusuhi wali-Ku, Kuma'lumkan perang padanya. Dan tidaklah hamba-Ku mendekatkan diri pada-Ku dengan sesuatu yang lebih Kucintai daripada yang Kuwajibkan atasnya.", perawi: "HR. Bukhari" },
+                { no: 39, judul: "Hadits 39: Dimaafkan Kekeliruan & Kelupaan", arab: "إِنَّ اللَّهَ تَجَاوَزَ لِي عَنْ أُمَّتِي الْخَطَأَ وَالنِّسْيَانَ وَمَا اسْتُكْرِهُوا عَلَيْهِ", arti: "Sesungguhnya Allah memaafkan bagi umatku kesalahan karena kekeliruan tak sengaja, kelupaan, dan apa yang dipaksakan kepadanya.", perawi: "HR. Ibnu Majah & Al-Baihaqi" },
+                { no: 40, judul: "Hadits 40: Hidup Laksana Pengembara", arab: "كُنْ فِي الدُّنْيَا كَأَنَّكَ غَرِيبٌ أَوْ عَابِرُ سَبِيلٍ", arti: "Jadilah engkau di dunia laksana orang asing atau seorang pengembara.", perawi: "HR. Bukhari" },
+                { no: 41, judul: "Hadits 41: Menundukkan Hawa Nafsu", arab: "لَا يُؤْمِنُ أَحَدُكُمْ حَتَّى يَكُونَ هَوَاهُ تَبَعًا لِمَا جِئْتُ بِهِ", arti: "Tidak beriman seseorang hingga hawa nafsunya tunduk mengikuti apa yang aku bawa.", perawi: "HR. Al-Baghawi" },
+                { no: 42, judul: "Hadits 42: Luasnya Ampunan Allah", arab: "يَا ابْنَ آدَمَ إِنَّكَ مَا دَعَوْتَنِي وَرَجَوْتَنِي غَفَرْتُ لَكَ عَلَى مَا كَانَ فِيكَ وَلَا أُبَالِي...", arti: "Wahai anak Adam, selama engkau berdoa dan berharap kepada-Ku niscaya Kuampuni dosa yang ada padamu dan Aku tidak peduli sebanyak apapun.", perawi: "HR. Tirmidzi" }
+            ],
+            "Hadits Akhlak & Adab Pilihan": [
+                { no: 1, judul: "Keutamaan Menuntut Ilmu", arab: "طَلَبُ الْعِلْمِ فَرِيضَةٌ عَلَى كُلِّ مُسْلِمٍ", arti: "Menuntut ilmu itu wajib atas setiap muslim.", perawi: "HR. Ibnu Majah" },
+                { no: 2, judul: "Sebaik-baik Manusia Belajar & Mengajar Al-Qur'an", arab: "خَيْرُكُمْ مَنْ تَعَلَّمَ الْقُرْآنَ وَعَلَّمَهُ", arti: "Sebaik-baik kalian adalah orang yang belajar Al-Qur'an dan mengajarkannya.", perawi: "HR. Bukhari" },
+                { no: 3, judul: "Senyum adalah Sedekah", arab: "تَبَسُّمُكَ فِي وَجْهِ أَخِيكَ لَكَ صَدَقَةٌ", arti: "Senyummu di hadapan saudaramu adalah sedekah bagimu.", perawi: "HR. Tirmidzi" },
+                { no: 4, judul: "Menjaga Lisan dan Tangan", arab: "الْمُسْلِمُ مَنْ سَلِمَ الْمُسْلِمُونَ مِنْ لِسَانِهِ وَيَدِهِ", arti: "Seorang muslim sejati adalah yang kaum muslimin selamat dari lisan dan tangannya.", perawi: "HR. Bukhari & Muslim" },
+                { no: 5, judul: "Kebaikan itu Sedekah", arab: "كُلُّ مَعْرُوفٍ صَدَقَةٌ", arti: "Setiap perkara yang baik adalah sedekah.", perawi: "HR. Bukhari & Muslim" },
+                { no: 6, judul: "Menyayangi yang Muda & Hormati yang Tua", arab: "لَيْسَ مِنَّا مَنْ لَمْ يَرْحَمْ صَغِيرَنَا وَيَعْرِفْ شَرَفَ كَبِيرِنَا", arti: "Bukan termasuk golongan kami orang yang tak menyayangi yang muda dan tak mengerti kehormatan yang tua.", perawi: "HR. Tirmidzi" },
+                { no: 7, judul: "Kebersihan Sebagian dari Iman", arab: "النَّظَافَةُ تَدْعُو إِلَى الْإِيمَانِ، وَالْإِيمَانُ مَعَ صَاحِبِهِ فِي الْجَنَّةِ", arti: "Kebersihan mengajak kepada keimanan, dan iman itu bersama pemiliknya di surga.", perawi: "HR. Ath-Thabrani" },
+                { no: 8, judul: "Mukmin yang Kuat Dicintai Allah", arab: "الْمُؤْمِنُ الْقَوِيُّ خَيْرٌ وَأَحَبُّ إِلَى اللَّهِ مِنَ الْمُؤْمِنِ الضَّعِيفِ، وَفِي كُلٍّ خَيْرٌ", arti: "Mukmin yang kuat lebih baik dan dicintai Allah daripada mukmin yang lemah, dan pada keduanya ada kebaikan.", perawi: "HR. Muslim" }
+            ]
+        };
+
+        const DATASET_DOA = {
+            "Doa Harian Santri": [
+                { id: "d1", nama: "Doa Sebelum Tidur", arab: "بِاسْمِكَ اللّٰهُمَّ أَحْيَا وَأَمُوتُ", arti: "Dengan nama-Mu ya Allah, aku hidup dan aku mati." },
+                { id: "d2", nama: "Doa Bangun Tidur", arab: "الْحَمْدُ لِلّٰهِ الَّذِي أَحْيَانَا بَعْدَ مَا أَمَاتَنَا وَإِلَيْهِ النُّشُورُ", arti: "Segala puji bagi Allah yang menghidupkan kami setelah mematikan kami, dan kepada-Nya kami dibangkitkan." },
+                { id: "d3", nama: "Doa Masuk Kamar Mandi", arab: "اللّٰهُمَّ إِنِّي أَعُوذُ بِكَ مِنَ الْخُبُثِ وَالْخَبَائِثِ", arti: "Ya Allah, sesungguhnya aku berlindung kepada-Mu dari godaan setan laki-laki dan setan perempuan." },
+                { id: "d4", nama: "Doa Keluar Kamar Mandi", arab: "غُفْرَانَكَ، الْحَمْدُ لِلّٰهِ الَّذِي أَذْهَبَ عَنِّي الْأَذَى وَعَافَانِي", arti: "Aku memohon ampunan-Mu. Segala puji bagi Allah yang telah menghilangkan kotoran dariku dan menyehatkanku." },
+                { id: "d5", nama: "Doa Masuk Masjid", arab: "اللّٰهُمَّ افْتَحْ لِي أَبْوَابَ رَحْمَتِكَ", arti: "Ya Allah, bukakanlah untukku pintu-pintu rahmat-Mu." },
+                { id: "d6", nama: "Doa Keluar Masjid", arab: "اللّٰهُمَّ إِنِّي أَسْأَلُكَ مِنْ فَضْلِكَ", arti: "Ya Allah, sesungguhnya aku memohon sebagian dari karunia-Mu." },
+                { id: "d7", nama: "Doa Sebelum Makan", arab: "بِسْمِ اللّٰهِ (أَو: اللّٰهُمَّ بَارِكْ لَنَا فِيمَا رَزَقْتَنَا وَقِنَا عَذَابَ النَّارِ)", arti: "Dengan menyebut nama Allah (Ya Allah berkahilah rezeki kami dan lindungi kami dari api neraka)." },
+                { id: "d8", nama: "Doa Sesudah Makan", arab: "الْحَمْدُ لِلّٰهِ الَّذِي أَطْعَمَنَا وَسَقَانَا وَجَعَلَنَا مُسْلِمِينَ", arti: "Segala puji bagi Allah yang memberi makan dan minum kepada kami serta menjadikan kami sebagai muslim." },
+                { id: "d9", nama: "Doa Memakai Pakaian", arab: "الْحَمْدُ لِلّٰهِ الَّذِي كَسَانِي هٰذَا الثَّوْبَ وَرَزَقَنِيهِ مِنْ غَيْرِ حَوْلٍ مِنِّي وَلَا قُوَّةٍ", arti: "Segala puji bagi Allah yang telah memakaikanku pakaian ini tanpa daya dan kekuatan dariku." },
+                { id: "d10", nama: "Doa Keluar Rumah", arab: "بِسْمِ اللّٰهِ تَوَكَّلْتُ عَلَى اللّٰهِ، لَا حَوْلَ وَلَا قُوَّةَ إِلَّا بِاللّٰهِ", arti: "Dengan nama Allah, aku bertawakal kepada Allah, tiada daya dan kekuatan melainkan dengan pertolongan Allah." },
+                { id: "d11", nama: "Doa Masuk Rumah", arab: "بِسْمِ اللّٰهِ وَلَجْنَا، وَبِسْمِ اللّٰهِ خَرَجْنَا، وَعَلَى رَبِّنَا تَوَكَّلْنَا", arti: "Dengan nama Allah kami masuk, dengan nama Allah kami keluar, dan kepada Rabb kami bertawakal." },
+                { id: "d12", nama: "Doa Naik Kendaraan", arab: "سُبْحَانَ الَّذِي سَخَّرَ لَنَا هٰذَا وَمَا كُنَّا لَهُ مُقْرِنِينَ وَإِنَّا إِلَى رَبِّنَا لَمُنْقَلِبُونَ", arti: "Maha Suci Allah yang menundukkan semua ini bagi kami padahal kami tak mampu menguasainya, dan kepada-Nya kami kembali." },
+                { id: "d13", nama: "Doa Untuk Kedua Orang Tua", arab: "رَبِّ اغْفِرْ لِي وَلِوَالِدَيَّ وَارْحَمْهُمَا كَمَا رَبَّيَانِي صَغِيرًا", arti: "Wahai Rabbku, ampunilah aku dan kedua orang tuaku, dan sayangilah mereka berdua sebagaimana mendidikku di waktu kecil." },
+                { id: "d14", nama: "Doa Kebaikan Dunia & Akhirat", arab: "رَبَّنَا آتِنَا فِي الدُّنْيَا حَسَنَةً وَفِي الْآخِرَةِ حَسَنَةً وَقِنَا عَذَابَ النَّارِ", arti: "Wahai Rabb kami, berilah kami kebaikan di dunia dan kebaikan di akhirat, dan lindungilah kami dari siksa api neraka." },
+                { id: "d15", nama: "Doa Kafaratul Majlis", arab: "سُبْحَانَكَ اللّٰهُمَّ وَبِحَمْدِكَ، أَشْهَدُ أَنْ لَا إِلٰهَ إِلَّا أَنْتَ، أَسْتَغْفِرُكَ وَأَتُوبُ إِلَيْكَ", arti: "Maha Suci Engkau ya Allah dan dengan memuji-Mu, aku bersaksi tiada ilah selain Engkau, aku memohon ampun dan bertaubat kepada-Mu." }
+            ],
+            "Dzikir Pagi & Petang": [
+                { id: "dz1", nama: "Sayyidul Istighfar", arab: "اللّٰهُمَّ أَنْتَ رَبِّي لَا إِلٰهَ إِلَّا أَنْتَ، خَلَقْتَنِي وَأَنَا عَبْدُكَ، وَأَنَا عَلَى عَهْدِكَ وَوَعْدِكَ مَا اسْتَطَعْتُ، أَعُوذُ بِكَ مِنْ شَرِّ مَا صَنَعْتُ، أَبُوءُ لَكَ بِنِعْمَتِكَ عَلَيَّ، وَأَبُوءُ بِذَنْبِي فَاغْفِرْ لِي فَإِنَّهُ لَا يَغْفِرُ الذُّنُوبَ إِلَّا أَنْتَ", arti: "Ya Allah Engkau adalah Rabbku, tiada ilah selain Engkau. Engkau menciptakanku dan aku adalah hamba-Mu... ampunilah aku karena tiada yang mengampuni dosa selain Engkau." },
+                { id: "dz2", nama: "Ayat Kursi (Al-Baqarah: 255)", arab: "اللَّهُ لَا إِلَهَ إِلَّا هُوَ الْحَيُّ الْقَيُّومُ لَا تَأْخُذُهُ سِنَةٌ وَلَا نَوْمٌ لَهُ مَا فِي السَّمَاوَاتِ وَمَا فِي الْأَرْضِ...", arti: "Allah, tidak ada ilah selain Dia. Yang Maha Hidup, yang terus menerus mengurus makhluk-Nya, tidak mengantuk dan tidak tidur..." },
+                { id: "dz3", nama: "Surat Al-Ikhlas, Al-Falaq, An-Nas (3x)", arab: "قُلْ هُوَ اللّٰهُ أَحَدٌ... | قُلْ أَعُوذُ بِرَبِّ الْفَلَقِ... | قُلْ أَعُوذُ بِرَبِّ النَّاسِ...", arti: "Dibaca 3x saat pagi dan petang, melindungi dari segala marabahaya, kejahatan makhluk, dan sihir." },
+                { id: "dz4", nama: "Bismillahilladzi laa yadhurru... (3x)", arab: "بِسْمِ اللّٰهِ الَّذِي لَا يَضُرُّ مَعَ اسْمِهِ شَيْءٌ فِي الْأَرْضِ وَلَا فِي السَّمَاءِ وَهُوَ السَّمِيعُ الْعَلِيمُ", arti: "Dengan nama Allah yang bersama nama-Nya tidak ada sesuatupun di bumi maupun di langit yang dapat membahayakan, dan Dia Maha Mendengar lagi Maha Mengetahui." },
+                { id: "dz5", nama: "Radhiitu billaahi rabba... (3x)", arab: "رَضِيتُ بِاللّٰهِ رَبًّا، وَبِالْإِسْلَامِ دِينًا، وَبِمُحَمَّدٍ صَلَّى اللّٰهُ عَلَيْهِ وَسَلَّمَ نَبِيًّا", arti: "Aku ridha Allah sebagai Rabbku, Islam sebagai agamaku, dan Muhammad shallallahu 'alaihi wa sallam sebagai nabiku." },
+                { id: "dz6", nama: "Allahumma bika ashbahna... (Pagi)", arab: "اللّٰهُمَّ بِكَ أَصْبَحْنَا، وَبِكَ أَمْسَيْنَا، وَبِكَ نَحْيَا، وَبِكَ نَمُوتُ، وَإِلَيْكَ النُّشُورُ", arti: "Ya Allah, dengan rahmat-Mu kami memasuki pagi, petang, hidup, mati, dan kepada-Mu kami dibangkitkan." },
+                { id: "dz7", nama: "Subhanallah wa bihamdihi 100x", arab: "سُبْحَانَ اللّٰهِ وَبِحَمْدِهِ", arti: "Maha Suci Allah dan dengan memuji-Nya (dibaca 100 kali: menghapus dosa walau sebanyak buih lautan)." }
+            ],
+            "Doa & Dzikir Shalat": [
+                { id: "sh1", nama: "Doa Iftitah (Wajjahtu)", arab: "وَجَّهْتُ وَجْهِيَ لِلَّذِي فَطَرَ السَّمَاوَاتِ وَالْأَرْضَ حَنِيفًا مُسْلِمًا وَمَا أَنَا مِنَ الْمُشْرِكِينَ، إِنَّ صَلَاتِي وَنُسُكِي وَمَحْيَايَ وَمَمَاتِي لِلّٰهِ رَبِّ الْعَالَمِينَ...", arti: "Aku hadapkan wajahku kepada Dzat yang menciptakan langit dan bumi dengan penuh kepatuhan..." },
+                { id: "sh2", nama: "Doa Iftitah (Allahumma baa'id)", arab: "اللّٰهُمَّ بَاعِدْ بَيْنِي وَبَيْنَ خَطَايَايَ كَمَا بَاعَدْتَ بَيْنَ الْمَشْرِقِ وَالْمَغْرِبِ...", arti: "Ya Allah jauhkanlah antara aku dan kesalahan-kesalahanku sebagaimana Engkau jauhkan antara timur dan barat..." },
+                { id: "sh3", nama: "Doa Ruku'", arab: "سُبْحَانَ رَبِّيَ الْعَظِيمِ وَبِحَمْدِهِ (3x)", arti: "Maha Suci Rabbku Yang Maha Agung dan dengan memuji-Nya." },
+                { id: "sh4", nama: "Doa I'tidal", arab: "رَبَّنَا وَلَكَ الْحَمْدُ حَمْدًا كَثِيرًا طَيِّبًا مُبَارَكًا فِيهِ", arti: "Wahai Rabb kami, bagi-Mu segala puji, pujian yang banyak, baik, dan penuh berkah." },
+                { id: "sh5", nama: "Doa Sujud", arab: "سُبْحَانَ رَبِّيَ الْأَعْلَى وَبِحَمْدِهِ (3x)", arti: "Maha Suci Rabbku Yang Maha Tinggi dan dengan memuji-Nya." },
+                { id: "sh6", nama: "Doa Duduk Antara Dua Sujud", arab: "رَبِّ اغْفِرْ لِي، وَارْحَمْنِي، وَاجْبُرْنِي، وَارْفَعْنِي، وَارْزُقْنِي، وَاهْدِنِي، وَعَافِنِي، وَاعْفُ عَنِّي", arti: "Wahai Rabbku ampunilah aku, sayangilah aku, cukupkanlah kekuranganku, tinggikanlah derajatku, berilah rezeki, petunjuk, dan maafkan aku." },
+                { id: "sh7", nama: "Tasyahhud & Sholawat", arab: "التَّحِيَّاتُ الْمُبَارَكَاتُ الصَّلَوَاتُ الطَّيِّبَاتُ لِلّٰهِ، السَّلَامُ عَلَيْكَ أَيُّهَا النَّبِيُّ وَرَحْمَةُ اللّٰهِ وَبَرَكَاتُهُ...", arti: "Segala kehormatan yang penuh berkah, kebahagiaan, dan kebaikan adalah milik Allah..." },
+                { id: "sh8", nama: "Doa Sebelum Salam (4 Perlindungan)", arab: "اللّٰهُمَّ إِنِّي أَعُوذُ بِكَ مِنْ عَذَابِ جَهَنَّمَ، وَمِنْ عَذَابِ الْقَبْرِ، وَمِنْ فِتْنَةِ الْمَحْيَا وَالْمَمَاتِ، وَمِنْ شَرِّ فِتْنَةِ الْمَسِيحِ الدَّجَّالِ", arti: "Ya Allah aku berlindung kepada-Mu dari siksa jahannam, azab kubur, fitnah hidup dan mati, serta fitnah Dajjal." }
+            ],
+            "Doa Pilihan Al-Qur'an (Rabbana)": [
+                { id: "q1", nama: "Memohon Tambahan Ilmu (Thaha: 114)", arab: "رَبِّ زِدْنِي عِلْمًا وَارْزُقْنِي فَهْمًا", arti: "Ya Rabbku, tambahkanlah kepadaku ilmu dan karuniakanlah pemahaman." },
+                { id: "q2", nama: "Keteguhan Iman & Hati (Ali 'Imran: 8)", arab: "رَبَّنَا لَا تُزِغْ قُلُوبَنَا بَعْدَ إِذْ هَدَيْتَنَا وَهَبْ لَنَا مِنْ لَدُنْكَ رَحْمَةً إِنَّكَ أَنْتَ الْوَهَّابُ", arti: "Ya Rabb kami, jangan condongkan hati kami pada kesesatan setelah Engkau beri petunjuk, dan karuniakanlah rahmat dari sisi-Mu." },
+                { id: "q3", nama: "Keluarga Sakinah & Qurrata A'yun (Al-Furqan: 74)", arab: "رَبَّنَا هَبْ لَنَا مِنْ أَزْوَاجِنَا وَذُرِّيَّاتِنَا قُرَّةَ أَعْيُنٍ وَاجْعَلْنَا لِلْمُتَّقِينَ إِمَامًا", arti: "Ya Rabb kami, anugerahkanlah istri-istri dan keturunan kami sebagai penyejuk mata, dan jadikan kami imam bagi orang bertakwa." },
+                { id: "q4", nama: "Istiqomah Menegakkan Shalat (Ibrahim: 40)", arab: "رَبِّ اجْعَلْنِي مُقِيمَ الصَّلَاةِ وَمِنْ ذُرِّيَّتِي رَبَّنَا وَتَقَبَّلْ دُعَاءِ", arti: "Ya Rabbku, jadikanlah aku dan anak cucuku orang-orang yang tetap mendirikan shalat, ya Rabb kami terimalah doaku." }
+            ]
+        };
+
+        // =========================================================
+        // --- LOGIKA PROGRAM MULTI-MATERI (QURAN, HADITS, DOA) ---
+        // =========================================================
+        function pilihProgramHafalan(prog) {
+            let pAktif = document.getElementById('program-hafalan-aktif');
+            if(pAktif) pAktif.value = prog;
+
+            let tabQ = document.getElementById('tab-prog-quran');
+            let tabH = document.getElementById('tab-prog-hadits');
+            let tabD = document.getElementById('tab-prog-doa');
+
+            let wQ = document.getElementById('wadah-materi-quran');
+            let wH = document.getElementById('wadah-materi-hadits');
+            let wD = document.getElementById('wadah-materi-doa');
+
+            let formBox = document.getElementById('box-form-setoran');
+            let btnSimpan = document.getElementById('btn-simpan-utama');
+            let jenis = document.getElementById('jenis-setoran-aktif').value || 'Ziyadah';
+
+            tabQ.className = 'prog-tab-btn';
+            tabH.className = 'prog-tab-btn';
+            tabD.className = 'prog-tab-btn';
+
+            wQ.classList.add('hidden');
+            wH.classList.add('hidden');
+            wD.classList.add('hidden');
+
+            formBox.classList.remove('mode-hadits', 'mode-doa');
+
+            let lbl1 = document.getElementById('label-rating-1');
+            let lbl2 = document.getElementById('label-rating-2');
+            let lbl3 = document.getElementById('label-rating-3');
+
+            if (prog === 'hadits') {
+                tabH.className = 'prog-tab-btn aktif-hadits';
+                wH.classList.remove('hidden');
+                formBox.classList.add('mode-hadits');
+                if(lbl1) lbl1.innerText = 'Lafadz Matan:';
+                if(lbl2) lbl2.innerText = 'Kelancaran:';
+                if(lbl3) lbl3.innerText = 'Pemahaman/Adab:';
+                btnSimpan.innerText = (jenis === 'Murojaah') ? "💾 SIMPAN MUROJA'AH (HADITS)" : "💾 SIMPAN ZIYADAH (HADITS)";
+                updateKitabHaditsUI();
+            } else if (prog === 'doa') {
+                tabD.className = 'prog-tab-btn aktif-doa';
+                wD.classList.remove('hidden');
+                formBox.classList.add('mode-doa');
+                if(lbl1) lbl1.innerText = 'Lafadz Doa:';
+                if(lbl2) lbl2.innerText = 'Kelancaran:';
+                if(lbl3) lbl3.innerText = 'Makhraj / Adab:';
+                btnSimpan.innerText = (jenis === 'Murojaah') ? "💾 SIMPAN MUROJA'AH (DOA)" : "💾 SIMPAN ZIYADAH (DOA)";
+                updateKategoriDoaUI();
+            } else {
+                tabQ.className = 'prog-tab-btn aktif-quran';
+                wQ.classList.remove('hidden');
+                if(lbl1) lbl1.innerText = 'Tajwid:';
+                if(lbl2) lbl2.innerText = 'Kelancaran:';
+                if(lbl3) lbl3.innerText = 'Makhraj:';
+                btnSimpan.innerText = (jenis === 'Murojaah') ? "💾 SIMPAN MUROJA'AH" : "💾 SIMPAN ZIYADAH";
+            }
+        }
+
+        function inisialisasiMateriDropdowns() {
+            // Dropdown Kitab Hadits
+            let selKitab = document.getElementById('input-kitab-hadits');
+            if(selKitab) {
+                selKitab.innerHTML = '';
+                for (let k in DATASET_HADITS) {
+                    selKitab.appendChild(new Option(k, k));
+                }
+                selKitab.appendChild(new Option("➕ Kitab Lainnya (Input Bebas / Kustom)", "Lainnya"));
+                updateKitabHaditsUI();
+            }
+
+            // Dropdown Kategori Doa
+            let selKategori = document.getElementById('input-kategori-doa');
+            if(selKategori) {
+                selKategori.innerHTML = '';
+                for (let c in DATASET_DOA) {
+                    selKategori.appendChild(new Option(c, c));
+                }
+                selKategori.appendChild(new Option("➕ Kategori Lainnya (Input Bebas / Kustom)", "Lainnya"));
+                updateKategoriDoaUI();
+            }
+        }
+
+        function updateKitabHaditsUI() {
+            let selKitab = document.getElementById('input-kitab-hadits');
+            let inpKitabMan = document.getElementById('input-kitab-hadits-manual');
+            let selHadits = document.getElementById('input-nomor-hadits');
+            let inpHaditsMan = document.getElementById('input-nomor-hadits-manual');
+            let kVal = selKitab ? selKitab.value : "";
+
+            if(kVal === 'Lainnya') {
+                inpKitabMan.classList.remove('hidden');
+                selHadits.innerHTML = '<option value="Lainnya">Ketik Judul Hadits Manual</option>';
+                inpHaditsMan.classList.remove('hidden');
+                updateDetailHaditsUI();
+                return;
+            } else {
+                inpKitabMan.classList.add('hidden');
+            }
+
+            selHadits.innerHTML = '';
+            let list = DATASET_HADITS[kVal] || [];
+            list.forEach(item => {
+                selHadits.appendChild(new Option(item.judul, item.judul));
+            });
+            selHadits.appendChild(new Option("➕ Hadits Lainnya di Kitab Ini (Kustom)", "Lainnya"));
+            updateDetailHaditsUI();
+        }
+
+        function updateDetailHaditsUI() {
+            let selKitab = document.getElementById('input-kitab-hadits');
+            let inpKitabMan = document.getElementById('input-kitab-hadits-manual');
+            let selHadits = document.getElementById('input-nomor-hadits');
+            let inpHaditsMan = document.getElementById('input-nomor-hadits-manual');
+
+            let kVal = (selKitab && selKitab.value === 'Lainnya') ? (inpKitabMan.value || 'Kitab Kustom') : (selKitab ? selKitab.value : '');
+            let hVal = selHadits ? selHadits.value : "";
+
+            let prArab = document.getElementById('preview-teks-hadits-arab');
+            let prArti = document.getElementById('preview-teks-hadits-arti');
+            let prPerawi = document.getElementById('label-perawi-hadits');
+
+            if(hVal === 'Lainnya') {
+                inpHaditsMan.classList.remove('hidden');
+                if(prArab) prArab.innerText = 'Teks matan hadits kustom...';
+                if(prArti) prArti.innerText = 'Arti / terjemahan hadits kustom...';
+                if(prPerawi) prPerawi.innerText = 'Hadits Kustom';
+                materiAktifReferensi = {
+                    tipe: 'hadits',
+                    judul: kVal,
+                    subjudul: inpHaditsMan.value || 'Hadits Kustom',
+                    arab: prArab ? prArab.innerText : '',
+                    arti: prArti ? prArti.innerText : '',
+                    link: linkReferensiHadits
+                };
+                return;
+            } else {
+                inpHaditsMan.classList.add('hidden');
+            }
+
+            let list = DATASET_HADITS[selKitab.value] || [];
+            let item = list.find(x => x.judul === hVal) || list[0];
+            if(item) {
+                if(prArab) prArab.innerText = item.arab;
+                if(prArti) prArti.innerText = '"' + item.arti + '"';
+                if(prPerawi) prPerawi.innerText = item.perawi || 'Shahih';
+                materiAktifReferensi = {
+                    tipe: 'hadits',
+                    judul: item.judul,
+                    subjudul: kVal + ' • ' + (item.perawi || ''),
+                    arab: item.arab,
+                    arti: item.arti,
+                    link: linkReferensiHadits
+                };
+            }
+        }
+
+        function updateKategoriDoaUI() {
+            let selKat = document.getElementById('input-kategori-doa');
+            let inpKatMan = document.getElementById('input-kategori-doa-manual');
+            let selDoa = document.getElementById('input-nama-doa');
+            let inpDoaMan = document.getElementById('input-nama-doa-manual');
+            let cVal = selKat ? selKat.value : "";
+
+            if(cVal === 'Lainnya') {
+                inpKatMan.classList.remove('hidden');
+                selDoa.innerHTML = '<option value="Lainnya">Ketik Nama Doa Manual</option>';
+                inpDoaMan.classList.remove('hidden');
+                updateDetailDoaUI();
+                return;
+            } else {
+                inpKatMan.classList.add('hidden');
+            }
+
+            selDoa.innerHTML = '';
+            let list = DATASET_DOA[cVal] || [];
+            list.forEach(item => {
+                selDoa.appendChild(new Option(item.nama, item.nama));
+            });
+            selDoa.appendChild(new Option("➕ Doa Lainnya di Kategori Ini (Kustom)", "Lainnya"));
+            updateDetailDoaUI();
+        }
+
+        function updateDetailDoaUI() {
+            let selKat = document.getElementById('input-kategori-doa');
+            let inpKatMan = document.getElementById('input-kategori-doa-manual');
+            let selDoa = document.getElementById('input-nama-doa');
+            let inpDoaMan = document.getElementById('input-nama-doa-manual');
+
+            let cVal = (selKat && selKat.value === 'Lainnya') ? (inpKatMan.value || 'Kategori Kustom') : (selKat ? selKat.value : '');
+            let dVal = selDoa ? selDoa.value : "";
+
+            let prArab = document.getElementById('preview-teks-doa-arab');
+            let prArti = document.getElementById('preview-teks-doa-arti');
+            let prInfo = document.getElementById('label-info-doa');
+
+            if(dVal === 'Lainnya') {
+                inpDoaMan.classList.remove('hidden');
+                if(prArab) prArab.innerText = 'Teks lafadz doa kustom...';
+                if(prArti) prArti.innerText = 'Arti / terjemahan doa kustom...';
+                if(prInfo) prInfo.innerText = 'Doa Kustom';
+                materiAktifReferensi = {
+                    tipe: 'doa',
+                    judul: cVal,
+                    subjudul: inpDoaMan.value || 'Doa Kustom',
+                    arab: prArab ? prArab.innerText : '',
+                    arti: prArti ? prArti.innerText : '',
+                    link: linkReferensiDoa
+                };
+                return;
+            } else {
+                inpDoaMan.classList.add('hidden');
+            }
+
+            let list = DATASET_DOA[selKat.value] || [];
+            let item = list.find(x => x.nama === dVal) || list[0];
+            if(item) {
+                if(prArab) prArab.innerText = item.arab;
+                if(prArti) prArti.innerText = '"' + item.arti + '"';
+                if(prInfo) prInfo.innerText = 'Shahih / Sesuai Sunnah';
+                materiAktifReferensi = {
+                    tipe: 'doa',
+                    judul: item.nama,
+                    subjudul: cVal + ' • Sesuai Sunnah',
+                    arab: item.arab,
+                    arti: item.arti,
+                    link: linkReferensiDoa
+                };
+            }
+        }
+
+        // =========================================================
+        // --- MODAL REFERENSI TEKS & TAUTAN WEB / PDF ---
+        // =========================================================
+        function bukaModalReferensiTeks(tipe) {
+            if(tipe === 'hadits') updateDetailHaditsUI();
+            if(tipe === 'doa') updateDetailDoaUI();
+
+            document.getElementById('modal-ref-ikon').innerText = (tipe === 'hadits') ? '📜' : '🤲';
+            document.getElementById('modal-ref-judul-teks').innerText = materiAktifReferensi.judul || (tipe === 'hadits' ? 'Referensi Hadits' : 'Referensi Doa');
+            document.getElementById('modal-ref-subjudul').innerText = materiAktifReferensi.subjudul || '';
+            document.getElementById('modal-ref-teks-arab').innerText = materiAktifReferensi.arab || '-';
+            document.getElementById('modal-ref-teks-arti').innerText = materiAktifReferensi.arti ? ('"' + materiAktifReferensi.arti + '"') : '-';
+            
+            document.getElementById('modal-referensi-materi').classList.remove('hidden');
+        }
+
+        function tutupModalReferensiTeks() {
+            document.getElementById('modal-referensi-materi').classList.add('hidden');
+        }
+
+        function salinTeksArab() {
+            let t = document.getElementById('modal-ref-teks-arab').innerText;
+            if(t) {
+                navigator.clipboard.writeText(t).then(() => alert("📋 Teks Arab berhasil disalin ke clipboard!"))
+                .catch(() => alert("⚠️ Gagal menyalin. Silakan pilih teks secara manual."));
+            }
+        }
+
+        function salinSemuaReferensi() {
+            let j = document.getElementById('modal-ref-judul-teks').innerText;
+            let a = document.getElementById('modal-ref-teks-arab').innerText;
+            let m = document.getElementById('modal-ref-teks-arti').innerText;
+            let txt = j + "\n\n" + a + "\n\nArti:\n" + m;
+            navigator.clipboard.writeText(txt).then(() => alert("📋 Teks Arab & Arti lengkap berhasil disalin!"))
+            .catch(() => alert("⚠️ Gagal menyalin. Silakan pilih teks secara manual."));
+        }
+
+        function bukaLinkReferensi(tipe) {
+            let link = (tipe === 'hadits') ? linkReferensiHadits : linkReferensiDoa;
+            if(!link) link = (tipe === 'hadits') ? DEFAULT_LINK_HADITS : DEFAULT_LINK_DOA;
+            window.open(link, '_blank');
+        }
+
+        function bukaLinkReferensiDariModal() {
+            let link = materiAktifReferensi.link || (materiAktifReferensi.tipe === 'hadits' ? linkReferensiHadits : linkReferensiDoa);
+            window.open(link, '_blank');
+        }
+
+        function simpanPengaturanLinkReferensi() {
+            let lH = document.getElementById('setting-link-hadits').value.trim();
+            let lD = document.getElementById('setting-link-doa').value.trim();
+            if(lH) { linkReferensiHadits = lH; localStorage.setItem('bilal_link_hadits', lH); }
+            if(lD) { linkReferensiDoa = lD; localStorage.setItem('bilal_link_doa', lD); }
+            alert("✅ Tautan referensi buku Hadits & Doa berhasil disimpan!");
+        }
+
+        function muatPengaturanLinkReferensi() {
+            let elH = document.getElementById('setting-link-hadits');
+            let elD = document.getElementById('setting-link-doa');
+            if(elH) elH.value = linkReferensiHadits;
+            if(elD) elD.value = linkReferensiDoa;
+        }
 
         const dataSurahLengkap = {
             "Al-Fatihah": 7, "Al-Baqarah": 286, "Ali 'Imran": 200, "An-Nisa'": 176, "Al-Ma'idah": 120, "Al-An'am": 165, "Al-A'raf": 206, "Al-Anfal": 75, "At-Taubah": 129, "Yunus": 109,
@@ -778,6 +1326,8 @@
 
             // Muat data lokal dulu (offline ready)
             muatDariLocalStorage();
+            inisialisasiMateriDropdowns();
+            muatPengaturanLinkReferensi();
             renderDashboardStatistik();
 
             fetch(scriptURL, { method: 'GET', mode: 'cors' }).then(r => r.json()).then(data => {
@@ -1443,13 +1993,15 @@
             let btnZ = document.getElementById('btn-mode-ziyadah'); let btnM = document.getElementById('btn-mode-murojaah');
             let formBox = document.getElementById('box-form-setoran'); let btnSimpan = document.getElementById('btn-simpan-utama');
             document.getElementById('jenis-setoran-aktif').value = mode;
+            let prog = document.getElementById('program-hafalan-aktif') ? document.getElementById('program-hafalan-aktif').value : 'quran';
+            let labelProg = (prog === 'hadits') ? ' (HADITS)' : (prog === 'doa' ? ' (DOA)' : '');
 
             if(mode === 'Ziyadah') {
                 btnZ.className = 'toggle-btn aktif-ziyadah'; btnM.className = 'toggle-btn'; document.documentElement.style.setProperty('--warna-input-aktif', '#fbbf24'); document.documentElement.style.setProperty('--warna-input-bayangan', 'rgba(251, 191, 36, 0.2)');
-                formBox.className = 'box mode-z'; btnSimpan.style.background = 'linear-gradient(135deg, #fbbf24, #d97706)'; btnSimpan.style.color = '#451a03'; btnSimpan.style.boxShadow = '0 6px 0 #b45309, 0 8px 15px rgba(0,0,0,0.3)'; btnSimpan.innerText = "💾 SIMPAN ZIYADAH";
+                formBox.className = 'box mode-z' + (prog === 'hadits' ? ' mode-hadits' : (prog === 'doa' ? ' mode-doa' : '')); btnSimpan.style.background = 'linear-gradient(135deg, #fbbf24, #d97706)'; btnSimpan.style.color = '#451a03'; btnSimpan.style.boxShadow = '0 6px 0 #b45309, 0 8px 15px rgba(0,0,0,0.3)'; btnSimpan.innerText = "💾 SIMPAN ZIYADAH" + labelProg;
             } else {
                 btnM.className = 'toggle-btn aktif-murojaah'; btnZ.className = 'toggle-btn'; document.documentElement.style.setProperty('--warna-input-aktif', '#10b981'); document.documentElement.style.setProperty('--warna-input-bayangan', 'rgba(16, 185, 129, 0.2)');
-                formBox.className = 'box mode-m'; btnSimpan.style.background = 'linear-gradient(135deg, #10b981, #047857)'; btnSimpan.style.color = 'white'; btnSimpan.style.boxShadow = '0 6px 0 #065f46, 0 8px 15px rgba(0,0,0,0.3)'; btnSimpan.innerText = "💾 SIMPAN MUROJA'AH";
+                formBox.className = 'box mode-m' + (prog === 'hadits' ? ' mode-hadits' : (prog === 'doa' ? ' mode-doa' : '')); btnSimpan.style.background = 'linear-gradient(135deg, #10b981, #047857)'; btnSimpan.style.color = 'white'; btnSimpan.style.boxShadow = '0 6px 0 #065f46, 0 8px 15px rgba(0,0,0,0.3)'; btnSimpan.innerText = "💾 SIMPAN MUROJA'AH" + labelProg;
             }
             pilihStatus(document.getElementById('statusSetoran').value);
         }
@@ -1576,15 +2128,42 @@
             let santri = document.getElementById('muhaffiz-pilih-santri').value; let kartu = document.getElementById('kartuPrestasi');
             if (santri !== "") {
                 kartu.style.display = "block";
-                if (dataProgresGlobal[santri]) { 
-                    let jStr = dataProgresGlobal[santri].juz; setJuzUI(jStr, false);
+                let prog = dataProgresGlobal[santri];
+                if (prog) { 
+                    let jStr = prog.juz || "-"; setJuzUI(jStr, false);
                     let jArr = parseDaftarJuz(jStr);
-                    document.getElementById('infoTotalJuz').innerText = jArr.length > 0 ? jArr.length + " Juz" : "Terdata"; 
+                    document.getElementById('infoTotalJuz').innerText = jArr.length > 0 ? jArr.length + " Juz" : (jStr !== "-" ? jStr : "Terdata"); 
                     document.getElementById('infoTotalJuz').style.color = "var(--tema-warna)"; 
-                    document.getElementById('infoSurah').innerText = dataProgresGlobal[santri].surah + " (" + dataProgresGlobal[santri].ayat + ")";
+                    document.getElementById('infoSurah').innerText = (prog.surah && prog.surah !== "-") ? (prog.surah + " (" + (prog.ayat || "-") + ")") : "-";
+
+                    // Tampilkan Progres Hadits Terakhir
+                    let elHadits = document.getElementById('infoHadits');
+                    if(elHadits) {
+                        if(prog.hadits && prog.hadits.judul) {
+                            elHadits.innerText = prog.hadits.judul + (prog.hadits.tgl ? " (" + prog.hadits.tgl + ")" : "");
+                            elHadits.style.color = "#60a5fa";
+                        } else {
+                            elHadits.innerText = "Belum Ada Data";
+                            elHadits.style.color = "var(--teks-sekunder)";
+                        }
+                    }
+
+                    // Tampilkan Progres Doa Terakhir
+                    let elDoa = document.getElementById('infoDoa');
+                    if(elDoa) {
+                        if(prog.doa && prog.doa.nama) {
+                            elDoa.innerText = prog.doa.nama + (prog.doa.tgl ? " (" + prog.doa.tgl + ")" : "");
+                            elDoa.style.color = "#34d399";
+                        } else {
+                            elDoa.innerText = "Belum Ada Data";
+                            elDoa.style.color = "var(--teks-sekunder)";
+                        }
+                    }
                 } else { 
                     setJuzUI("", false); 
                     document.getElementById('infoTotalJuz').innerText = "Belum Ada Data"; document.getElementById('infoTotalJuz').style.color = "var(--teks-sekunder)"; document.getElementById('infoSurah').innerText = "-"; 
+                    let elH = document.getElementById('infoHadits'); if(elH) { elH.innerText = "-"; elH.style.color = "var(--teks-sekunder)"; }
+                    let elD = document.getElementById('infoDoa'); if(elD) { elD.innerText = "-"; elD.style.color = "var(--teks-sekunder)"; }
                 }
             } else { kartu.style.display = "none"; }
         }
@@ -1613,26 +2192,90 @@
         function simpanSetoran() {
             let halaqah = document.getElementById('muhaffiz-pilih-halaqah').value; let santri = document.getElementById('muhaffiz-pilih-santri').value; let kehadiran = document.querySelector('input[name="kehadiran"]:checked').value;
             let jenisSetoran = document.getElementById('jenis-setoran-aktif').value; 
-            
-            let juz = document.getElementById('input-juz-hidden').value; 
-            let sAwal = document.getElementById('input-surah').value; let sAkhir = document.getElementById('input-surah-akhir').value; let surah = sAwal; let ayat = "";
-            if (sAwal && sAkhir && sAkhir !== sAwal) { surah = sAwal + " s/d " + sAkhir; ayat = "Penuh";
-            } else { let aAwal = document.getElementById('input-ayat-awal').value; let aAkhir = document.getElementById('input-ayat-akhir').value; if(aAwal && aAkhir) { ayat = (aAwal === aAkhir) ? aAwal : (aAwal + "-" + aAkhir); } }
+            let prog = document.getElementById('program-hafalan-aktif') ? document.getElementById('program-hafalan-aktif').value : "quran";
+
+            let juz = "-"; let surah = "-"; let ayat = "-"; let kategori = "Al-Qur'an";
+
+            if (kehadiran === "Hadir") {
+                if(!halaqah || !santri) { alert("⚠️ Harap pilih Halaqah dan Santri!"); return; }
+
+                if (prog === "quran") {
+                    kategori = "Al-Qur'an";
+                    juz = document.getElementById('input-juz-hidden').value || "-"; 
+                    let sAwal = document.getElementById('input-surah').value; let sAkhir = document.getElementById('input-surah-akhir').value; surah = sAwal; ayat = "";
+                    if (sAwal && sAkhir && sAkhir !== sAwal) { surah = sAwal + " s/d " + sAkhir; ayat = "Penuh";
+                    } else { let aAwal = document.getElementById('input-ayat-awal').value; let aAkhir = document.getElementById('input-ayat-akhir').value; if(aAwal && aAkhir) { ayat = (aAwal === aAkhir) ? aAwal : (aAwal + "-" + aAkhir); } }
+                    if(!sAwal) { alert("⚠️ Harap pilih Surah Mulai!"); return; }
+                    if(!sAkhir || sAkhir === sAwal) { if(!ayat) { alert("⚠️ Harap pilih rentang Ayat!"); return; } }
+                } else if (prog === "hadits") {
+                    kategori = "Hadits";
+                    juz = "-";
+                    let kSel = document.getElementById('input-kitab-hadits').value;
+                    surah = (kSel === "Lainnya") ? document.getElementById('input-kitab-hadits-manual').value.trim() : kSel;
+                    let nSel = document.getElementById('input-nomor-hadits').value;
+                    ayat = (nSel === "Lainnya") ? document.getElementById('input-nomor-hadits-manual').value.trim() : nSel;
+                    if(!surah) { alert("⚠️ Harap tentukan Kitab Hadits!"); return; }
+                    if(!ayat) { alert("⚠️ Harap tentukan Nomor/Judul Hadits!"); return; }
+                } else if (prog === "doa") {
+                    kategori = "Doa";
+                    juz = "-";
+                    let kSel = document.getElementById('input-kategori-doa').value;
+                    surah = (kSel === "Lainnya") ? document.getElementById('input-kategori-doa-manual').value.trim() : kSel;
+                    let nSel = document.getElementById('input-nama-doa').value;
+                    ayat = (nSel === "Lainnya") ? document.getElementById('input-nama-doa-manual').value.trim() : nSel;
+                    if(!surah) { alert("⚠️ Harap tentukan Kategori Doa!"); return; }
+                    if(!ayat) { alert("⚠️ Harap tentukan Nama Doa / Dzikir!"); return; }
+                }
+            } else {
+                if(!halaqah || !santri) { alert("⚠️ Harap pilih Halaqah dan Santri!"); return; }
+                juz = "-"; surah = "-"; ayat = "-"; kategori = (prog === 'hadits' ? 'Hadits' : (prog === 'doa' ? 'Doa' : "Al-Qur'an"));
+            }
 
             let t = document.querySelector('input[name="tajwid"]:checked'); let l = document.querySelector('input[name="lancar"]:checked'); let m = document.querySelector('input[name="makhraj"]:checked');
             let statusSetoran = document.getElementById('statusSetoran').value; let catatan = document.getElementById('catatanEvaluasi').value || "-";
 
-            if (kehadiran === "Hadir") { 
-                if(!halaqah || !santri || !sAwal || !t || !l || !m) { alert("⚠️ Harap lengkapi isian Surah dan Bintang!"); return; }
-                if(!sAkhir || sAkhir === sAwal) { if(!ayat) { alert("⚠️ Harap pilih rentang Ayat!"); return; } }
-                if(!juz) juz = "-";
-            } else { if(!halaqah || !santri) { alert("⚠️ Harap pilih Halaqah dan Santri!"); return; } juz = "-"; surah = "-"; ayat = "-"; t = {value: "-"}; l = {value: "-"}; m = {value: "-"}; statusSetoran = "-"; catatan = "-"; }
+            if (kehadiran === "Hadir") {
+                if(!t || !l || !m) { alert("⚠️ Harap berikan penilaian bintang (3 indikator)!"); return; }
+            } else {
+                t = {value: "-"}; l = {value: "-"}; m = {value: "-"}; statusSetoran = "-"; catatan = "-";
+            }
 
-            let setoranBaru = { tgl: new Date().toLocaleDateString('id-ID') + " " + new Date().toLocaleTimeString('id-ID', {hour: '2-digit', minute:'2-digit'}), halaqah: halaqah, santri: santri, kehadiran: kehadiran, jenis: jenisSetoran, juz: juz, surah: surah, ayat: ayat, tajwid: t ? t.value : "-", lancar: l ? l.value : "-", makhraj: m ? m.value : "-", status: statusSetoran, catatan: catatan };
+            let tglLengkap = new Date().toLocaleDateString('id-ID') + " " + new Date().toLocaleTimeString('id-ID', {hour: '2-digit', minute:'2-digit'});
+            let tglSingkat = new Date().toLocaleDateString('id-ID');
+
+            let setoranBaru = {
+                tgl: tglLengkap,
+                halaqah: halaqah,
+                santri: santri,
+                kehadiran: kehadiran,
+                jenis: jenisSetoran,
+                kategori: kategori,
+                juz: juz,
+                surah: surah,
+                ayat: ayat,
+                tajwid: t ? t.value : "-",
+                lancar: l ? l.value : "-",
+                makhraj: m ? m.value : "-",
+                status: statusSetoran,
+                catatan: catatan
+            };
+
             dataRiwayat.unshift(setoranBaru); 
             dataRiwayatServer.unshift(setoranBaru);
+
             if(kehadiran === "Hadir" && statusSetoran === "Lanjut" && jenisSetoran === "Ziyadah") { 
-                dataProgresGlobal[santri] = { juz: juz, surah: surah, ayat: ayat }; 
+                if(!dataProgresGlobal[santri]) {
+                    dataProgresGlobal[santri] = { juz: "-", surah: "-", ayat: "-" };
+                }
+                if (prog === "quran") {
+                    dataProgresGlobal[santri].juz = juz;
+                    dataProgresGlobal[santri].surah = surah;
+                    dataProgresGlobal[santri].ayat = ayat;
+                } else if (prog === "hadits") {
+                    dataProgresGlobal[santri].hadits = { kitab: surah, judul: ayat, tgl: tglSingkat };
+                } else if (prog === "doa") {
+                    dataProgresGlobal[santri].doa = { kategori: surah, nama: ayat, tgl: tglSingkat };
+                }
                 tampilkanKartuPrestasi(); 
             }
             simpanKeLocalStorage();
@@ -1647,9 +2290,18 @@
                 console.warn("Offline: tersimpan di memori lokal");
             }).finally(() => {
                 btn.innerText = asli; btn.disabled = false;
-                document.getElementById('input-surah').value = ''; document.getElementById('input-surah-akhir').value = ''; updateMateriUI(); document.getElementById('catatanEvaluasi').value = ''; 
+                if(prog === "quran") {
+                    document.getElementById('input-surah').value = ''; document.getElementById('input-surah-akhir').value = ''; updateMateriUI();
+                } else if(prog === "hadits") {
+                    let inpHaditsMan = document.getElementById('input-nomor-hadits-manual');
+                    if(inpHaditsMan) inpHaditsMan.value = '';
+                } else if(prog === "doa") {
+                    let inpDoaMan = document.getElementById('input-nama-doa-manual');
+                    if(inpDoaMan) inpDoaMan.value = '';
+                }
+                document.getElementById('catatanEvaluasi').value = ''; 
                 pilihStatus('Lanjut'); if(t && t.checked) t.checked = false; if(l && l.checked) l.checked = false; if(m && m.checked) m.checked = false; document.querySelector('input[name="kehadiran"][value="Hadir"]').checked = true; toggleFormSetoran(); 
-                alert("✅ Setoran berhasil disimpan ke database!");
+                alert(`✅ Setoran ${kategori} berhasil disimpan ke database!`);
             });
         }
 
@@ -1659,14 +2311,71 @@
             if(confirm("✏️ Data ditarik ke form untuk diedit. Lanjutkan?")) {
                 let item = dataRiwayat[index]; document.getElementById('muhaffiz-pilih-halaqah').value = item.halaqah; updateDropdownSantri(); document.getElementById('muhaffiz-pilih-santri').value = item.santri; tampilkanKartuPrestasi(); document.querySelector(`input[name="kehadiran"][value="${item.kehadiran}"]`).checked = true; toggleFormSetoran();
                 ubahModeSetoran(item.jenis);
-                if (item.kehadiran === "Hadir") {
-                    setJuzUI(item.juz, false);
-                    if (item.surah.includes(" s/d ")) {
-                        let sArr = item.surah.split(" s/d "); document.getElementById('input-surah').value = sArr[0]; document.getElementById('input-surah-akhir').value = sArr[1]; updateMateriUI();
-                    } else {
-                        document.getElementById('input-surah').value = item.surah; document.getElementById('input-surah-akhir').value = ""; updateMateriUI();
-                        let arrAyat = item.ayat.split("-"); document.getElementById('input-ayat-awal').value = arrAyat[0]; document.getElementById('input-ayat-akhir').value = arrAyat.length > 1 ? arrAyat[1] : arrAyat[0];
+
+                let kat = item.kategori || (item.surah && (item.surah.includes('Hadits') || item.surah.includes("Arba'in")) ? "Hadits" : (item.surah && (item.surah.includes('Doa') || item.surah.includes('Dzikir')) ? "Doa" : "Al-Qur'an"));
+
+                if (kat === "Hadits") {
+                    pilihProgramHafalan('hadits');
+                    let selK = document.getElementById('input-kitab-hadits');
+                    let foundK = false;
+                    for(let i=0; i<selK.options.length; i++) {
+                        if(selK.options[i].value === item.surah) { selK.selectedIndex = i; foundK = true; break; }
                     }
+                    if(!foundK) {
+                        selK.value = "Lainnya";
+                        let manK = document.getElementById('input-kitab-hadits-manual');
+                        if(manK) manK.value = item.surah;
+                    }
+                    updateKitabHaditsUI();
+                    let selH = document.getElementById('input-nomor-hadits');
+                    let foundH = false;
+                    for(let i=0; i<selH.options.length; i++) {
+                        if(selH.options[i].value === item.ayat) { selH.selectedIndex = i; foundH = true; break; }
+                    }
+                    if(!foundH) {
+                        selH.value = "Lainnya";
+                        let manH = document.getElementById('input-nomor-hadits-manual');
+                        if(manH) manH.value = item.ayat;
+                    }
+                    updateDetailHaditsUI();
+                } else if (kat === "Doa") {
+                    pilihProgramHafalan('doa');
+                    let selC = document.getElementById('input-kategori-doa');
+                    let foundC = false;
+                    for(let i=0; i<selC.options.length; i++) {
+                        if(selC.options[i].value === item.surah) { selC.selectedIndex = i; foundC = true; break; }
+                    }
+                    if(!foundC) {
+                        selC.value = "Lainnya";
+                        let manC = document.getElementById('input-kategori-doa-manual');
+                        if(manC) manC.value = item.surah;
+                    }
+                    updateKategoriDoaUI();
+                    let selD = document.getElementById('input-nama-doa');
+                    let foundD = false;
+                    for(let i=0; i<selD.options.length; i++) {
+                        if(selD.options[i].value === item.ayat) { selD.selectedIndex = i; foundD = true; break; }
+                    }
+                    if(!foundD) {
+                        selD.value = "Lainnya";
+                        let manD = document.getElementById('input-nama-doa-manual');
+                        if(manD) manD.value = item.ayat;
+                    }
+                    updateDetailDoaUI();
+                } else {
+                    pilihProgramHafalan('quran');
+                    if (item.kehadiran === "Hadir") {
+                        setJuzUI(item.juz, false);
+                        if (item.surah.includes(" s/d ")) {
+                            let sArr = item.surah.split(" s/d "); document.getElementById('input-surah').value = sArr[0]; document.getElementById('input-surah-akhir').value = sArr[1]; updateMateriUI();
+                        } else {
+                            document.getElementById('input-surah').value = item.surah; document.getElementById('input-surah-akhir').value = ""; updateMateriUI();
+                            let arrAyat = item.ayat.split("-"); document.getElementById('input-ayat-awal').value = arrAyat[0]; document.getElementById('input-ayat-akhir').value = arrAyat.length > 1 ? arrAyat[1] : arrAyat[0];
+                        }
+                    }
+                }
+
+                if (item.kehadiran === "Hadir") {
                     if(item.tajwid !== "-") document.getElementById('star' + item.tajwid + '-tajwid').checked = true; if(item.lancar !== "-") document.getElementById('star' + item.lancar + '-lancar').checked = true; if(item.makhraj !== "-") document.getElementById('star' + item.makhraj + '-makhraj').checked = true;
                     pilihStatus(item.status); document.getElementById('catatanEvaluasi').value = item.catatan !== "-" ? item.catatan : "";
                 }
@@ -1679,7 +2388,17 @@
             let htmlHTML = '';
             dataRiwayat.forEach((item, index) => {
                 let w = item.kehadiran === 'Hadir' ? 'var(--tema-warna)' : (item.kehadiran === 'Sakit' ? '#f59e0b' : (item.kehadiran === 'Izin' ? '#3b82f6' : '#ef4444')); let wt = item.kehadiran === 'Hadir' ? 'var(--teks-dalam-tombol)' : '#ffffff'; let badgeJenis = item.jenis === 'Murojaah' ? `<span class="badge-mode Murojaah">Muroja'ah</span>` : `<span class="badge-mode Ziyadah">Ziyadah</span>`;
-                let info = item.kehadiran === 'Hadir' ? `<div style="font-size: 17px; font-weight: 800; color: var(--teks-utama); margin-bottom: 5px;">📖 ${item.surah} : ${item.ayat} ${badgeJenis}</div><div class="riwayat-bintang-grid"><div class="rb-item"><span>Tajwid</span> <span class="rb-stars">${drawStars(item.tajwid)}</span></div><div class="rb-item"><span>Lancar</span> <span class="rb-stars">${drawStars(item.lancar)}</span></div><div class="rb-item"><span>Makhraj</span> <span class="rb-stars">${drawStars(item.makhraj)}</span></div></div><div style="font-size:14px; font-weight:800; color: ${item.status === 'Lanjut' ? 'var(--tema-warna)' : '#ef4444'}; margin-top:10px;">${item.status === 'Lanjut' ? '✅ BOLEH LANJUT' : '🔄 HARUS ULANGI'}</div>${item.catatan !== '-' ? `<div style="margin-top:10px; font-size:13px; font-style:italic; color:var(--teks-sekunder); background: rgba(0,0,0,0.2); padding: 10px; border-radius: 8px; border-left: 3px solid rgba(255,255,255,0.2);">📝 ${item.catatan}</div>` : ''}` : `<div style="color: var(--teks-sekunder); font-style: italic; font-weight:600; margin-top:10px;">Tidak setoran (Absen)</div>`;
+                
+                let kat = item.kategori || (item.surah && (item.surah.includes('Hadits') || item.surah.includes("Arba'in")) ? "Hadits" : (item.surah && (item.surah.includes('Doa') || item.surah.includes('Dzikir')) ? "Doa" : "Al-Qur'an"));
+                let ikonMateri = (kat === 'Hadits') ? '📜' : ((kat === 'Doa') ? '🤲' : '📖');
+                let badgeKat = (kat === 'Hadits') ? `<span class="badge-mode" style="background:rgba(59,130,246,0.2); color:#93c5fd; border:1px solid rgba(59,130,246,0.3); margin-left:4px;">Hadits</span>` : ((kat === 'Doa') ? `<span class="badge-mode" style="background:rgba(16,185,129,0.2); color:#6ee7b7; border:1px solid rgba(16,185,129,0.3); margin-left:4px;">Doa</span>` : `<span class="badge-mode" style="background:rgba(251,191,36,0.2); color:#fde68a; border:1px solid rgba(251,191,36,0.3); margin-left:4px;">Al-Qur'an</span>`);
+
+                let lblBintang1 = (kat === 'Hadits') ? 'Matan' : ((kat === 'Doa') ? 'Lafadz' : 'Tajwid');
+                let lblBintang3 = (kat === 'Hadits') ? 'Adab' : 'Makhraj';
+
+                let infoMateriTeks = (kat === 'Hadits' || kat === 'Doa') ? `${item.surah} • ${item.ayat}` : `${item.surah} : ${item.ayat}`;
+
+                let info = item.kehadiran === 'Hadir' ? `<div style="font-size: 16px; font-weight: 800; color: var(--teks-utama); margin-bottom: 5px;">${ikonMateri} ${infoMateriTeks} ${badgeJenis} ${badgeKat}</div><div class="riwayat-bintang-grid"><div class="rb-item"><span>${lblBintang1}</span> <span class="rb-stars">${drawStars(item.tajwid)}</span></div><div class="rb-item"><span>Lancar</span> <span class="rb-stars">${drawStars(item.lancar)}</span></div><div class="rb-item"><span>${lblBintang3}</span> <span class="rb-stars">${drawStars(item.makhraj)}</span></div></div><div style="font-size:14px; font-weight:800; color: ${item.status === 'Lanjut' ? 'var(--tema-warna)' : '#ef4444'}; margin-top:10px;">${item.status === 'Lanjut' ? '✅ BOLEH LANJUT' : '🔄 HARUS ULANGI'}</div>${item.catatan !== '-' ? `<div style="margin-top:10px; font-size:13px; font-style:italic; color:var(--teks-sekunder); background: rgba(0,0,0,0.2); padding: 10px; border-radius: 8px; border-left: 3px solid rgba(255,255,255,0.2);">📝 ${item.catatan}</div>` : ''}` : `<div style="color: var(--teks-sekunder); font-style: italic; font-weight:600; margin-top:10px;">Tidak setoran (Absen)</div>`;
                 htmlHTML += `<div class="kartu-riwayat" style="border-left-color: ${w};"><div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:12px;"><div><strong style="font-size: 16px; color: var(--teks-utama); display:block;">${item.santri}</strong><span style="font-size:12px; color:var(--teks-sekunder); font-weight:700;">${item.halaqah}</span></div><div style="text-align:right;"><span class="badge-absen" style="background-color: ${w}; color: ${wt}; display:inline-block; margin-bottom:4px;">${item.kehadiran}</span><br><span style="font-size:11px; color:var(--teks-sekunder); font-weight: 600;">${item.tgl}</span></div></div><div style="border-top: 1px dashed var(--border-halus); padding-top:12px;">${info}</div><div style="margin-top: 15px; display: flex; gap: 10px;"><button class="btn-kecil" style="background: rgba(59, 130, 246, 0.2); color: #93c5fd; border: 1px solid rgba(59, 130, 246, 0.3);" onclick="editRiwayat(${index})">✏️ Edit</button><button class="btn-kecil" style="background: rgba(239, 68, 68, 0.2); color: #fca5a5; border: 1px solid rgba(239, 68, 68, 0.3);" onclick="hapusRiwayat(${index})">🗑️ Hapus</button></div></div>`;
             }); kotakArea.innerHTML = htmlHTML;
         }
