@@ -230,6 +230,71 @@
         .materi-preview-card { background: rgba(0, 0, 0, 0.3); border: 1px solid var(--border-halus); border-radius: 14px; padding: 16px; margin-top: 12px; margin-bottom: 15px; }
         .teks-arab-box { font-family: 'Amiri', 'Traditional Arabic', 'Scheherazade New', serif; font-size: 22px; text-align: right; line-height: 2.1; color: #fde68a; direction: rtl; margin-bottom: 12px; padding: 12px 16px; background: rgba(0,0,0,0.3); border-radius: 10px; border-right: 4px solid var(--tema-warna); }
         .teks-arti-box { font-size: 13px; color: var(--teks-utama); line-height: 1.6; font-style: italic; background: rgba(255,255,255,0.03); padding: 10px 14px; border-radius: 10px; border-left: 3px solid rgba(255,255,255,0.2); }
+
+        /* Drag & Drop PDF Styles */
+        .pdf-dropzone {
+            border: 2px dashed rgba(59, 130, 246, 0.45);
+            background: rgba(0, 0, 0, 0.25);
+            border-radius: 14px;
+            padding: 18px 14px;
+            text-align: center;
+            transition: all 0.25s ease;
+            cursor: pointer;
+            position: relative;
+            margin-bottom: 12px;
+        }
+        .pdf-dropzone.zone-doa {
+            border-color: rgba(16, 185, 129, 0.45);
+        }
+        .pdf-dropzone:hover, .pdf-dropzone.drag-active {
+            border-color: #60a5fa;
+            background: rgba(59, 130, 246, 0.15);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(59, 130, 246, 0.25);
+        }
+        .pdf-dropzone.zone-doa:hover, .pdf-dropzone.zone-doa.drag-active {
+            border-color: #34d399;
+            background: rgba(16, 185, 129, 0.15);
+            box-shadow: 0 6px 20px rgba(16, 185, 129, 0.25);
+        }
+        .pdf-file-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-halus);
+            border-radius: 12px;
+            padding: 12px 14px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            text-align: left;
+        }
+        .btn-pilih-pdf {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.08);
+            color: #93c5fd;
+            border: 1px solid rgba(59, 130, 246, 0.4);
+            border-radius: 20px;
+            padding: 4px 14px;
+            font-size: 11px;
+            font-weight: 700;
+            margin-top: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .btn-pilih-pdf:hover {
+            background: rgba(59, 130, 246, 0.3);
+            color: white;
+            border-color: #60a5fa;
+        }
+        .btn-pilih-pdf.btn-pilih-doa {
+            color: #6ee7b7;
+            border-color: rgba(16, 185, 129, 0.4);
+        }
+        .btn-pilih-pdf.btn-pilih-doa:hover {
+            background: rgba(16, 185, 129, 0.3);
+            color: white;
+            border-color: #34d399;
+        }
     </style>
 </head>
 <body>
@@ -427,12 +492,96 @@
         </div>
 
         <div class="box" style="border-left: 6px solid #3b82f6; background: rgba(59, 130, 246, 0.05);">
-            <h3 style="color: #60a5fa; border-color: rgba(59, 130, 246, 0.2);">7. Referensi Materi Hadits & Doa (Link Web / PDF)</h3>
-            <p style="color:var(--teks-sekunder); font-size:13px; margin-top:-5px; margin-bottom:12px;">Atur tautan buku PDF (Google Drive/Cloud) atau website referensi agar Muhaffiz dapat membukanya langsung saat menyimak hafalan.</p>
-            <label class="form-label-small" style="margin-bottom: 4px;">Link Web / PDF Hadits Arba'in:</label>
-            <input type="text" id="setting-link-hadits" placeholder="https://..." style="margin-bottom: 10px; background:var(--bg-elemen);">
-            <label class="form-label-small" style="margin-bottom: 4px;">Link Web / PDF Doa & Dzikir:</label>
-            <input type="text" id="setting-link-doa" placeholder="https://..." style="margin-bottom: 12px; background:var(--bg-elemen);">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 8px;">
+                <h3 style="color: #60a5fa; border:none; margin:0; padding:0; font-size: 18px;">7. Referensi Materi Hadits & Doa</h3>
+                <span style="font-size: 11px; background: rgba(59, 130, 246, 0.2); color: #93c5fd; padding: 4px 10px; border-radius: 12px; font-weight: 800; border: 1px solid rgba(59, 130, 246, 0.3);">PDF Lokal & Web</span>
+            </div>
+            <p style="color:var(--teks-sekunder); font-size:13px; margin-top:0; margin-bottom:18px; line-height: 1.5;">
+                Muhaffiz dapat membuka buku referensi PDF langsung saat menyimak setoran. Anda dapat <b>memilih file atau Drag & Drop file PDF dari perangkat (laptop/HP)</b> untuk penggunaan offline, atau mengisi tautan web/cloud online.
+            </p>
+
+            <!-- SUB-BAGIAN: BUKU PDF HADITS ARBA'IN -->
+            <div style="background: rgba(0,0,0,0.3); border: 1px solid rgba(59, 130, 246, 0.25); border-radius: 14px; padding: 16px; margin-bottom: 16px;">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 10px;">
+                    <span style="font-size: 13px; font-weight: 800; color: #60a5fa;">📜 Buku / Referensi Hadits Arba'in:</span>
+                    <span id="badge-status-pdf-hadits" style="font-size: 11px; color: var(--teks-sekunder); font-weight: 700; background: rgba(255,255,255,0.06); padding: 3px 8px; border-radius: 8px;">Belum ada PDF lokal</span>
+                </div>
+
+                <!-- DROPZONE FILE PDF HADITS -->
+                <div class="pdf-dropzone" id="dropzone-hadits" 
+                     ondragover="handleDragOverPDF(event, 'hadits')" 
+                     ondragleave="handleDragLeavePDF(event, 'hadits')" 
+                     ondrop="handleDropPDF(event, 'hadits')"
+                     onclick="picuPilihFilePDF('hadits')">
+                    
+                    <div id="dropzone-kosong-hadits">
+                        <span style="font-size: 32px; display: block; margin-bottom: 6px;">📥</span>
+                        <div style="font-size: 13px; font-weight: 800; color: #93c5fd;">Tarik & Lepas (Drag & Drop) File PDF Hadits ke sini</div>
+                        <div style="font-size: 11px; color: var(--teks-sekunder); margin-top: 4px;">atau klik untuk <span class="btn-pilih-pdf">📁 Pilih File PDF dari Perangkat</span></div>
+                    </div>
+
+                    <div id="dropzone-terisi-hadits" class="pdf-file-card hidden" onclick="event.stopPropagation();">
+                        <div style="display: flex; align-items: center; gap: 10px; overflow: hidden;">
+                            <span style="font-size: 28px;">📕</span>
+                            <div style="overflow: hidden;">
+                                <div id="nama-file-pdf-hadits" style="font-size: 13px; font-weight: 800; color: white; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">kitab.pdf</div>
+                                <div id="info-file-pdf-hadits" style="font-size: 11px; color: #93c5fd;">2.5 MB • Diupload baru saja</div>
+                            </div>
+                        </div>
+                        <div style="display: flex; gap: 6px; flex-shrink: 0;">
+                            <button type="button" class="btn-kecil" style="background: rgba(59, 130, 246, 0.35); color: #93c5fd; border: 1px solid rgba(59, 130, 246, 0.4); padding: 6px 12px; font-size: 11px;" onclick="bukaFilePDFLokal('hadits')">👁️ Buka</button>
+                            <button type="button" class="btn-kecil" style="background: rgba(255, 255, 255, 0.1); color: #cbd5e1; border: 1px solid var(--border-halus); padding: 6px 10px; font-size: 11px;" onclick="picuPilihFilePDF('hadits')">🔄 Ganti</button>
+                            <button type="button" class="btn-kecil" style="background: rgba(239, 68, 68, 0.25); color: #fca5a5; border: 1px solid rgba(239, 68, 68, 0.4); padding: 6px 10px; font-size: 11px;" onclick="hapusFilePDFLokal('hadits')">🗑️</button>
+                        </div>
+                    </div>
+                    <input type="file" id="input-file-hadits" accept="application/pdf" style="display:none;" onchange="prosesUploadPDF(this.files[0], 'hadits')">
+                </div>
+
+                <div style="font-size: 11px; color: var(--teks-sekunder); margin-bottom: 5px; font-weight: 700;">Atau Tautan Web / Google Drive Online (Opsional):</div>
+                <input type="text" id="setting-link-hadits" placeholder="https://..." style="margin: 0; background:var(--bg-elemen); font-size: 12px; padding: 10px 14px;">
+            </div>
+
+            <!-- SUB-BAGIAN: BUKU PDF DOA & DZIKIR -->
+            <div style="background: rgba(0,0,0,0.3); border: 1px solid rgba(16, 185, 129, 0.25); border-radius: 14px; padding: 16px; margin-bottom: 16px;">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 10px;">
+                    <span style="font-size: 13px; font-weight: 800; color: #34d399;">🤲 Buku / Referensi Doa & Dzikir:</span>
+                    <span id="badge-status-pdf-doa" style="font-size: 11px; color: var(--teks-sekunder); font-weight: 700; background: rgba(255,255,255,0.06); padding: 3px 8px; border-radius: 8px;">Belum ada PDF lokal</span>
+                </div>
+
+                <!-- DROPZONE FILE PDF DOA -->
+                <div class="pdf-dropzone zone-doa" id="dropzone-doa" 
+                     ondragover="handleDragOverPDF(event, 'doa')" 
+                     ondragleave="handleDragLeavePDF(event, 'doa')" 
+                     ondrop="handleDropPDF(event, 'doa')"
+                     onclick="picuPilihFilePDF('doa')">
+                    
+                    <div id="dropzone-kosong-doa">
+                        <span style="font-size: 32px; display: block; margin-bottom: 6px;">📥</span>
+                        <div style="font-size: 13px; font-weight: 800; color: #6ee7b7;">Tarik & Lepas (Drag & Drop) File PDF Doa ke sini</div>
+                        <div style="font-size: 11px; color: var(--teks-sekunder); margin-top: 4px;">atau klik untuk <span class="btn-pilih-pdf btn-pilih-doa">📁 Pilih File PDF dari Perangkat</span></div>
+                    </div>
+
+                    <div id="dropzone-terisi-doa" class="pdf-file-card hidden" onclick="event.stopPropagation();">
+                        <div style="display: flex; align-items: center; gap: 10px; overflow: hidden;">
+                            <span style="font-size: 28px;">📗</span>
+                            <div style="overflow: hidden;">
+                                <div id="nama-file-pdf-doa" style="font-size: 13px; font-weight: 800; color: white; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">doa.pdf</div>
+                                <div id="info-file-pdf-doa" style="font-size: 11px; color: #6ee7b7;">1.8 MB • Diupload baru saja</div>
+                            </div>
+                        </div>
+                        <div style="display: flex; gap: 6px; flex-shrink: 0;">
+                            <button type="button" class="btn-kecil" style="background: rgba(16, 185, 129, 0.35); color: #6ee7b7; border: 1px solid rgba(16, 185, 129, 0.4); padding: 6px 12px; font-size: 11px;" onclick="bukaFilePDFLokal('doa')">👁️ Buka</button>
+                            <button type="button" class="btn-kecil" style="background: rgba(255, 255, 255, 0.1); color: #cbd5e1; border: 1px solid var(--border-halus); padding: 6px 10px; font-size: 11px;" onclick="picuPilihFilePDF('doa')">🔄 Ganti</button>
+                            <button type="button" class="btn-kecil" style="background: rgba(239, 68, 68, 0.25); color: #fca5a5; border: 1px solid rgba(239, 68, 68, 0.4); padding: 6px 10px; font-size: 11px;" onclick="hapusFilePDFLokal('doa')">🗑️</button>
+                        </div>
+                    </div>
+                    <input type="file" id="input-file-doa" accept="application/pdf" style="display:none;" onchange="prosesUploadPDF(this.files[0], 'doa')">
+                </div>
+
+                <div style="font-size: 11px; color: var(--teks-sekunder); margin-bottom: 5px; font-weight: 700;">Atau Tautan Web / Google Drive Online (Opsional):</div>
+                <input type="text" id="setting-link-doa" placeholder="https://..." style="margin: 0; background:var(--bg-elemen); font-size: 12px; padding: 10px 14px;">
+            </div>
+
             <button type="button" onclick="simpanPengaturanLinkReferensi()" style="background: linear-gradient(135deg, #3b82f6, #1d4ed8); color: white; box-shadow: 0 6px 0 #1e40af;">💾 Simpan Tautan Referensi</button>
         </div>
         <button class="btn-logout" onclick="logout()">Keluar dari Admin</button>
@@ -606,7 +755,7 @@
                             <div id="preview-teks-hadits-arti" class="teks-arti-box">"Sesungguhnya setiap amalan tergantung pada niatnya..."</div>
                             <div style="display:flex; gap: 8px; margin-top: 12px; flex-wrap: wrap;">
                                 <button type="button" class="btn-kecil" style="flex:1; background: linear-gradient(135deg, #2563eb, #1d4ed8); color: white; border: none; padding: 10px;" onclick="bukaModalReferensiTeks('hadits')">📖 Teks Arab & Arti Lengkap</button>
-                                <button type="button" class="btn-kecil" style="background: rgba(255,255,255,0.08); color: #93c5fd; border: 1px solid rgba(59,130,246,0.3); padding: 10px 14px;" onclick="bukaLinkReferensi('hadits')">🔗 Link Web / PDF</button>
+                                <button type="button" id="btn-buka-ref-hadits" class="btn-kecil" style="background: rgba(255,255,255,0.08); color: #93c5fd; border: 1px solid rgba(59,130,246,0.3); padding: 10px 14px;" onclick="bukaLinkReferensi('hadits')">🔗 Link Web / PDF</button>
                             </div>
                         </div>
                     </div>
@@ -633,7 +782,7 @@
                             <div id="preview-teks-doa-arti" class="teks-arti-box">"Dengan nama-Mu ya Allah, aku hidup dan aku mati."</div>
                             <div style="display:flex; gap: 8px; margin-top: 12px; flex-wrap: wrap;">
                                 <button type="button" class="btn-kecil" style="flex:1; background: linear-gradient(135deg, #059669, #047857); color: white; border: none; padding: 10px;" onclick="bukaModalReferensiTeks('doa')">🤲 Teks Arab & Arti Lengkap</button>
-                                <button type="button" class="btn-kecil" style="background: rgba(255,255,255,0.08); color: #6ee7b7; border: 1px solid rgba(16,185,129,0.3); padding: 10px 14px;" onclick="bukaLinkReferensi('doa')">🔗 Link Web / PDF</button>
+                                <button type="button" id="btn-buka-ref-doa" class="btn-kecil" style="background: rgba(255,255,255,0.08); color: #6ee7b7; border: 1px solid rgba(16,185,129,0.3); padding: 10px 14px;" onclick="bukaLinkReferensi('doa')">🔗 Link Web / PDF</button>
                             </div>
                         </div>
                     </div>
@@ -1144,7 +1293,7 @@
         // =========================================================
         // --- MODAL REFERENSI TEKS & TAUTAN WEB / PDF ---
         // =========================================================
-        function bukaModalReferensiTeks(tipe) {
+        async function bukaModalReferensiTeks(tipe) {
             if(tipe === 'hadits') updateDetailHaditsUI();
             if(tipe === 'doa') updateDetailDoaUI();
 
@@ -1154,6 +1303,13 @@
             document.getElementById('modal-ref-teks-arab').innerText = materiAktifReferensi.arab || '-';
             document.getElementById('modal-ref-teks-arti').innerText = materiAktifReferensi.arti ? ('"' + materiAktifReferensi.arti + '"') : '-';
             
+            let btnM = document.getElementById('modal-ref-btn-link');
+            if(btnM) {
+                let id = (tipe === 'hadits') ? 'pdf_hadits' : 'pdf_doa';
+                let item = await ambilPDFDariDB(id);
+                btnM.innerText = (item && item.data) ? '📄 Buka Buku PDF' : '🌐 Buka Link / PDF';
+            }
+
             document.getElementById('modal-referensi-materi').classList.remove('hidden');
         }
 
@@ -1178,15 +1334,228 @@
             .catch(() => alert("⚠️ Gagal menyalin. Silakan pilih teks secara manual."));
         }
 
-        function bukaLinkReferensi(tipe) {
+        // =========================================================
+        // --- SISTEM PENYIMPANAN FILE PDF LOKAL (INDEXEDDB) ---
+        // =========================================================
+        const IDB_NAME = 'BilalTahfizhPDFStore';
+        const IDB_VERSION = 1;
+        const IDB_STORE = 'buku_pdf';
+
+        function bukaDBPDF() {
+            return new Promise((resolve, reject) => {
+                let req = indexedDB.open(IDB_NAME, IDB_VERSION);
+                req.onupgradeneeded = function(e) {
+                    let db = e.target.result;
+                    if (!db.objectStoreNames.contains(IDB_STORE)) {
+                        db.createObjectStore(IDB_STORE, { keyPath: 'id' });
+                    }
+                };
+                req.onsuccess = function(e) { resolve(e.target.result); };
+                req.onerror = function(e) { reject(e.target.error); };
+            });
+        }
+
+        async function simpanPDFKeDB(id, file) {
+            let db = await bukaDBPDF();
+            return new Promise((resolve, reject) => {
+                let tx = db.transaction(IDB_STORE, 'readwrite');
+                let store = tx.objectStore(IDB_STORE);
+                let item = {
+                    id: id,
+                    nama: file.name,
+                    ukuran: file.size,
+                    tipe: file.type || 'application/pdf',
+                    data: file,
+                    waktu: new Date().toLocaleDateString('id-ID') + ' ' + new Date().toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' })
+                };
+                let putReq = store.put(item);
+                putReq.onsuccess = () => resolve(item);
+                putReq.onerror = (e) => reject(e.target.error);
+            });
+        }
+
+        async function ambilPDFDariDB(id) {
+            try {
+                let db = await bukaDBPDF();
+                return new Promise((resolve, reject) => {
+                    let tx = db.transaction(IDB_STORE, 'readonly');
+                    let store = tx.objectStore(IDB_STORE);
+                    let req = store.get(id);
+                    req.onsuccess = () => resolve(req.result || null);
+                    req.onerror = (e) => reject(e.target.error);
+                });
+            } catch(e) {
+                console.warn('Gagal akses IndexedDB:', e);
+                return null;
+            }
+        }
+
+        async function hapusPDFDariDB(id) {
+            try {
+                let db = await bukaDBPDF();
+                return new Promise((resolve, reject) => {
+                    let tx = db.transaction(IDB_STORE, 'readwrite');
+                    let store = tx.objectStore(IDB_STORE);
+                    let req = store.delete(id);
+                    req.onsuccess = () => resolve(true);
+                    req.onerror = (e) => reject(e.target.error);
+                });
+            } catch(e) {
+                console.warn('Gagal hapus dari IndexedDB:', e);
+                return false;
+            }
+        }
+
+        function formatUkuranFile(bytes) {
+            if (!bytes || bytes === 0) return '0 Bytes';
+            let k = 1024;
+            let sizes = ['Bytes', 'KB', 'MB', 'GB'];
+            let i = Math.floor(Math.log(bytes) / Math.log(k));
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(1)) + ' ' + sizes[i];
+        }
+
+        function picuPilihFilePDF(tipe) {
+            let el = document.getElementById(tipe === 'hadits' ? 'input-file-hadits' : 'input-file-doa');
+            if(el) el.click();
+        }
+
+        function handleDragOverPDF(e, tipe) {
+            e.preventDefault();
+            e.stopPropagation();
+            let el = document.getElementById(tipe === 'hadits' ? 'dropzone-hadits' : 'dropzone-doa');
+            if(el) el.classList.add('drag-active');
+        }
+
+        function handleDragLeavePDF(e, tipe) {
+            e.preventDefault();
+            e.stopPropagation();
+            let el = document.getElementById(tipe === 'hadits' ? 'dropzone-hadits' : 'dropzone-doa');
+            if(el) el.classList.remove('drag-active');
+        }
+
+        function handleDropPDF(e, tipe) {
+            e.preventDefault();
+            e.stopPropagation();
+            let el = document.getElementById(tipe === 'hadits' ? 'dropzone-hadits' : 'dropzone-doa');
+            if(el) el.classList.remove('drag-active');
+
+            if (e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+                let file = e.dataTransfer.files[0];
+                prosesUploadPDF(file, tipe);
+            }
+        }
+
+        async function prosesUploadPDF(file, tipe) {
+            if(!file) return;
+            if(!file.name.toLowerCase().endsWith('.pdf') && file.type !== 'application/pdf') {
+                alert("⚠️ Harap pilih file dengan format PDF (.pdf)!");
+                return;
+            }
+
+            try {
+                let id = (tipe === 'hadits') ? 'pdf_hadits' : 'pdf_doa';
+                await simpanPDFKeDB(id, file);
+                await muatStatusPDFLokalUI();
+                alert(`✅ File PDF ${tipe === 'hadits' ? 'Hadits' : 'Doa'} "${file.name}" berhasil disimpan di perangkat!`);
+            } catch(e) {
+                console.error("Gagal simpan PDF", e);
+                alert("⚠️ Terjadi kesalahan saat menyimpan file PDF ke database lokal.");
+            }
+        }
+
+        async function bukaFilePDFLokal(tipe) {
+            let id = (tipe === 'hadits') ? 'pdf_hadits' : 'pdf_doa';
+            let item = await ambilPDFDariDB(id);
+            if(item && item.data) {
+                let blobUrl = URL.createObjectURL(item.data);
+                window.open(blobUrl, '_blank');
+            } else {
+                alert("⚠️ Belum ada file PDF lokal yang tersimpan.");
+            }
+        }
+
+        async function hapusFilePDFLokal(tipe) {
+            let label = (tipe === 'hadits') ? 'Hadits' : 'Doa';
+            if(confirm(`🗑️ Hapus file PDF ${label} dari penyimpanan perangkat?`)) {
+                let id = (tipe === 'hadits') ? 'pdf_hadits' : 'pdf_doa';
+                await hapusPDFDariDB(id);
+                await muatStatusPDFLokalUI();
+                alert(`✅ File PDF ${label} berhasil dihapus.`);
+            }
+        }
+
+        async function muatStatusPDFLokalUI() {
+            // Cek Hadits
+            try {
+                let itemH = await ambilPDFDariDB('pdf_hadits');
+                let kH = document.getElementById('dropzone-kosong-hadits');
+                let tH = document.getElementById('dropzone-terisi-hadits');
+                let bH = document.getElementById('badge-status-pdf-hadits');
+                let nH = document.getElementById('nama-file-pdf-hadits');
+                let iH = document.getElementById('info-file-pdf-hadits');
+                let btnH = document.getElementById('btn-buka-ref-hadits');
+
+                if(itemH && itemH.data) {
+                    if(kH) kH.classList.add('hidden');
+                    if(tH) tH.classList.remove('hidden');
+                    if(bH) { bH.innerText = '✅ PDF Lokal Aktif'; bH.style.color = '#60a5fa'; bH.style.background = 'rgba(59,130,246,0.2)'; }
+                    if(nH) nH.innerText = itemH.nama;
+                    if(iH) iH.innerText = formatUkuranFile(itemH.ukuran) + ' • Disimpan ' + (itemH.waktu || 'offline');
+                    if(btnH) btnH.innerText = '📄 Buka PDF Buku';
+                } else {
+                    if(kH) kH.classList.remove('hidden');
+                    if(tH) tH.classList.add('hidden');
+                    if(bH) { bH.innerText = 'Belum ada PDF lokal'; bH.style.color = 'var(--teks-sekunder)'; bH.style.background = 'rgba(255,255,255,0.06)'; }
+                    if(btnH) btnH.innerText = '🔗 Link Web / PDF';
+                }
+            } catch(e) { console.warn('Error cek status PDF Hadits', e); }
+
+            // Cek Doa
+            try {
+                let itemD = await ambilPDFDariDB('pdf_doa');
+                let kD = document.getElementById('dropzone-kosong-doa');
+                let tD = document.getElementById('dropzone-terisi-doa');
+                let bD = document.getElementById('badge-status-pdf-doa');
+                let nD = document.getElementById('nama-file-pdf-doa');
+                let iD = document.getElementById('info-file-pdf-doa');
+                let btnD = document.getElementById('btn-buka-ref-doa');
+
+                if(itemD && itemD.data) {
+                    if(kD) kD.classList.add('hidden');
+                    if(tD) tD.classList.remove('hidden');
+                    if(bD) { bD.innerText = '✅ PDF Lokal Aktif'; bD.style.color = '#34d399'; bD.style.background = 'rgba(16,185,129,0.2)'; }
+                    if(nD) nD.innerText = itemD.nama;
+                    if(iD) iD.innerText = formatUkuranFile(itemD.ukuran) + ' • Disimpan ' + (itemD.waktu || 'offline');
+                    if(btnD) btnD.innerText = '📄 Buka PDF Buku';
+                } else {
+                    if(kD) kD.classList.remove('hidden');
+                    if(tD) tD.classList.add('hidden');
+                    if(bD) { bD.innerText = 'Belum ada PDF lokal'; bD.style.color = 'var(--teks-sekunder)'; bD.style.background = 'rgba(255,255,255,0.06)'; }
+                    if(btnD) btnD.innerText = '🔗 Link Web / PDF';
+                }
+            } catch(e) { console.warn('Error cek status PDF Doa', e); }
+        }
+
+        async function bukaLinkReferensi(tipe) {
+            let id = (tipe === 'hadits') ? 'pdf_hadits' : 'pdf_doa';
+            try {
+                let item = await ambilPDFDariDB(id);
+                if (item && item.data) {
+                    let blobUrl = URL.createObjectURL(item.data);
+                    window.open(blobUrl, '_blank');
+                    return;
+                }
+            } catch(e) { console.warn("Fallback link web", e); }
+
+            // Fallback ke tautan web online
             let link = (tipe === 'hadits') ? linkReferensiHadits : linkReferensiDoa;
             if(!link) link = (tipe === 'hadits') ? DEFAULT_LINK_HADITS : DEFAULT_LINK_DOA;
             window.open(link, '_blank');
         }
 
-        function bukaLinkReferensiDariModal() {
-            let link = materiAktifReferensi.link || (materiAktifReferensi.tipe === 'hadits' ? linkReferensiHadits : linkReferensiDoa);
-            window.open(link, '_blank');
+        async function bukaLinkReferensiDariModal() {
+            let tipe = (materiAktifReferensi && materiAktifReferensi.tipe) ? materiAktifReferensi.tipe : 'hadits';
+            await bukaLinkReferensi(tipe);
         }
 
         function simpanPengaturanLinkReferensi() {
@@ -1202,6 +1571,7 @@
             let elD = document.getElementById('setting-link-doa');
             if(elH) elH.value = linkReferensiHadits;
             if(elD) elD.value = linkReferensiDoa;
+            muatStatusPDFLokalUI();
         }
 
         const dataSurahLengkap = {
