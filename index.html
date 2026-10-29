@@ -1027,8 +1027,16 @@
                     <b style="color: #60a5fa;">2. Buat Bucket Storage:</b><br>
                     Di menu sebelah kiri, klik menu <b>Storage</b> &rarr; klik tombol <b>"New Bucket"</b> &rarr; Beri nama persis: <code style="color:#fde047; background:rgba(0,0,0,0.5); padding:2px 6px; border-radius:4px; font-weight:800;">buku-referensi</code> &rarr; <b>Aktifkan tombol "Public bucket"</b> &rarr; Klik <i>Save</i>.
                 </div>
+                <div style="margin-bottom: 12px; background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.35); border-radius: 10px; padding: 12px 14px;">
+                    <b style="color: #f87171;">3. Berikan Izin Upload (RLS Policy - WAJIB):</b><br>
+                    <span style="font-size: 12px; color: #cbd5e1;">Jika langkah ini dilewati, Supabase akan menolak upload dengan pesan <i>"new row violates row-level security policy"</i>. Cukup klik tombol di bawah untuk menyalin script SQL, lalu jalankan di Supabase:</span>
+                    <div style="margin-top: 10px; display: flex; gap: 8px; align-items: center; flex-wrap: wrap;">
+                        <button type="button" class="btn-kecil" style="background: linear-gradient(135deg, #10b981, #059669); color: white; border: none; padding: 8px 16px; font-size: 12px; font-weight: 800; border-radius: 8px; cursor: pointer; box-shadow: 0 4px 10px rgba(16,185,129,0.3);" onclick="salinSQLPolicySupabase()">📋 Salin Script SQL Policy</button>
+                        <span style="font-size: 11px; color: #94a3b8;">Buka menu <b>SQL Editor</b> (ikon &gt;_) di Supabase &rarr; Paste &rarr; Klik <b>Run</b></span>
+                    </div>
+                </div>
                 <div style="margin-bottom: 12px;">
-                    <b style="color: #60a5fa;">3. Salin URL & Anon Key API:</b><br>
+                    <b style="color: #60a5fa;">4. Salin URL & Anon Key API:</b><br>
                     Buka menu <b>Project Settings</b> (ikon roda gigi di pojok kiri bawah) &rarr; pilih <b>API</b> &rarr; Salin dua data berikut:
                     <ul style="margin: 4px 0 4px 18px; padding: 0;">
                         <li><b>Project URL</b> (contoh: <code>https://abcdefghijkl.supabase.co</code>)</li>
@@ -1036,7 +1044,7 @@
                     </ul>
                 </div>
                 <div>
-                    <b style="color: #60a5fa;">4. Tempel & Uji Koneksi:</b><br>
+                    <b style="color: #60a5fa;">5. Tempel & Uji Koneksi:</b><br>
                     Tempelkan Project URL dan Anon Key ke form pengaturan di aplikasi ini, lalu klik tombol <b>"🔌 Tes Koneksi & Simpan"</b>. Selesai!
                 </div>
             </div>
@@ -1565,6 +1573,37 @@
             if(m) m.classList.add('hidden');
         }
 
+        function salinSQLPolicySupabase() {
+            let bucket = (document.getElementById('input-supabase-bucket')?.value || '').trim() || 'buku-referensi';
+            let sql = `-- 1. Izinkan Publik/Anon Mengunggah (Upload) File PDF ke Bucket '${bucket}'
+CREATE POLICY "Izinkan Upload Publik"
+ON storage.objects FOR INSERT
+TO public
+WITH CHECK (bucket_id = '${bucket}');
+
+-- 2. Izinkan Publik Membaca (Download/View) File di Bucket '${bucket}'
+CREATE POLICY "Izinkan Baca Publik"
+ON storage.objects FOR SELECT
+TO public
+USING (bucket_id = '${bucket}');
+
+-- 3. Izinkan Publik Menimpa/Update File di Bucket '${bucket}'
+CREATE POLICY "Izinkan Update Publik"
+ON storage.objects FOR UPDATE
+TO public
+USING (bucket_id = '${bucket}');`;
+
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(sql).then(() => {
+                    alert("📋 Script SQL Policy berhasil disalin ke clipboard!\n\nLangkah berikutnya:\n1. Buka dashboard Supabase Anda (supabase.com)\n2. Klik menu 'SQL Editor' (ikon '>_') di bilah menu kiri\n3. Klik tombol 'New query'\n4. Tempelkan (Paste / Ctrl+V) script ini lalu klik tombol 'Run' (atau Ctrl+Enter).\n\nSetelah berhasil, coba upload kembali file PDF!");
+                }).catch(() => {
+                    prompt("Silakan salin manual script SQL berikut:", sql);
+                });
+            } else {
+                prompt("Silakan salin manual script SQL berikut:", sql);
+            }
+        }
+
         async function tesKoneksiSupabase() {
             let url = (document.getElementById('input-supabase-url')?.value || '').trim();
             let key = (document.getElementById('input-supabase-key')?.value || '').trim();
@@ -1599,7 +1638,7 @@
                 }
 
                 perbaruiStatusSupabaseUI("✅ Berhasil terhubung ke bucket '" + bucket + "'", false);
-                alert(`✅ Alhamdulillah! Berhasil terhubung ke Supabase Cloud.\n\nBucket: "${bucket}" siap digunakan untuk upload & sinkronisasi otomatis PDF Hadits dan Doa.`);
+                alert(`✅ Alhamdulillah! Berhasil terhubung ke Supabase Cloud.\n\nBucket: "${bucket}" siap digunakan.\n\n⚠️ PENTING: Jika saat upload PDF muncul pesan 'violates row-level security policy', pastikan Anda sudah menyalin & menjalankan Script SQL Policy dari tombol '📖 Panduan Buat Supabase'.`);
                 return true;
             } catch(e) {
                 console.error("Test error:", e);
@@ -1819,6 +1858,14 @@
                     } catch(cloudErr) {
                         console.error("Gagal upload ke Supabase:", cloudErr);
                         let pesan = cloudErr.message || JSON.stringify(cloudErr);
+
+                        if(pesan.toLowerCase().includes('row-level security') || pesan.toLowerCase().includes('security policy')) {
+                            if(progressBox) progressBox.classList.add('hidden');
+                            alert("⚠️ Upload ditolak oleh Kebijakan Keamanan (RLS) Supabase!\n\nHal ini terjadi karena izin upload (RLS Policy) untuk bucket '" + (supabaseConfig.bucket || 'buku-referensi') + "' belum dibuat di Supabase.\n\nSolusinya sangat mudah (1 langkah):\n1. Pada jendela panduan yang terbuka, klik tombol hijau '📋 Salin Script SQL Policy'\n2. Buka dashboard Supabase > menu SQL Editor (ikon '>_') > klik 'New query'\n3. Paste lalu klik 'Run'.\n\nSetelah itu silakan upload ulang file PDF ini.");
+                            bukaModalPanduanSupabase();
+                            return;
+                        }
+
                         let lanjutLokal = confirm(`⚠️ Gagal mengunggah ke Cloud Supabase:\n"${pesan}"\n\nApakah Anda ingin tetap menyimpannya di penyimpanan lokal perangkat ini saja?`);
                         if(!lanjutLokal) {
                             if(progressBox) progressBox.classList.add('hidden');
