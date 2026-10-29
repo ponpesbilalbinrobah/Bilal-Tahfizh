@@ -147,6 +147,72 @@
         label.form-label { font-weight: 700; font-size: 14px; color: var(--teks-utama); display: block; margin-bottom: 6px;}
         .wp-opsi { display: flex; gap: 12px; margin-bottom: 15px; overflow-x: auto; padding-bottom: 10px; }
         .wp-kotak { min-width: 65px; height: 65px; border-radius: 12px; cursor: pointer; border: 2px solid transparent; box-shadow: 0 4px 10px rgba(0,0,0,0.5); background-size: cover; background-position: center;}
+
+        /* =========================================================
+           --- DASHBOARD STATISTIK & PERINGKAT CAPAIAN PONDOK ---
+        ========================================================= */
+        .stat-kpi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 12px; margin-bottom: 22px; }
+        .stat-kpi-card { background: rgba(0, 0, 0, 0.35); border: 1px solid var(--border-halus); border-radius: 16px; padding: 14px 10px; text-align: center; position: relative; overflow: hidden; transition: all 0.25s ease; box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
+        .stat-kpi-card:hover { transform: translateY(-3px); border-color: rgba(251, 191, 36, 0.4); box-shadow: 0 8px 25px rgba(251, 191, 36, 0.15); }
+        .stat-kpi-icon { font-size: 22px; margin-bottom: 2px; }
+        .stat-kpi-val { font-size: 24px; font-weight: 900; color: var(--tema-warna); line-height: 1.1; margin: 3px 0; text-shadow: 0 2px 10px rgba(251, 191, 36, 0.3); }
+        .stat-kpi-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: var(--teks-utama); }
+
+        .podium-wrapper { display: flex; justify-content: center; align-items: flex-end; gap: 10px; margin: 20px 0 25px 0; padding-bottom: 5px; }
+        .podium-col { flex: 1; max-width: 180px; display: flex; flex-direction: column; align-items: center; text-align: center; position: relative; }
+        .podium-avatar { width: 50px; height: 50px; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 22px; margin-bottom: 8px; position: relative; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5); }
+        .podium-col.rank-1 .podium-avatar { width: 64px; height: 64px; font-size: 28px; border: 3px solid #fbbf24; background: radial-gradient(circle, rgba(251, 191, 36, 0.35) 0%, #0f172a 100%); box-shadow: 0 0 25px rgba(251, 191, 36, 0.6); animation: goldGlow 3s ease-in-out infinite; }
+        .podium-col.rank-2 .podium-avatar { border: 3px solid #94a3b8; background: radial-gradient(circle, rgba(148, 163, 184, 0.25) 0%, #0f172a 100%); box-shadow: 0 0 15px rgba(148, 163, 184, 0.4); }
+        .podium-col.rank-3 .podium-avatar { border: 3px solid #f97316; background: radial-gradient(circle, rgba(249, 115, 22, 0.25) 0%, #0f172a 100%); box-shadow: 0 0 15px rgba(249, 115, 22, 0.4); }
+        .podium-crown { position: absolute; top: -14px; font-size: 20px; animation: bounceCrown 2s ease-in-out infinite; }
+        .podium-name { font-size: 13px; font-weight: 800; color: var(--teks-utama); line-height: 1.2; margin-bottom: 2px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; min-height: 32px; }
+        .podium-halaqah { font-size: 10px; font-weight: 600; color: var(--teks-sekunder); margin-bottom: 8px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; }
+        .podium-pillar { width: 100%; border-radius: 14px 14px 8px 8px; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 12px 6px; border: 1px solid var(--border-halus); box-shadow: inset 0 2px 10px rgba(0,0,0,0.3); }
+        .podium-col.rank-1 .podium-pillar { height: 110px; background: linear-gradient(180deg, rgba(251, 191, 36, 0.3) 0%, rgba(180, 83, 9, 0.35) 100%); border-color: rgba(251, 191, 36, 0.6); }
+        .podium-col.rank-2 .podium-pillar { height: 85px; background: linear-gradient(180deg, rgba(148, 163, 184, 0.2) 0%, rgba(51, 65, 85, 0.35) 100%); border-color: rgba(148, 163, 184, 0.4); }
+        .podium-col.rank-3 .podium-pillar { height: 65px; background: linear-gradient(180deg, rgba(249, 115, 22, 0.2) 0%, rgba(154, 52, 18, 0.35) 100%); border-color: rgba(249, 115, 22, 0.4); }
+        .podium-juz-tag { font-size: 15px; font-weight: 900; letter-spacing: 0.5px; }
+        .podium-col.rank-1 .podium-juz-tag { color: #fbbf24; text-shadow: 0 0 10px rgba(251, 191, 36, 0.5); }
+        .podium-col.rank-2 .podium-juz-tag { color: #e2e8f0; }
+        .podium-col.rank-3 .podium-juz-tag { color: #fdba74; }
+        .podium-badge-label { font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; opacity: 0.9; margin-top: 2px; }
+
+        @keyframes goldGlow { 0%, 100% { box-shadow: 0 0 20px rgba(251, 191, 36, 0.4); } 50% { box-shadow: 0 0 35px rgba(251, 191, 36, 0.85); } }
+        @keyframes bounceCrown { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-4px); } }
+
+        .dash-tabs { display: flex; background: rgba(0, 0, 0, 0.4); border-radius: 12px; padding: 4px; margin-bottom: 16px; border: 1px solid var(--border-halus); gap: 4px; }
+        .dash-tab-btn { flex: 1; padding: 10px 4px; text-align: center; font-weight: 700; font-size: 12px; border-radius: 8px; cursor: pointer; color: var(--teks-sekunder); transition: all 0.2s ease; border: none; background: transparent; box-shadow: none; margin: 0; text-transform: none; letter-spacing: normal; }
+        .dash-tab-btn:hover { color: var(--teks-utama); background: rgba(255, 255, 255, 0.05); transform: none; box-shadow: none; }
+        .dash-tab-btn.aktif { background: linear-gradient(135deg, var(--tema-warna), var(--tema-gelap)); color: var(--teks-dalam-tombol); box-shadow: 0 2px 8px rgba(251, 191, 36, 0.3); }
+
+        .lb-card { background: var(--bg-input); border: 1px solid var(--border-halus); border-radius: 14px; padding: 12px 14px; margin-bottom: 10px; display: flex; align-items: flex-start; gap: 12px; transition: all 0.2s ease; }
+        .lb-card:hover { border-color: rgba(251, 191, 36, 0.3); background: rgba(255, 255, 255, 0.04); transform: translateX(2px); }
+        .lb-card.top-1 { border-left: 5px solid #fbbf24; background: linear-gradient(90deg, rgba(251, 191, 36, 0.08) 0%, var(--bg-input) 100%); }
+        .lb-card.top-2 { border-left: 5px solid #94a3b8; }
+        .lb-card.top-3 { border-left: 5px solid #f97316; }
+        .lb-rank-badge { min-width: 34px; height: 34px; border-radius: 10px; display: flex; justify-content: center; align-items: center; font-weight: 900; font-size: 14px; background: rgba(255,255,255,0.06); color: var(--teks-utama); border: 1px solid var(--border-halus); flex-shrink: 0; }
+        .lb-card.top-1 .lb-rank-badge { background: linear-gradient(135deg, #fbbf24, #d97706); color: #451a03; border-color: #fbbf24; box-shadow: 0 2px 8px rgba(251, 191, 36, 0.4); }
+        .lb-card.top-2 .lb-rank-badge { background: linear-gradient(135deg, #cbd5e1, #64748b); color: #0f172a; border-color: #cbd5e1; }
+        .lb-card.top-3 .lb-rank-badge { background: linear-gradient(135deg, #fdba74, #ea580c); color: #431407; border-color: #fdba74; }
+        .lb-content { flex: 1; min-width: 0; }
+        .lb-header-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; gap: 6px; }
+        .lb-santri-nama { font-weight: 800; font-size: 14px; color: var(--teks-utama); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .lb-juz-badge { font-weight: 900; font-size: 13px; color: var(--tema-warna); background: rgba(251, 191, 36, 0.12); padding: 3px 8px; border-radius: 6px; border: 1px solid rgba(251, 191, 36, 0.25); white-space: nowrap; }
+        .lb-meta-row { display: flex; justify-content: space-between; align-items: center; font-size: 11px; color: var(--teks-sekunder); margin-bottom: 6px; }
+        .lb-bar-track { width: 100%; height: 7px; background: rgba(255, 255, 255, 0.08); border-radius: 100px; overflow: hidden; margin-bottom: 6px; }
+        .lb-bar-fill { height: 100%; background: linear-gradient(90deg, #10b981, var(--tema-warna)); border-radius: 100px; transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1); }
+        .lb-chips-wrap { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 6px; }
+        .lb-chip { font-size: 10px; font-weight: 700; padding: 2px 6px; border-radius: 4px; background: rgba(251, 191, 36, 0.12); color: #fde68a; border: 1px solid rgba(251, 191, 36, 0.25); }
+
+        .halaqah-card { background: var(--bg-input); border: 1px solid var(--border-halus); border-radius: 16px; padding: 16px; transition: all 0.2s ease; margin-bottom: 12px; }
+        .halaqah-card:hover { border-color: rgba(251, 191, 36, 0.4); box-shadow: 0 6px 20px rgba(0,0,0,0.3); }
+        .halaqah-title { font-size: 15px; font-weight: 800; color: var(--tema-warna); margin-bottom: 10px; display: flex; align-items: center; justify-content: space-between; }
+        .halaqah-stat-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 12px; }
+        .halaqah-stat-box { background: rgba(255, 255, 255, 0.03); border: 1px solid var(--border-halus); border-radius: 10px; padding: 8px 6px; text-align: center; }
+        .halaqah-stat-num { font-size: 15px; font-weight: 800; color: var(--teks-utama); }
+        .halaqah-stat-lbl { font-size: 10px; color: var(--teks-sekunder); font-weight: 600; text-transform: uppercase; margin-top: 2px; }
+
+        .modal-content-large { max-width: 650px !important; width: 92% !important; }
     </style>
 </head>
 <body>
@@ -190,6 +256,96 @@
 
     <div id="admin-page" class="container hidden">
         <h2 style="color: var(--tema-warna);">Dashboard Admin</h2>
+        
+        <!-- DASHBOARD STATISTIK & PERINGKAT CAPAIAN PONDOK -->
+        <div id="section-dashboard-statistik" class="box" style="border: 1px solid rgba(251, 191, 36, 0.35); background: linear-gradient(180deg, rgba(251, 191, 36, 0.08) 0%, rgba(15, 23, 42, 0.6) 100%); padding: 22px 18px; margin-bottom: 25px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; border-bottom: 1px solid var(--border-halus); padding-bottom: 12px; flex-wrap: wrap; gap: 8px;">
+                <div>
+                    <h3 style="margin: 0; color: var(--tema-warna); border: none; padding: 0; font-size: 19px; display: flex; align-items: center; gap: 8px;">
+                        <span>📊</span> Statistik & Capaian Pondok
+                    </h3>
+                    <p style="margin: 4px 0 0 0; font-size: 12px; color: var(--teks-sekunder);">Pantauan performa hafalan santri & halaqah pesantren secara real-time</p>
+                </div>
+                <button type="button" onclick="tarikDataServer('admin')" class="btn-kecil" style="background: rgba(251, 191, 36, 0.15); color: var(--tema-warna); border: 1px solid rgba(251, 191, 36, 0.3); width: auto; padding: 8px 14px; font-size: 12px; border-radius: 10px;" title="Perbarui Data dari Server">
+                    🔄 Segarkan Data
+                </button>
+            </div>
+
+            <!-- KPI Summary Cards -->
+            <div class="stat-kpi-grid">
+                <div class="stat-kpi-card">
+                    <div class="stat-kpi-icon">📖</div>
+                    <div class="stat-kpi-val" id="stat-total-juz-pondok">-</div>
+                    <div class="stat-kpi-label">Total Hafalan</div>
+                    <div style="font-size: 10px; color: var(--teks-sekunder); margin-top: 2px;">Akumulasi Pondok</div>
+                </div>
+                <div class="stat-kpi-card">
+                    <div class="stat-kpi-icon">👥</div>
+                    <div class="stat-kpi-val" id="stat-total-santri">-</div>
+                    <div class="stat-kpi-label">Santri Terdaftar</div>
+                    <div style="font-size: 10px; color: var(--teks-sekunder); margin-top: 2px;">Seluruh Halaqah</div>
+                </div>
+                <div class="stat-kpi-card">
+                    <div class="stat-kpi-icon">📈</div>
+                    <div class="stat-kpi-val" id="stat-rata-juz">-</div>
+                    <div class="stat-kpi-label">Rata-rata Hafalan</div>
+                    <div style="font-size: 10px; color: var(--teks-sekunder); margin-top: 2px;">Juz per Santri</div>
+                </div>
+                <div class="stat-kpi-card">
+                    <div class="stat-kpi-icon">⚡</div>
+                    <div class="stat-kpi-val" id="stat-total-setoran">-</div>
+                    <div class="stat-kpi-label">Total Setoran</div>
+                    <div style="font-size: 10px; color: var(--teks-sekunder); margin-top: 2px;">Ziyadah & Muroja'ah</div>
+                </div>
+            </div>
+
+            <!-- Podium Top 3 Santri -->
+            <div style="margin-top: 20px; text-align: center;">
+                <div style="font-size: 13px; font-weight: 800; color: var(--tema-warna); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px;">
+                    👑 Podium Kehormatan (Top 3 Santri)
+                </div>
+                <div class="podium-wrapper" id="wadah-podium-top3">
+                    <!-- Dinamis terisi oleh JavaScript -->
+                </div>
+            </div>
+
+            <!-- Dashboard Navigation Tabs -->
+            <div class="dash-tabs" style="margin-top: 20px;">
+                <button type="button" class="dash-tab-btn aktif" id="tab-btn-leaderboard" onclick="gantiTabDashboard('leaderboard', '')">🏆 Peringkat Santri</button>
+                <button type="button" class="dash-tab-btn" id="tab-btn-halaqah" onclick="gantiTabDashboard('halaqah', '')">🕌 Capaian Halaqah</button>
+                <button type="button" class="dash-tab-btn" id="tab-btn-keaktifan" onclick="gantiTabDashboard('keaktifan', '')">🔥 Santri Teraktif</button>
+            </div>
+
+            <!-- Tab Content 1: Leaderboard Santri -->
+            <div id="dash-panel-leaderboard" class="dash-panel">
+                <div style="display: flex; gap: 8px; margin-bottom: 12px; flex-wrap: wrap;">
+                    <input type="text" id="dash-cari-santri" placeholder="🔍 Cari nama santri..." oninput="filterLeaderboardSantri('')" style="margin: 0; flex: 2; min-width: 150px; font-size: 13px; padding: 10px 14px;">
+                    <select id="dash-filter-halaqah" onchange="filterLeaderboardSantri('')" style="margin: 0; flex: 1; min-width: 140px; font-size: 13px; padding: 10px 14px;">
+                        <option value="semua">Semua Halaqah</option>
+                    </select>
+                </div>
+                <div id="wadah-list-leaderboard" style="max-height: 400px; overflow-y: auto; padding-right: 2px;">
+                    <!-- Terisi otomatis -->
+                </div>
+            </div>
+
+            <!-- Tab Content 2: Capaian Halaqah -->
+            <div id="dash-panel-halaqah" class="dash-panel hidden">
+                <div id="wadah-list-halaqah" style="display: flex; flex-direction: column; gap: 10px;">
+                    <!-- Terisi otomatis -->
+                </div>
+            </div>
+
+            <!-- Tab Content 3: Santri Teraktif -->
+            <div id="dash-panel-keaktifan" class="dash-panel hidden">
+                <div style="font-size: 12px; color: var(--teks-sekunder); margin-bottom: 10px; text-align: center;">
+                    Daftar santri dengan dedikasi dan frekuensi setoran ziyadah & muroja'ah terbanyak.
+                </div>
+                <div id="wadah-list-keaktifan" style="max-height: 400px; overflow-y: auto; padding-right: 2px;">
+                    <!-- Terisi otomatis -->
+                </div>
+            </div>
+        </div>
         
         <div class="box" style="border-left: 6px solid var(--tema-warna); background: rgba(245, 158, 11, 0.05);">
             <h3 style="color: var(--tema-warna); border-color: rgba(245, 158, 11, 0.2);">⚙️ Pengaturan Instansi</h3>
@@ -301,6 +457,10 @@
 
         <p style="text-align: center; font-weight: 800; font-size: 18px; color: var(--tema-warna); margin-top:0; margin-bottom: 25px; background: rgba(251,191,36,0.05); padding: 12px; border-radius: 12px; border: 1px dashed rgba(251,191,36,0.3);"><span id="nama-guru-aktif"></span></p>
         
+        <button type="button" onclick="bukaModalPeringkatPondok()" class="btn-outline" style="margin-top: -12px; margin-bottom: 22px; font-size: 14px; padding: 12px; display: flex; align-items: center; justify-content: center; gap: 8px; border-radius: 14px; font-weight: 800;">
+            <span>🏆</span> Buka Peringkat & Capaian Pondok
+        </button>
+
         <div class="box">
             <label class="form-label">1. Pilih Halaqah:</label><select id="muhaffiz-pilih-halaqah" onchange="updateDropdownSantri()"></select>
             <label class="form-label" style="margin-top: 10px;">2. Pilih Santri:</label><select id="muhaffiz-pilih-santri" onchange="tampilkanKartuPrestasi()"><option value="">-- Pilih Halaqah Dulu --</option></select>
@@ -466,6 +626,18 @@
         </div>
     </div>
 
+    <div id="modal-peringkat-pondok" class="modal-overlay hidden">
+        <div class="modal-content modal-content-large" style="padding: 25px 20px;">
+            <div class="modal-header" style="margin-bottom: 18px;">
+                <h3 style="display: flex; align-items: center; gap: 8px; color: var(--tema-warna); margin: 0; border: none; font-size: 20px;">
+                    <span>🏆</span> Peringkat & Capaian Pondok
+                </h3>
+                <button class="close-btn" onclick="tutupModalPeringkatPondok()">×</button>
+            </div>
+            <div id="wadah-dashboard-modal"></div>
+        </div>
+    </div>
+
     <script>
         // --- ⚠️ URL GOOGLE APPS SCRIPT ANTUM ---
         const scriptURL = 'https://script.google.com/macros/s/AKfycbxoNJfz3VozPWYHaRn-Q0WVL5d284j3_Q8LpzprKnpiP0NTaCltDclmGrmpNbHAbRBH/exec';
@@ -592,6 +764,7 @@
 
             // Muat data lokal dulu (offline ready)
             muatDariLocalStorage();
+            renderDashboardStatistik();
 
             fetch(scriptURL, { method: 'GET', mode: 'cors' }).then(r => r.json()).then(data => {
                 if(data.progres && Object.keys(data.progres).length > 0) dataProgresGlobal = data.progres;
@@ -605,9 +778,11 @@
                 simpanKeLocalStorage();
                 renderMuhaffizDropdown();
                 renderHalaqahDropdowns();
+                renderDashboardStatistik();
                 document.getElementById('teks-loading').innerText = "Sistem Siap (Online)";
             }).catch(e => {
                 document.getElementById('teks-loading').innerText = "Mode Offline (Data Lokal Aktif)";
+                renderDashboardStatistik();
             }).finally(() => {
                 setTimeout(function() {
                     let splash = document.getElementById('splash-screen'); splash.classList.add('fade-out');
@@ -716,6 +891,487 @@
         }
 
         // =========================================================
+        // --- LOGIKA DASHBOARD STATISTIK & PERINGKAT PONDOK ---
+        // =========================================================
+        function hitungDataStatistikPondok() {
+            let santriMap = {};
+            
+            // 1. Data Santri Master dari databasePesantren
+            for (let hNama in databasePesantren) {
+                let listS = databasePesantren[hNama] || [];
+                listS.forEach(s => {
+                    santriMap[s] = {
+                        nama: s,
+                        halaqah: hNama,
+                        juzSet: new Set(),
+                        totalSetoran: 0,
+                        hadir: 0,
+                        sakit: 0,
+                        izin: 0,
+                        alfa: 0,
+                        lanjut: 0,
+                        ulangi: 0,
+                        lastSurah: '-'
+                    };
+                });
+            }
+
+            // 2. Santri dari riwayat jika belum ada di databasePesantren
+            dataRiwayatServer.forEach(item => {
+                if (!santriMap[item.santri]) {
+                    santriMap[item.santri] = {
+                        nama: item.santri,
+                        halaqah: item.halaqah || '-',
+                        juzSet: new Set(),
+                        totalSetoran: 0,
+                        hadir: 0,
+                        sakit: 0,
+                        izin: 0,
+                        alfa: 0,
+                        lanjut: 0,
+                        ulangi: 0,
+                        lastSurah: '-'
+                    };
+                }
+            });
+
+            // 3. Progres hafalan terkini dari dataProgresGlobal
+            for (let sNama in santriMap) {
+                if (dataProgresGlobal && dataProgresGlobal[sNama]) {
+                    let prog = dataProgresGlobal[sNama];
+                    parseDaftarJuz(prog.juz).forEach(jz => santriMap[sNama].juzSet.add(jz));
+                    if (prog.surah && prog.surah !== '-') {
+                        santriMap[sNama].lastSurah = prog.surah + (prog.ayat && prog.ayat !== '-' ? ` : ${prog.ayat}` : '');
+                    }
+                }
+            }
+
+            // 4. Akumulasi dari dataRiwayatServer
+            dataRiwayatServer.forEach(item => {
+                let s = santriMap[item.santri];
+                if (s) {
+                    s.totalSetoran++;
+                    if (item.kehadiran === 'Hadir') {
+                        s.hadir++;
+                        parseDaftarJuz(item.juz).forEach(jz => s.juzSet.add(jz));
+                        if (s.lastSurah === '-' && item.surah && item.surah !== '-') {
+                            s.lastSurah = item.surah + (item.ayat && item.ayat !== '-' ? ` : ${item.ayat}` : '');
+                        }
+                    } else if (item.kehadiran === 'Sakit') s.sakit++;
+                    else if (item.kehadiran === 'Izin') s.izin++;
+                    else if (item.kehadiran === 'Alfa') s.alfa++;
+
+                    if (item.status === 'Lanjut') s.lanjut++;
+                    else if (item.status === 'Ulangi') s.ulangi++;
+                }
+            });
+
+            let listSantri = Object.values(santriMap);
+            let totalSantri = listSantri.length;
+            let totalJuzAkumulasi = listSantri.reduce((acc, cur) => acc + cur.juzSet.size, 0);
+            let rataRataJuz = totalSantri > 0 ? (totalJuzAkumulasi / totalSantri).toFixed(1) : 0;
+            let totalSetoran = dataRiwayatServer.length;
+
+            // Sorting untuk Ranking (Juz terbanyak DESC, lalu setoran terbanyak DESC, lalu nama ASC)
+            let rankingSantri = listSantri.map(s => {
+                let arr = Array.from(s.juzSet).sort((a, b) => a - b);
+                return {
+                    ...s,
+                    juzCount: arr.length,
+                    juzArray: arr
+                };
+            }).sort((a, b) => b.juzCount - a.juzCount || b.totalSetoran - a.totalSetoran || a.nama.localeCompare(b.nama));
+
+            // Tandai ranking asli (1-indexed)
+            rankingSantri.forEach((s, idx) => s.originalRank = idx + 1);
+
+            // Statistik per Halaqah
+            let halaqahMap = {};
+            for (let hNama in databasePesantren) {
+                halaqahMap[hNama] = {
+                    nama: hNama,
+                    santriCount: 0,
+                    totalJuz: 0,
+                    totalSetoran: 0,
+                    topSantriName: '-',
+                    topSantriJuz: 0
+                };
+            }
+            rankingSantri.forEach(s => {
+                let h = s.halaqah;
+                if (!halaqahMap[h]) {
+                    halaqahMap[h] = { nama: h, santriCount: 0, totalJuz: 0, totalSetoran: 0, topSantriName: '-', topSantriJuz: 0 };
+                }
+                halaqahMap[h].santriCount++;
+                halaqahMap[h].totalJuz += s.juzCount;
+                halaqahMap[h].totalSetoran += s.totalSetoran;
+                if (s.juzCount > halaqahMap[h].topSantriJuz) {
+                    halaqahMap[h].topSantriJuz = s.juzCount;
+                    halaqahMap[h].topSantriName = s.nama;
+                }
+            });
+
+            let halaqahStats = Object.values(halaqahMap).map(h => {
+                let rata = h.santriCount > 0 ? (h.totalJuz / h.santriCount).toFixed(1) : 0;
+                let persenPondok = totalJuzAkumulasi > 0 ? ((h.totalJuz / totalJuzAkumulasi) * 100).toFixed(1) : 0;
+                return {
+                    ...h,
+                    rataRata: rata,
+                    persenPondok: persenPondok
+                };
+            }).sort((a, b) => b.totalJuz - a.totalJuz);
+
+            // Santri Teraktif
+            let santriTeraktif = [...rankingSantri].sort((a, b) => b.totalSetoran - a.totalSetoran || b.juzCount - a.juzCount);
+
+            return {
+                totalSantri,
+                totalJuzAkumulasi,
+                rataRataJuz,
+                totalSetoran,
+                rankingSantri,
+                halaqahStats,
+                santriTeraktif
+            };
+        }
+
+        function renderDashboardStatistik() {
+            let data = hitungDataStatistikPondok();
+
+            // 1. KPI Cards di Admin
+            let elTotalJuz = document.getElementById('stat-total-juz-pondok');
+            if (elTotalJuz) elTotalJuz.innerText = data.totalJuzAkumulasi + " Juz";
+            let elTotalSantri = document.getElementById('stat-total-santri');
+            if (elTotalSantri) elTotalSantri.innerText = data.totalSantri;
+            let elRataJuz = document.getElementById('stat-rata-juz');
+            if (elRataJuz) elRataJuz.innerText = data.rataRataJuz + " Juz";
+            let elTotalSetoran = document.getElementById('stat-total-setoran');
+            if (elTotalSetoran) elTotalSetoran.innerText = data.totalSetoran;
+
+            // 2. Podium Top 3 di Admin
+            renderPodiumTop3(data.rankingSantri, 'wadah-podium-top3');
+
+            // 3. Dropdown Filter Halaqah di Admin
+            let selFilter = document.getElementById('dash-filter-halaqah');
+            if (selFilter) {
+                let curVal = selFilter.value;
+                let opts = '<option value="semua">Semua Halaqah</option>';
+                for (let h in databasePesantren) {
+                    opts += `<option value="${h}">${h}</option>`;
+                }
+                selFilter.innerHTML = opts;
+                if (curVal) selFilter.value = curVal;
+            }
+
+            // 4. Render Tab Konten di Admin
+            filterLeaderboardSantri('');
+            renderDaftarHalaqah(data.halaqahStats, 'wadah-list-halaqah');
+            renderDaftarKeaktifan(data.santriTeraktif, 'wadah-list-keaktifan');
+
+            // 5. Jika modal sedang terbuka, perbarui juga modalnya
+            let modal = document.getElementById('modal-peringkat-pondok');
+            if (modal && !modal.classList.contains('hidden')) {
+                renderModalDashboardContent(data);
+            }
+        }
+
+        function renderPodiumTop3(rankingSantri, containerId) {
+            let container = document.getElementById(containerId);
+            if (!container) return;
+
+            let top1 = rankingSantri[0] || { nama: 'Belum Ada', halaqah: '-', juzCount: 0 };
+            let top2 = rankingSantri[1] || { nama: 'Belum Ada', halaqah: '-', juzCount: 0 };
+            let top3 = rankingSantri[2] || { nama: 'Belum Ada', halaqah: '-', juzCount: 0 };
+
+            let html = `
+                <!-- Juara 2 (Perak) -->
+                <div class="podium-col rank-2">
+                    <div class="podium-avatar">🥈</div>
+                    <div class="podium-name" title="${top2.nama}">${top2.nama}</div>
+                    <div class="podium-halaqah">${top2.halaqah}</div>
+                    <div class="podium-pillar">
+                        <div class="podium-juz-tag">${top2.juzCount} Juz</div>
+                        <div class="podium-badge-label" style="color: #cbd5e1;">🥈 Juara 2</div>
+                    </div>
+                </div>
+
+                <!-- Juara 1 (Emas - Tengah & Tertinggi) -->
+                <div class="podium-col rank-1">
+                    <div class="podium-crown">👑</div>
+                    <div class="podium-avatar">🥇</div>
+                    <div class="podium-name" title="${top1.nama}">${top1.nama}</div>
+                    <div class="podium-halaqah">${top1.halaqah}</div>
+                    <div class="podium-pillar">
+                        <div class="podium-juz-tag">${top1.juzCount} Juz</div>
+                        <div class="podium-badge-label" style="color: #fbbf24;">🥇 Juara 1</div>
+                    </div>
+                </div>
+
+                <!-- Juara 3 (Perunggu) -->
+                <div class="podium-col rank-3">
+                    <div class="podium-avatar">🥉</div>
+                    <div class="podium-name" title="${top3.nama}">${top3.nama}</div>
+                    <div class="podium-halaqah">${top3.halaqah}</div>
+                    <div class="podium-pillar">
+                        <div class="podium-juz-tag">${top3.juzCount} Juz</div>
+                        <div class="podium-badge-label" style="color: #fdba74;">🥉 Juara 3</div>
+                    </div>
+                </div>
+            `;
+            container.innerHTML = html;
+        }
+
+        function gantiTabDashboard(tab, prefix = '') {
+            ['leaderboard', 'halaqah', 'keaktifan'].forEach(t => {
+                let btn = document.getElementById(`${prefix}tab-btn-${t}`);
+                let pnl = document.getElementById(`${prefix}dash-panel-${t}`);
+                if (btn) {
+                    if (t === tab) btn.classList.add('aktif');
+                    else btn.classList.remove('aktif');
+                }
+                if (pnl) {
+                    if (t === tab) pnl.classList.remove('hidden');
+                    else pnl.classList.add('hidden');
+                }
+            });
+        }
+
+        function filterLeaderboardSantri(prefix = '') {
+            let cariInput = document.getElementById(`${prefix}dash-cari-santri`);
+            let cari = cariInput ? cariInput.value.toLowerCase().trim() : '';
+            let filterHalaqahSelect = document.getElementById(`${prefix}dash-filter-halaqah`);
+            let halaqah = filterHalaqahSelect ? filterHalaqahSelect.value : 'semua';
+
+            let data = hitungDataStatistikPondok();
+            let filtered = data.rankingSantri.filter(s => {
+                let matchNama = s.nama.toLowerCase().includes(cari);
+                let matchHalaqah = halaqah === 'semua' || s.halaqah === halaqah;
+                return matchNama && matchHalaqah;
+            });
+
+            renderDaftarLeaderboard(filtered, `${prefix}wadah-list-leaderboard`, prefix);
+        }
+
+        function renderDaftarLeaderboard(list, targetElementId, prefix = '') {
+            let container = document.getElementById(targetElementId);
+            if (!container) return;
+
+            if (list.length === 0) {
+                container.innerHTML = '<div style="text-align: center; color: var(--teks-sekunder); padding: 25px 10px; font-size: 13px;">Santri tidak ditemukan.</div>';
+                return;
+            }
+
+            let html = '';
+            list.forEach(s => {
+                let rankClass = s.originalRank === 1 ? 'top-1' : (s.originalRank === 2 ? 'top-2' : (s.originalRank === 3 ? 'top-3' : ''));
+                let rankText = s.originalRank === 1 ? '🥇' : (s.originalRank === 2 ? '🥈' : (s.originalRank === 3 ? '🥉' : `#${s.originalRank}`));
+                let persen = ((s.juzCount / 30) * 100).toFixed(0);
+
+                let chipsHtml = '';
+                if (s.juzArray.length > 0) {
+                    chipsHtml = '<div class="lb-chips-wrap">' + s.juzArray.map(j => `<span class="lb-chip">Juz ${j}</span>`).join('') + '</div>';
+                } else {
+                    chipsHtml = '<div style="font-size: 11px; color: var(--teks-sekunder); font-style: italic; margin-top: 4px;">Belum tercatat hafalan juz</div>';
+                }
+
+                html += `
+                    <div class="lb-card ${rankClass}">
+                        <div class="lb-rank-badge">${rankText}</div>
+                        <div class="lb-content">
+                            <div class="lb-header-row">
+                                <span class="lb-santri-nama" title="${s.nama}">${s.nama}</span>
+                                <span class="lb-juz-badge">${s.juzCount} / 30 Juz</span>
+                            </div>
+                            <div class="lb-meta-row">
+                                <span>🕌 ${s.halaqah}</span>
+                                <span>${persen}% Menuju 30 Juz</span>
+                            </div>
+                            <div class="lb-bar-track">
+                                <div class="lb-bar-fill" style="width: ${persen}%;"></div>
+                            </div>
+                            <div class="lb-meta-row" style="margin-bottom: 2px;">
+                                <span>⚡ Setoran: <b>${s.totalSetoran}x</b> (${s.hadir} Hadir)</span>
+                                <span>Terakhir: <i>${s.lastSurah}</i></span>
+                            </div>
+                            ${chipsHtml}
+                        </div>
+                    </div>
+                `;
+            });
+            container.innerHTML = html;
+        }
+
+        function renderDaftarHalaqah(halaqahList, targetElementId) {
+            let container = document.getElementById(targetElementId);
+            if (!container) return;
+
+            if (halaqahList.length === 0) {
+                container.innerHTML = '<div style="text-align: center; color: var(--teks-sekunder); padding: 25px 10px;">Belum ada data halaqah.</div>';
+                return;
+            }
+
+            let html = '';
+            halaqahList.forEach(h => {
+                html += `
+                    <div class="halaqah-card">
+                        <div class="halaqah-title">
+                            <span>🕌 ${h.nama}</span>
+                            <span class="badge-mode Ziyadah" style="font-size: 11px;">${h.totalJuz} Juz</span>
+                        </div>
+                        <div class="halaqah-stat-grid">
+                            <div class="halaqah-stat-box">
+                                <div class="halaqah-stat-num">${h.santriCount}</div>
+                                <div class="halaqah-stat-lbl">Santri</div>
+                            </div>
+                            <div class="halaqah-stat-box">
+                                <div class="halaqah-stat-num">${h.totalJuz}</div>
+                                <div class="halaqah-stat-lbl">Total Juz</div>
+                            </div>
+                            <div class="halaqah-stat-box">
+                                <div class="halaqah-stat-num">${h.rataRata}</div>
+                                <div class="halaqah-stat-lbl">Rata-rata</div>
+                            </div>
+                        </div>
+                        <div class="lb-bar-track" style="height: 8px;">
+                            <div class="lb-bar-fill" style="width: ${h.persenPondok}%; background: linear-gradient(90deg, #3b82f6, #10b981);"></div>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; font-size: 11px; color: var(--teks-sekunder); margin-top: 6px;">
+                            <span>🏆 Tertinggi: <b>${h.topSantriName} (${h.topSantriJuz} Juz)</b></span>
+                            <span>${h.persenPondok}% dari total pondok</span>
+                        </div>
+                    </div>
+                `;
+            });
+            container.innerHTML = html;
+        }
+
+        function renderDaftarKeaktifan(keaktifanList, targetElementId) {
+            let container = document.getElementById(targetElementId);
+            if (!container) return;
+
+            let top15 = keaktifanList.slice(0, 15);
+            if (top15.length === 0) {
+                container.innerHTML = '<div style="text-align: center; color: var(--teks-sekunder); padding: 25px 10px;">Belum ada riwayat setoran.</div>';
+                return;
+            }
+
+            let html = '';
+            top15.forEach((s, idx) => {
+                let badgeColor = idx === 0 ? 'top-1' : (idx === 1 ? 'top-2' : (idx === 2 ? 'top-3' : ''));
+                let rankIcon = idx === 0 ? '🥇' : (idx === 1 ? '🥈' : (idx === 2 ? '🥉' : `#${idx + 1}`));
+                let rateLanjut = s.totalSetoran > 0 ? ((s.lanjut / s.totalSetoran) * 100).toFixed(0) : 0;
+
+                html += `
+                    <div class="lb-card ${badgeColor}" style="align-items: center;">
+                        <div class="lb-rank-badge">${rankIcon}</div>
+                        <div class="lb-content">
+                            <div class="lb-header-row">
+                                <span class="lb-santri-nama">${s.nama}</span>
+                                <span class="badge-mode Murojaah" style="font-size: 12px; margin: 0;">⚡ ${s.totalSetoran}x Setoran</span>
+                            </div>
+                            <div class="lb-meta-row" style="margin: 4px 0 0 0;">
+                                <span>🕌 ${s.halaqah}</span>
+                                <span>Hadir: <b>${s.hadir}x</b> | Lancar: <b>${rateLanjut}%</b></span>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+            container.innerHTML = html;
+        }
+
+        function bukaModalPeringkatPondok() {
+            let data = hitungDataStatistikPondok();
+            renderModalDashboardContent(data);
+            document.getElementById('modal-peringkat-pondok').classList.remove('hidden');
+        }
+
+        function tutupModalPeringkatPondok() {
+            document.getElementById('modal-peringkat-pondok').classList.add('hidden');
+        }
+
+        function renderModalDashboardContent(data) {
+            let container = document.getElementById('wadah-dashboard-modal');
+            if (!container) return;
+
+            let halaqahOptions = '<option value="semua">Semua Halaqah</option>';
+            for (let h in databasePesantren) {
+                halaqahOptions += `<option value="${h}">${h}</option>`;
+            }
+
+            container.innerHTML = `
+                <!-- KPI Summary Cards -->
+                <div class="stat-kpi-grid">
+                    <div class="stat-kpi-card">
+                        <div class="stat-kpi-icon">📖</div>
+                        <div class="stat-kpi-val">${data.totalJuzAkumulasi} Juz</div>
+                        <div class="stat-kpi-label">Total Hafalan</div>
+                        <div style="font-size: 10px; color: var(--teks-sekunder); margin-top: 2px;">Akumulasi Pondok</div>
+                    </div>
+                    <div class="stat-kpi-card">
+                        <div class="stat-kpi-icon">👥</div>
+                        <div class="stat-kpi-val">${data.totalSantri}</div>
+                        <div class="stat-kpi-label">Santri</div>
+                        <div style="font-size: 10px; color: var(--teks-sekunder); margin-top: 2px;">Seluruh Halaqah</div>
+                    </div>
+                    <div class="stat-kpi-card">
+                        <div class="stat-kpi-icon">📈</div>
+                        <div class="stat-kpi-val">${data.rataRataJuz} Juz</div>
+                        <div class="stat-kpi-label">Rata-rata</div>
+                        <div style="font-size: 10px; color: var(--teks-sekunder); margin-top: 2px;">Per Santri</div>
+                    </div>
+                    <div class="stat-kpi-card">
+                        <div class="stat-kpi-icon">⚡</div>
+                        <div class="stat-kpi-val">${data.totalSetoran}</div>
+                        <div class="stat-kpi-label">Total Setoran</div>
+                        <div style="font-size: 10px; color: var(--teks-sekunder); margin-top: 2px;">Tercatat</div>
+                    </div>
+                </div>
+
+                <!-- Podium Top 3 Santri -->
+                <div style="margin-top: 15px; text-align: center;">
+                    <div style="font-size: 12px; font-weight: 800; color: var(--tema-warna); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px;">
+                        👑 Podium Kehormatan (Top 3 Santri)
+                    </div>
+                    <div class="podium-wrapper" id="modal-wadah-podium-top3"></div>
+                </div>
+
+                <!-- Dashboard Navigation Tabs -->
+                <div class="dash-tabs" style="margin-top: 15px;">
+                    <button type="button" class="dash-tab-btn aktif" id="modal-tab-btn-leaderboard" onclick="gantiTabDashboard('leaderboard', 'modal-')">🏆 Peringkat Santri</button>
+                    <button type="button" class="dash-tab-btn" id="modal-tab-btn-halaqah" onclick="gantiTabDashboard('halaqah', 'modal-')">🕌 Capaian Halaqah</button>
+                    <button type="button" class="dash-tab-btn" id="modal-tab-btn-keaktifan" onclick="gantiTabDashboard('keaktifan', 'modal-')">🔥 Santri Teraktif</button>
+                </div>
+
+                <!-- Tab 1: Leaderboard -->
+                <div id="modal-dash-panel-leaderboard" class="dash-panel">
+                    <div style="display: flex; gap: 8px; margin-bottom: 12px; flex-wrap: wrap;">
+                        <input type="text" id="modal-dash-cari-santri" placeholder="🔍 Cari nama santri..." oninput="filterLeaderboardSantri('modal-')" style="margin: 0; flex: 2; min-width: 140px; font-size: 13px; padding: 10px 14px;">
+                        <select id="modal-dash-filter-halaqah" onchange="filterLeaderboardSantri('modal-')" style="margin: 0; flex: 1; min-width: 130px; font-size: 13px; padding: 10px 14px;">
+                            ${halaqahOptions}
+                        </select>
+                    </div>
+                    <div id="modal-wadah-list-leaderboard" style="max-height: 350px; overflow-y: auto; padding-right: 2px;"></div>
+                </div>
+
+                <!-- Tab 2: Halaqah -->
+                <div id="modal-dash-panel-halaqah" class="dash-panel hidden">
+                    <div id="modal-wadah-list-halaqah" style="display: flex; flex-direction: column; gap: 10px; max-height: 350px; overflow-y: auto;"></div>
+                </div>
+
+                <!-- Tab 3: Keaktifan -->
+                <div id="modal-dash-panel-keaktifan" class="dash-panel hidden">
+                    <div id="modal-wadah-list-keaktifan" style="max-height: 350px; overflow-y: auto; padding-right: 2px;"></div>
+                </div>
+            `;
+
+            renderPodiumTop3(data.rankingSantri, 'modal-wadah-podium-top3');
+            filterLeaderboardSantri('modal-');
+            renderDaftarHalaqah(data.halaqahStats, 'modal-wadah-list-halaqah');
+            renderDaftarKeaktifan(data.santriTeraktif, 'modal-wadah-list-keaktifan');
+        }
+
+        // =========================================================
         // --- LOGIKA ADMIN MASTER DATA ---
         // =========================================================
         function renderMuhaffizDropdown() {
@@ -729,6 +1385,7 @@
             let htmlHalaqah = ''; for(let halaqah in databasePesantren) { htmlHalaqah += `<div class="list-item"><span class="list-item-text">${halaqah}</span><div style="display:flex; gap:5px;"><button onclick="editHalaqah('${halaqah}')" class="btn-kecil" style="background:rgba(59,130,246,0.2); color:#93c5fd; border:1px solid rgba(59,130,246,0.3);">✏️</button><button onclick="hapusHalaqah('${halaqah}')" class="btn-kecil" style="background:rgba(239,68,68,0.2); color:#fca5a5; border:1px solid rgba(239,68,68,0.3);">🗑️</button></div></div>`; }
             document.getElementById('tabel-halaqah').innerHTML = htmlHalaqah || '<p style="color:var(--teks-sekunder); text-align:center; font-size:13px;">Belum ada data halaqah.</p>';
             renderTabelSantriAdmin(); renderHalaqahDropdowns(); 
+            renderDashboardStatistik();
         }
 
         function tambahGuru() { let n = document.getElementById('nama-muhaffiz-baru').value.trim(); if(!n) return alert("⚠️ Nama tidak boleh kosong!"); if(dataAkunGlobal[n]) return alert("⚠️ Nama sudah terdaftar!"); eksekusiCRUD('crud_tambah', 'Akun', '', [n, "guru123"]); dataAkunGlobal[n] = "guru123"; document.getElementById('nama-muhaffiz-baru').value = ''; alert("✅ Muhaffizh ditambahkan!"); renderTabelAdmin(); renderMuhaffizDropdown(); simpanKeLocalStorage(); }
@@ -823,11 +1480,13 @@
                 if (asal === 'muhaffiz' && document.getElementById('muhaffiz-pilih-santri').value !== "") tampilkanKartuPrestasi(); 
                 else if (asal === 'ortu' && document.getElementById('ortu-pilih-santri').value !== "") tampilkanDataOrtu();
                 else if (asal === 'admin') renderTabelAdmin(); 
+                renderDashboardStatistik();
             }).catch(e => {
                 console.warn('Mode offline aktif, menggunakan data lokal.');
                 if (asal === 'muhaffiz' && document.getElementById('muhaffiz-pilih-santri').value !== "") tampilkanKartuPrestasi(); 
                 else if (asal === 'ortu' && document.getElementById('ortu-pilih-santri').value !== "") tampilkanDataOrtu();
                 else if (asal === 'admin') renderTabelAdmin(); 
+                renderDashboardStatistik();
             });
         }
 
