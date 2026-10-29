@@ -563,95 +563,61 @@
                 <span id="teks-progress-upload-pdf" style="font-weight: 700;">Sedang mengunggah file ke Supabase Storage...</span>
             </div>
 
-            <!-- SUB-BAGIAN: BUKU PDF HADITS ARBA'IN -->
-            <div style="background: rgba(0,0,0,0.3); border: 1px solid rgba(59, 130, 246, 0.25); border-radius: 14px; padding: 16px; margin-bottom: 16px;">
-                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 10px;">
+            <!-- SUB-BAGIAN: KOLEKSI BUKU / KITAB HADITS -->
+            <div style="background: rgba(0,0,0,0.3); border: 1px solid rgba(59, 130, 246, 0.25); border-radius: 14px; padding: 16px; margin-bottom: 20px;">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 12px; flex-wrap: wrap; gap: 8px;">
                     <div style="display:flex; align-items:center; gap: 8px;">
-                        <span style="font-size: 13px; font-weight: 800; color: #60a5fa;">📜 Buku / Referensi Hadits Arba'in:</span>
-                        <span id="badge-cloud-hadits" class="hidden" style="font-size: 10px; background: rgba(59, 130, 246, 0.25); color: #93c5fd; border: 1px solid rgba(59, 130, 246, 0.4); padding: 2px 6px; border-radius: 6px; font-weight: 800;">☁️ Cloud Supabase</span>
+                        <span style="font-size: 14px; font-weight: 800; color: #60a5fa;">📜 Koleksi Buku / Kitab Hadits:</span>
+                        <span id="badge-total-buku-hadits" style="font-size: 11px; background: rgba(59, 130, 246, 0.25); color: #93c5fd; border: 1px solid rgba(59, 130, 246, 0.4); padding: 2px 8px; border-radius: 6px; font-weight: 800;">0 Buku</span>
                     </div>
-                    <span id="badge-status-pdf-hadits" style="font-size: 11px; color: var(--teks-sekunder); font-weight: 700; background: rgba(255,255,255,0.06); padding: 3px 8px; border-radius: 8px;">Belum ada PDF</span>
                 </div>
 
-                <!-- DROPZONE FILE PDF HADITS -->
-                <div class="pdf-dropzone" id="dropzone-hadits" 
+                <!-- DAFTAR KARTU BUKU HADITS -->
+                <div id="daftar-buku-hadits-admin"></div>
+
+                <!-- TOMBOL / DROPZONE TAMBAH BUKU HADITS -->
+                <div class="pdf-dropzone" id="dropzone-tambah-hadits" 
                      ondragover="handleDragOverPDF(event, 'hadits')" 
                      ondragleave="handleDragLeavePDF(event, 'hadits')" 
                      ondrop="handleDropPDF(event, 'hadits')"
-                     onclick="picuPilihFilePDF('hadits')">
-                    
-                    <div id="dropzone-kosong-hadits">
-                        <span style="font-size: 32px; display: block; margin-bottom: 6px;">📥</span>
-                        <div style="font-size: 13px; font-weight: 800; color: #93c5fd;">Tarik & Lepas (Drag & Drop) File PDF Hadits ke sini</div>
-                        <div style="font-size: 11px; color: var(--teks-sekunder); margin-top: 4px;">atau klik untuk <span class="btn-pilih-pdf">📁 Pilih File PDF dari Perangkat</span></div>
-                    </div>
-
-                    <div id="dropzone-terisi-hadits" class="pdf-file-card hidden" onclick="event.stopPropagation();">
-                        <div style="display: flex; align-items: center; gap: 10px; overflow: hidden;">
-                            <span style="font-size: 28px;">📕</span>
-                            <div style="overflow: hidden;">
-                                <div id="nama-file-pdf-hadits" style="font-size: 13px; font-weight: 800; color: white; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">kitab.pdf</div>
-                                <div id="info-file-pdf-hadits" style="font-size: 11px; color: #93c5fd;">2.5 MB • Diupload baru saja</div>
-                            </div>
-                        </div>
-                        <div style="display: flex; gap: 6px; flex-shrink: 0;">
-                            <button type="button" class="btn-kecil" style="background: rgba(59, 130, 246, 0.35); color: #93c5fd; border: 1px solid rgba(59, 130, 246, 0.4); padding: 6px 12px; font-size: 11px;" onclick="bukaFilePDFLokal('hadits')">👁️ Buka</button>
-                            <button type="button" class="btn-kecil" style="background: rgba(255, 255, 255, 0.1); color: #cbd5e1; border: 1px solid var(--border-halus); padding: 6px 10px; font-size: 11px;" onclick="picuPilihFilePDF('hadits')">🔄 Ganti</button>
-                            <button type="button" class="btn-kecil" style="background: rgba(239, 68, 68, 0.25); color: #fca5a5; border: 1px solid rgba(239, 68, 68, 0.4); padding: 6px 10px; font-size: 11px;" onclick="hapusFilePDFLokal('hadits')">🗑️</button>
-                        </div>
-                    </div>
-                    <input type="file" id="input-file-hadits" accept="application/pdf" style="display:none;" onchange="prosesUploadPDF(this.files[0], 'hadits')">
+                     onclick="document.getElementById('input-file-tambah-hadits').click()"
+                     style="padding: 16px 14px; margin-top: 10px;">
+                    <span style="font-size: 26px; display: block; margin-bottom: 4px;">➕</span>
+                    <div style="font-size: 13px; font-weight: 800; color: #93c5fd;">Tambah Buku PDF Hadits Baru</div>
+                    <div style="font-size: 11px; color: var(--teks-sekunder); margin-top: 2px;">Tarik & lepas file PDF ke sini atau <span class="btn-pilih-pdf">📁 Pilih File PDF</span></div>
+                    <input type="file" id="input-file-tambah-hadits" accept="application/pdf" style="display:none;" onchange="prosesUploadBukuBaru(this.files[0], 'hadits'); this.value='';">
                 </div>
-
-                <div style="font-size: 11px; color: var(--teks-sekunder); margin-bottom: 5px; font-weight: 700;">Tautan Web / Public Supabase URL:</div>
-                <input type="text" id="setting-link-hadits" placeholder="https://..." style="margin: 0; background:var(--bg-elemen); font-size: 12px; padding: 10px 14px;">
             </div>
 
-            <!-- SUB-BAGIAN: BUKU PDF DOA & DZIKIR -->
+            <!-- SUB-BAGIAN: KOLEKSI BUKU DOA & DZIKIR -->
             <div style="background: rgba(0,0,0,0.3); border: 1px solid rgba(16, 185, 129, 0.25); border-radius: 14px; padding: 16px; margin-bottom: 16px;">
-                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 10px;">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 12px; flex-wrap: wrap; gap: 8px;">
                     <div style="display:flex; align-items:center; gap: 8px;">
-                        <span style="font-size: 13px; font-weight: 800; color: #34d399;">🤲 Buku / Referensi Doa & Dzikir:</span>
-                        <span id="badge-cloud-doa" class="hidden" style="font-size: 10px; background: rgba(16, 185, 129, 0.25); color: #6ee7b7; border: 1px solid rgba(16, 185, 129, 0.4); padding: 2px 6px; border-radius: 6px; font-weight: 800;">☁️ Cloud Supabase</span>
+                        <span style="font-size: 14px; font-weight: 800; color: #34d399;">🤲 Koleksi Buku Doa & Dzikir:</span>
+                        <span id="badge-total-buku-doa" style="font-size: 11px; background: rgba(16, 185, 129, 0.25); color: #6ee7b7; border: 1px solid rgba(16, 185, 129, 0.4); padding: 2px 8px; border-radius: 6px; font-weight: 800;">0 Buku</span>
                     </div>
-                    <span id="badge-status-pdf-doa" style="font-size: 11px; color: var(--teks-sekunder); font-weight: 700; background: rgba(255,255,255,0.06); padding: 3px 8px; border-radius: 8px;">Belum ada PDF</span>
                 </div>
 
-                <!-- DROPZONE FILE PDF DOA -->
-                <div class="pdf-dropzone zone-doa" id="dropzone-doa" 
+                <!-- DAFTAR KARTU BUKU DOA -->
+                <div id="daftar-buku-doa-admin"></div>
+
+                <!-- TOMBOL / DROPZONE TAMBAH BUKU DOA -->
+                <div class="pdf-dropzone zone-doa" id="dropzone-tambah-doa" 
                      ondragover="handleDragOverPDF(event, 'doa')" 
                      ondragleave="handleDragLeavePDF(event, 'doa')" 
                      ondrop="handleDropPDF(event, 'doa')"
-                     onclick="picuPilihFilePDF('doa')">
-                    
-                    <div id="dropzone-kosong-doa">
-                        <span style="font-size: 32px; display: block; margin-bottom: 6px;">📥</span>
-                        <div style="font-size: 13px; font-weight: 800; color: #6ee7b7;">Tarik & Lepas (Drag & Drop) File PDF Doa ke sini</div>
-                        <div style="font-size: 11px; color: var(--teks-sekunder); margin-top: 4px;">atau klik untuk <span class="btn-pilih-pdf btn-pilih-doa">📁 Pilih File PDF dari Perangkat</span></div>
-                    </div>
-
-                    <div id="dropzone-terisi-doa" class="pdf-file-card hidden" onclick="event.stopPropagation();">
-                        <div style="display: flex; align-items: center; gap: 10px; overflow: hidden;">
-                            <span style="font-size: 28px;">📗</span>
-                            <div style="overflow: hidden;">
-                                <div id="nama-file-pdf-doa" style="font-size: 13px; font-weight: 800; color: white; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">doa.pdf</div>
-                                <div id="info-file-pdf-doa" style="font-size: 11px; color: #6ee7b7;">1.8 MB • Diupload baru saja</div>
-                            </div>
-                        </div>
-                        <div style="display: flex; gap: 6px; flex-shrink: 0;">
-                            <button type="button" class="btn-kecil" style="background: rgba(16, 185, 129, 0.35); color: #6ee7b7; border: 1px solid rgba(16, 185, 129, 0.4); padding: 6px 12px; font-size: 11px;" onclick="bukaFilePDFLokal('doa')">👁️ Buka</button>
-                            <button type="button" class="btn-kecil" style="background: rgba(255, 255, 255, 0.1); color: #cbd5e1; border: 1px solid var(--border-halus); padding: 6px 10px; font-size: 11px;" onclick="picuPilihFilePDF('doa')">🔄 Ganti</button>
-                            <button type="button" class="btn-kecil" style="background: rgba(239, 68, 68, 0.25); color: #fca5a5; border: 1px solid rgba(239, 68, 68, 0.4); padding: 6px 10px; font-size: 11px;" onclick="hapusFilePDFLokal('doa')">🗑️</button>
-                        </div>
-                    </div>
-                    <input type="file" id="input-file-doa" accept="application/pdf" style="display:none;" onchange="prosesUploadPDF(this.files[0], 'doa')">
+                     onclick="document.getElementById('input-file-tambah-doa').click()"
+                     style="padding: 16px 14px; margin-top: 10px;">
+                    <span style="font-size: 26px; display: block; margin-bottom: 4px;">➕</span>
+                    <div style="font-size: 13px; font-weight: 800; color: #6ee7b7;">Tambah Buku PDF Doa Baru</div>
+                    <div style="font-size: 11px; color: var(--teks-sekunder); margin-top: 2px;">Tarik & lepas file PDF ke sini atau <span class="btn-pilih-pdf btn-pilih-doa">📁 Pilih File PDF</span></div>
+                    <input type="file" id="input-file-tambah-doa" accept="application/pdf" style="display:none;" onchange="prosesUploadBukuBaru(this.files[0], 'doa'); this.value='';">
                 </div>
-
-                <div style="font-size: 11px; color: var(--teks-sekunder); margin-bottom: 5px; font-weight: 700;">Tautan Web / Public Supabase URL:</div>
-                <input type="text" id="setting-link-doa" placeholder="https://..." style="margin: 0; background:var(--bg-elemen); font-size: 12px; padding: 10px 14px;">
             </div>
 
-            <button type="button" onclick="simpanPengaturanLinkReferensi()" style="background: linear-gradient(135deg, #3b82f6, #1d4ed8); color: white; box-shadow: 0 6px 0 #1e40af;">💾 Simpan Tautan Referensi</button>
+            <div style="margin-top: 14px; padding: 12px 14px; background: rgba(59, 130, 246, 0.08); border: 1px solid rgba(59, 130, 246, 0.25); border-radius: 10px; font-size: 12px; color: #93c5fd; line-height: 1.5;">
+                💡 <b>Petunjuk:</b> Anda dapat menambahkan banyak buku PDF sekaligus. Klik tombol <b>✏️ Ubah Nama</b> pada kartu buku untuk memberi nama / judul kitab yang rapi agar mudah dipilih oleh para Muhaffiz saat menyimak hafalan.
+            </div>
         </div>
         <button class="btn-logout" onclick="logout()">Keluar dari Admin</button>
     </div>
@@ -1108,27 +1074,149 @@
         const DATASET_HADITS = {};
         const DATASET_DOA = {};
 
-        // Cache Blob URL agar tidak berulang kali createObjectURL
-        let cacheBlobUrlHadits = null;
-        let cacheBlobUrlDoa = null;
+        // Cache Blob URL berdasarkan bookId agar tidak berulang kali createObjectURL
+        let cacheBlobUrlBuku = {};
 
-        async function ambilURLPDF(tipe) {
-            let id = (tipe === 'hadits') ? 'pdf_hadits' : 'pdf_doa';
-            try {
-                let item = await ambilPDFDariDB(id);
-                if (item && item.data) {
-                    if (tipe === 'hadits') {
-                        if (!cacheBlobUrlHadits) cacheBlobUrlHadits = URL.createObjectURL(item.data);
-                        return cacheBlobUrlHadits;
-                    } else {
-                        if (!cacheBlobUrlDoa) cacheBlobUrlDoa = URL.createObjectURL(item.data);
-                        return cacheBlobUrlDoa;
-                    }
+        // =========================================================
+        // --- MANAJEMEN KOLEKSI MULTI-BUKU PDF (HADITS & DOA) ---
+        // =========================================================
+
+        async function migrasiDanMuatKoleksiBuku() {
+            let allDB = await ambilSemuaPDFDariDB();
+            let updated = false;
+
+            // 1. Cek legacy hadits
+            let haditsLegacy = allDB.find(x => x.id === 'pdf_hadits');
+            if (haditsLegacy) {
+                if (!haditsLegacy.kategori) { haditsLegacy.kategori = 'hadits'; updated = true; }
+                if (!haditsLegacy.judul) {
+                    let nama = localStorage.getItem('bilal_nama_pdf_hadits') || haditsLegacy.nama || 'Kitabul Jami - Ibnu Hajar';
+                    haditsLegacy.judul = nama.replace(/\.pdf$/i, '').trim();
+                    updated = true;
                 }
-            } catch(e) {
-                console.warn("Gagal ambil PDF dari IndexedDB:", e);
+                if (updated) await simpanItemPDFKeDB(haditsLegacy);
+            } else if (linkReferensiHadits && linkReferensiHadits.trim() !== '') {
+                let nama = localStorage.getItem('bilal_nama_pdf_hadits') || 'Kitabul Jami - Ibnu Hajar.pdf';
+                let item = {
+                    id: 'pdf_hadits',
+                    kategori: 'hadits',
+                    judul: nama.replace(/\.pdf$/i, '').trim(),
+                    nama: nama,
+                    ukuran: 0,
+                    tipe: 'application/pdf',
+                    data: null,
+                    waktu: 'Disimpan di Cloud',
+                    publicUrl: linkReferensiHadits,
+                    cloudPath: '',
+                    cloudUploaded: true
+                };
+                await simpanItemPDFKeDB(item);
+                allDB.push(item);
             }
 
+            // 2. Cek legacy doa
+            let doaLegacy = allDB.find(x => x.id === 'pdf_doa');
+            if (doaLegacy) {
+                let upDoa = false;
+                if (!doaLegacy.kategori) { doaLegacy.kategori = 'doa'; upDoa = true; }
+                if (!doaLegacy.judul) {
+                    let nama = localStorage.getItem('bilal_nama_pdf_doa') || doaLegacy.nama || 'صحيح الآداب الإسلامية';
+                    doaLegacy.judul = nama.replace(/\.pdf$/i, '').trim();
+                    upDoa = true;
+                }
+                if (upDoa) await simpanItemPDFKeDB(doaLegacy);
+            } else if (linkReferensiDoa && linkReferensiDoa.trim() !== '') {
+                let nama = localStorage.getItem('bilal_nama_pdf_doa') || 'صحيح الآداب الإسلامية.pdf';
+                let item = {
+                    id: 'pdf_doa',
+                    kategori: 'doa',
+                    judul: nama.replace(/\.pdf$/i, '').trim(),
+                    nama: nama,
+                    ukuran: 0,
+                    tipe: 'application/pdf',
+                    data: null,
+                    waktu: 'Disimpan di Cloud',
+                    publicUrl: linkReferensiDoa,
+                    cloudPath: '',
+                    cloudUploaded: true
+                };
+                await simpanItemPDFKeDB(item);
+                allDB.push(item);
+            }
+
+            // Simpan snapshot metadata ke localStorage untuk backup lintas sesi
+            let freshList = await ambilSemuaPDFDariDB();
+            let metaList = freshList.map(b => ({
+                id: b.id,
+                kategori: b.kategori || (b.id.includes('doa') ? 'doa' : 'hadits'),
+                judul: b.judul || (b.nama ? b.nama.replace(/\.pdf$/i, '') : 'Buku PDF'),
+                nama: b.nama || 'dokumen.pdf',
+                ukuran: b.ukuran || 0,
+                waktu: b.waktu || '',
+                publicUrl: b.publicUrl || '',
+                cloudUploaded: !!b.cloudUploaded
+            }));
+            localStorage.setItem('bilal_koleksi_buku_meta', JSON.stringify(metaList));
+            return freshList;
+        }
+
+        async function ambilKoleksiBuku(tipe) {
+            let allDB = await ambilSemuaPDFDariDB();
+            let res = allDB.filter(b => (b.kategori === tipe) || (tipe === 'hadits' && b.id === 'pdf_hadits') || (tipe === 'doa' && b.id === 'pdf_doa'));
+
+            if (res.length === 0) {
+                try {
+                    let meta = JSON.parse(localStorage.getItem('bilal_koleksi_buku_meta') || '[]');
+                    res = meta.filter(b => b.kategori === tipe);
+                } catch(e) {}
+            }
+
+            res.forEach(b => {
+                if (!b.judul) {
+                    b.judul = b.nama ? b.nama.replace(/\.pdf$/i, '').trim() : (tipe === 'hadits' ? 'Kitab Hadits' : 'Kitab Doa');
+                }
+            });
+
+            return res;
+        }
+
+        async function ambilURLBukuPDF(bookId) {
+            if (!bookId) return null;
+            if (cacheBlobUrlBuku[bookId]) return cacheBlobUrlBuku[bookId];
+
+            try {
+                let item = await ambilPDFDariDB(bookId);
+                if (item && item.data) {
+                    cacheBlobUrlBuku[bookId] = URL.createObjectURL(item.data);
+                    return cacheBlobUrlBuku[bookId];
+                }
+                if (item && item.publicUrl) {
+                    return item.publicUrl;
+                }
+            } catch(e) {
+                console.warn('Gagal ambil URL buku:', e);
+            }
+
+            try {
+                let meta = JSON.parse(localStorage.getItem('bilal_koleksi_buku_meta') || '[]');
+                let b = meta.find(x => x.id === bookId);
+                if (b && b.publicUrl) return b.publicUrl;
+            } catch(e) {}
+
+            if (bookId === 'pdf_hadits' && linkReferensiHadits) return linkReferensiHadits;
+            if (bookId === 'pdf_doa' && linkReferensiDoa) return linkReferensiDoa;
+
+            return null;
+        }
+
+        async function ambilURLPDF(tipe, bookId = null) {
+            if (bookId) {
+                return await ambilURLBukuPDF(bookId);
+            }
+            let books = await ambilKoleksiBuku(tipe);
+            if (books.length > 0) {
+                return await ambilURLBukuPDF(books[0].id);
+            }
             let link = (tipe === 'hadits') ? linkReferensiHadits : linkReferensiDoa;
             if (link && (link.includes('supabase.co') || link.toLowerCase().endsWith('.pdf') || link.startsWith('http'))) {
                 return link;
@@ -1136,39 +1224,54 @@
             return null;
         }
 
-        async function muatPreviewPDF(tipe) {
+        async function muatPreviewPDF(tipe, spesifikBookId = null) {
             let idIframe = (tipe === 'hadits') ? 'iframe-preview-hadits' : 'iframe-preview-doa';
             let idPesan = (tipe === 'hadits') ? 'pesan-kosong-pdf-hadits' : 'pesan-kosong-pdf-doa';
             let idLabel = (tipe === 'hadits') ? 'label-nama-pdf-hadits-preview' : 'label-nama-pdf-doa-preview';
+            let selEl = document.getElementById(tipe === 'hadits' ? 'input-kitab-hadits' : 'input-kategori-doa');
 
             let iframe = document.getElementById(idIframe);
             let pesan = document.getElementById(idPesan);
             let label = document.getElementById(idLabel);
 
-            let url = await ambilURLPDF(tipe);
-            let namaFile = localStorage.getItem('bilal_nama_pdf_' + tipe) || (tipe === 'hadits' ? 'Buku Hadits Pondok.pdf' : 'Buku Doa Pondok.pdf');
-
-            if (url) {
-                let finalUrl = url;
-                if (!url.startsWith('blob:') && !url.includes('#')) {
-                    finalUrl = url + '#toolbar=1&navpanes=0';
-                }
-                if (iframe) {
-                    if (iframe.src !== finalUrl) {
-                        iframe.src = finalUrl;
-                    }
-                    iframe.style.display = 'block';
-                }
-                if (pesan) pesan.classList.add('hidden');
-                if (label) label.innerText = '📄 ' + namaFile + ' (Siap Digunakan)';
-            } else {
-                if (iframe) {
-                    iframe.src = 'about:blank';
-                    iframe.style.display = 'none';
-                }
-                if (pesan) pesan.classList.remove('hidden');
-                if (label) label.innerText = 'Belum ada file PDF';
+            let bookId = spesifikBookId;
+            if (!bookId && selEl) {
+                bookId = selEl.value;
             }
+
+            let books = await ambilKoleksiBuku(tipe);
+            let currentBook = books.find(b => b.id === bookId);
+
+            if (!currentBook && books.length > 0 && bookId !== 'Lainnya') {
+                currentBook = books[0];
+                bookId = currentBook.id;
+            }
+
+            if (currentBook) {
+                let url = await ambilURLBukuPDF(currentBook.id);
+                if (url) {
+                    let finalUrl = url;
+                    if (!url.startsWith('blob:') && !url.includes('#')) {
+                        finalUrl = url + '#toolbar=1&navpanes=0';
+                    }
+                    if (iframe) {
+                        if (iframe.src !== finalUrl) {
+                            iframe.src = finalUrl;
+                        }
+                        iframe.style.display = 'block';
+                    }
+                    if (pesan) pesan.classList.add('hidden');
+                    if (label) label.innerText = `📄 ${currentBook.judul} (${currentBook.nama || 'Buku PDF'})`;
+                    return;
+                }
+            }
+
+            if (iframe) {
+                iframe.src = 'about:blank';
+                iframe.style.display = 'none';
+            }
+            if (pesan) pesan.classList.remove('hidden');
+            if (label) label.innerText = 'Belum ada file PDF';
         }
 
         // =========================================================
@@ -1213,7 +1316,6 @@
                 if(lbl3) lbl3.innerText = 'Pemahaman/Adab:';
                 btnSimpan.innerText = (jenis === 'Murojaah') ? "💾 SIMPAN MUROJA'AH (HADITS)" : "💾 SIMPAN ZIYADAH (HADITS)";
                 updateKitabHaditsUI();
-                muatPreviewPDF('hadits');
             } else if (prog === 'doa') {
                 tabD.className = 'prog-tab-btn aktif-doa';
                 wD.classList.remove('hidden');
@@ -1223,7 +1325,6 @@
                 if(lbl3) lbl3.innerText = 'Makhraj / Adab:';
                 btnSimpan.innerText = (jenis === 'Murojaah') ? "💾 SIMPAN MUROJA'AH (DOA)" : "💾 SIMPAN ZIYADAH (DOA)";
                 updateKategoriDoaUI();
-                muatPreviewPDF('doa');
             } else {
                 tabQ.className = 'prog-tab-btn aktif-quran';
                 wQ.classList.remove('hidden');
@@ -1235,19 +1336,21 @@
         }
 
         async function inisialisasiMateriDropdowns() {
-            // Dropdown Kitab Hadits
+            await migrasiDanMuatKoleksiBuku();
+
+            // 1. Dropdown Kitab Hadits
             let selKitab = document.getElementById('input-kitab-hadits');
             if(selKitab) {
-                let itemH = await ambilPDFDariDB('pdf_hadits');
-                let namaHadits = (itemH && itemH.nama) ? itemH.nama : (localStorage.getItem('bilal_nama_pdf_hadits') || '');
-                let adaHadits = !!(itemH && itemH.data) || !!(linkReferensiHadits && linkReferensiHadits.trim() !== '');
-
+                let booksHadits = await ambilKoleksiBuku('hadits');
                 let prevVal = selKitab.value;
                 selKitab.innerHTML = '';
 
-                if (adaHadits) {
-                    let optTitle = namaHadits ? `📕 Buku PDF: ${namaHadits}` : `📕 Buku PDF Hadits Pondok`;
-                    selKitab.appendChild(new Option(optTitle, optTitle));
+                if (booksHadits.length > 0) {
+                    booksHadits.forEach(b => {
+                        let opt = new Option(`📕 ${b.judul}`, b.id);
+                        opt.setAttribute('data-judul', b.judul);
+                        selKitab.appendChild(opt);
+                    });
                 } else {
                     selKitab.appendChild(new Option("⚠️ Belum Ada Buku PDF Hadits (Unggah di Admin)", "Belum Ada PDF"));
                 }
@@ -1255,23 +1358,25 @@
 
                 if (prevVal && (prevVal === "Lainnya" || [...selKitab.options].some(o => o.value === prevVal))) {
                     selKitab.value = prevVal;
+                } else if (booksHadits.length > 0) {
+                    selKitab.value = booksHadits[0].id;
                 }
                 updateKitabHaditsUI();
             }
 
-            // Dropdown Kategori Doa
+            // 2. Dropdown Kategori Doa
             let selKategori = document.getElementById('input-kategori-doa');
             if(selKategori) {
-                let itemD = await ambilPDFDariDB('pdf_doa');
-                let namaDoa = (itemD && itemD.nama) ? itemD.nama : (localStorage.getItem('bilal_nama_pdf_doa') || '');
-                let adaDoa = !!(itemD && itemD.data) || !!(linkReferensiDoa && linkReferensiDoa.trim() !== '');
-
+                let booksDoa = await ambilKoleksiBuku('doa');
                 let prevVal = selKategori.value;
                 selKategori.innerHTML = '';
 
-                if (adaDoa) {
-                    let optTitle = namaDoa ? `📗 Buku PDF: ${namaDoa}` : `📗 Buku PDF Doa Pondok`;
-                    selKategori.appendChild(new Option(optTitle, optTitle));
+                if (booksDoa.length > 0) {
+                    booksDoa.forEach(b => {
+                        let opt = new Option(`📗 ${b.judul}`, b.id);
+                        opt.setAttribute('data-judul', b.judul);
+                        selKategori.appendChild(opt);
+                    });
                 } else {
                     selKategori.appendChild(new Option("⚠️ Belum Ada Buku PDF Doa (Unggah di Admin)", "Belum Ada PDF"));
                 }
@@ -1279,6 +1384,8 @@
 
                 if (prevVal && (prevVal === "Lainnya" || [...selKategori.options].some(o => o.value === prevVal))) {
                     selKategori.value = prevVal;
+                } else if (booksDoa.length > 0) {
+                    selKategori.value = booksDoa[0].id;
                 }
                 updateKategoriDoaUI();
             }
@@ -1293,6 +1400,9 @@
                 if(inpKitabMan) inpKitabMan.classList.remove('hidden');
             } else {
                 if(inpKitabMan) inpKitabMan.classList.add('hidden');
+                if(kVal && kVal !== 'Belum Ada PDF') {
+                    muatPreviewPDF('hadits', kVal);
+                }
             }
         }
 
@@ -1309,6 +1419,9 @@
                 if(inpKatMan) inpKatMan.classList.remove('hidden');
             } else {
                 if(inpKatMan) inpKatMan.classList.add('hidden');
+                if(cVal && cVal !== 'Belum Ada PDF') {
+                    muatPreviewPDF('doa', cVal);
+                }
             }
         }
 
@@ -1674,6 +1787,33 @@ USING (bucket_id = '${bucket}');`;
             }
         }
 
+        async function simpanItemPDFKeDB(item) {
+            let db = await bukaDBPDF();
+            return new Promise((resolve, reject) => {
+                let tx = db.transaction(IDB_STORE, 'readwrite');
+                let store = tx.objectStore(IDB_STORE);
+                let putReq = store.put(item);
+                putReq.onsuccess = () => resolve(item);
+                putReq.onerror = (e) => reject(e.target.error);
+            });
+        }
+
+        async function ambilSemuaPDFDariDB() {
+            try {
+                let db = await bukaDBPDF();
+                return new Promise((resolve, reject) => {
+                    let tx = db.transaction(IDB_STORE, 'readonly');
+                    let store = tx.objectStore(IDB_STORE);
+                    let req = store.getAll();
+                    req.onsuccess = () => resolve(req.result || []);
+                    req.onerror = (e) => reject(e.target.error);
+                });
+            } catch(e) {
+                console.warn('Gagal ambil semua PDF dari IndexedDB:', e);
+                return [];
+            }
+        }
+
         function formatUkuranFile(bytes) {
             if (!bytes || bytes === 0) return '0 Bytes';
             let k = 1024;
@@ -1682,51 +1822,83 @@ USING (bucket_id = '${bucket}');`;
             return parseFloat((bytes / Math.pow(k, i)).toFixed(1)) + ' ' + sizes[i];
         }
 
+        function escapeHtmlPDF(str) {
+            if (!str) return '';
+            return String(str)
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#39;');
+        }
+
+        function formatJudulDefaultBuku(fileName, tipe) {
+            if (!fileName) return (tipe === 'hadits') ? 'Kitab Hadits' : 'Kitab Doa';
+            let base = fileName.replace(/\.pdf$/i, '');
+            // Bersihkan prefix umum website jika ada
+            base = base.replace(/^[a-zA-Z0-9.-]+\.com\s*[0-9]*\s*/i, '');
+            // Ganti underscore / dash ganda dengan spasi
+            base = base.replace(/[_-]+/g, ' ').replace(/\s+/g, ' ').trim();
+            return base || ((tipe === 'hadits') ? 'Kitab Hadits' : 'Kitab Doa');
+        }
+
         function picuPilihFilePDF(tipe) {
-            let el = document.getElementById(tipe === 'hadits' ? 'input-file-hadits' : 'input-file-doa');
+            let el = document.getElementById(tipe === 'hadits' ? 'input-file-tambah-hadits' : 'input-file-tambah-doa');
             if(el) el.click();
         }
 
         function handleDragOverPDF(e, tipe) {
             e.preventDefault();
             e.stopPropagation();
-            let el = document.getElementById(tipe === 'hadits' ? 'dropzone-hadits' : 'dropzone-doa');
+            let el = document.getElementById(tipe === 'hadits' ? 'dropzone-tambah-hadits' : 'dropzone-tambah-doa');
             if(el) el.classList.add('drag-active');
         }
 
         function handleDragLeavePDF(e, tipe) {
             e.preventDefault();
             e.stopPropagation();
-            let el = document.getElementById(tipe === 'hadits' ? 'dropzone-hadits' : 'dropzone-doa');
+            let el = document.getElementById(tipe === 'hadits' ? 'dropzone-tambah-hadits' : 'dropzone-tambah-doa');
             if(el) el.classList.remove('drag-active');
         }
 
         function handleDropPDF(e, tipe) {
             e.preventDefault();
             e.stopPropagation();
-            let el = document.getElementById(tipe === 'hadits' ? 'dropzone-hadits' : 'dropzone-doa');
+            let el = document.getElementById(tipe === 'hadits' ? 'dropzone-tambah-hadits' : 'dropzone-tambah-doa');
             if(el) el.classList.remove('drag-active');
 
             if (e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files.length > 0) {
                 let file = e.dataTransfer.files[0];
-                prosesUploadPDF(file, tipe);
+                prosesUploadBukuBaru(file, tipe);
             }
         }
 
-        async function prosesUploadPDF(file, tipe) {
+        async function prosesUploadBukuBaru(file, tipe) {
             if(!file) return;
             if(!file.name.toLowerCase().endsWith('.pdf') && file.type !== 'application/pdf') {
                 alert("⚠️ Harap pilih file dengan format PDF (.pdf)!");
                 return;
             }
 
-            let id = (tipe === 'hadits') ? 'pdf_hadits' : 'pdf_doa';
+            // Berikan saran judul bersih dari nama file dan konfirmasi ke Admin
+            let defaultJudul = formatJudulDefaultBuku(file.name, tipe);
+            let labelTipe = (tipe === 'hadits') ? 'Hadits' : 'Doa & Dzikir';
+            let inputJudul = prompt(`📖 Beri Nama / Judul untuk Buku PDF ${labelTipe} ini:\n\n(Nama ini yang akan tampil rapi di menu pilihan Muhaffiz saat menyimak setoran)`, defaultJudul);
+
+            if (inputJudul === null) {
+                // Pengguna membatalkan
+                return;
+            }
+
+            let judulBuku = inputJudul.trim() || defaultJudul;
+            let id = tipe + '_' + Date.now();
+
             let progressBox = document.getElementById('progress-upload-pdf');
             let progressText = document.getElementById('teks-progress-upload-pdf');
 
             if(progressBox) {
                 progressBox.classList.remove('hidden');
-                if(progressText) progressText.innerText = `⏳ Memproses upload PDF ${tipe === 'hadits' ? 'Hadits' : 'Doa'}...`;
+                if(progressText) progressText.innerText = `⏳ Memproses buku "${judulBuku}"...`;
             }
 
             try {
@@ -1742,31 +1914,18 @@ USING (bucket_id = '${bucket}');`;
                         publicUrl = res.publicUrl;
                         cloudPath = res.path;
                         cloudUploaded = true;
-
-                        // Perbarui link dan simpan ke localStorage
-                        if(tipe === 'hadits') {
-                            linkReferensiHadits = publicUrl;
-                            localStorage.setItem('bilal_link_hadits', publicUrl);
-                            let inputLink = document.getElementById('setting-link-hadits');
-                            if(inputLink) inputLink.value = publicUrl;
-                        } else {
-                            linkReferensiDoa = publicUrl;
-                            localStorage.setItem('bilal_link_doa', publicUrl);
-                            let inputLink = document.getElementById('setting-link-doa');
-                            if(inputLink) inputLink.value = publicUrl;
-                        }
                     } catch(cloudErr) {
                         console.error("Gagal upload ke Supabase:", cloudErr);
                         let pesan = cloudErr.message || JSON.stringify(cloudErr);
 
                         if(pesan.toLowerCase().includes('row-level security') || pesan.toLowerCase().includes('security policy')) {
                             if(progressBox) progressBox.classList.add('hidden');
-                            alert("⚠️ Upload ditolak oleh Kebijakan Keamanan (RLS) Supabase!\n\nHal ini terjadi karena izin upload (RLS Policy) untuk bucket '" + (supabaseConfig.bucket || 'buku-referensi') + "' belum dibuat di Supabase.\n\nSolusinya sangat mudah (1 langkah):\n1. Pada jendela panduan yang terbuka, klik tombol hijau '📋 Salin Script SQL Policy'\n2. Buka dashboard Supabase > menu SQL Editor (ikon '>_') > klik 'New query'\n3. Paste lalu klik 'Run'.\n\nSetelah itu silakan upload ulang file PDF ini.");
+                            alert("⚠️ Upload ditolak oleh Kebijakan Keamanan (RLS) Supabase!\n\nIzin upload (RLS Policy) untuk bucket '" + (supabaseConfig.bucket || 'buku-referensi') + "' belum dibuat di Supabase.\n\nSolusi:\n1. Klik '📖 Panduan Buat Supabase' lalu klik '📋 Salin Script SQL Policy'\n2. Buka dashboard Supabase > SQL Editor > Paste & Run.\n3. Ulangi penambahan buku ini.");
                             bukaModalPanduanSupabase();
                             return;
                         }
 
-                        let lanjutLokal = confirm(`⚠️ Gagal mengunggah ke Cloud Supabase:\n"${pesan}"\n\nApakah Anda ingin tetap menyimpannya di penyimpanan lokal perangkat ini saja?`);
+                        let lanjutLokal = confirm(`⚠️ Gagal mengunggah ke Cloud Supabase:\n"${pesan}"\n\nApakah Anda ingin tetap menyimpannya di database lokal perangkat ini saja?`);
                         if(!lanjutLokal) {
                             if(progressBox) progressBox.classList.add('hidden');
                             return;
@@ -1774,151 +1933,284 @@ USING (bucket_id = '${bucket}');`;
                     }
                 }
 
-                // 2. Simpan juga di IndexedDB lokal untuk akses instan & offline
-                await simpanPDFKeDB(id, file, { publicUrl, cloudPath, cloudUploaded });
-                localStorage.setItem('bilal_nama_pdf_' + tipe, file.name);
-                if(tipe === 'hadits' && cacheBlobUrlHadits) { URL.revokeObjectURL(cacheBlobUrlHadits); cacheBlobUrlHadits = null; }
-                if(tipe === 'doa' && cacheBlobUrlDoa) { URL.revokeObjectURL(cacheBlobUrlDoa); cacheBlobUrlDoa = null; }
-                await muatStatusPDFLokalUI();
+                // 2. Simpan ke IndexedDB lokal untuk akses instan & offline
+                let bookItem = {
+                    id: id,
+                    kategori: tipe,
+                    judul: judulBuku,
+                    nama: file.name,
+                    ukuran: file.size,
+                    tipe: file.type || 'application/pdf',
+                    data: file,
+                    waktu: new Date().toLocaleDateString('id-ID') + ' ' + new Date().toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' }),
+                    publicUrl: publicUrl,
+                    cloudPath: cloudPath,
+                    cloudUploaded: cloudUploaded
+                };
+                await simpanItemPDFKeDB(bookItem);
+
+                // 3. Simpan ringkasan metadata ke localStorage
+                let metaList = JSON.parse(localStorage.getItem('bilal_koleksi_buku_' + tipe) || '[]');
+                metaList.push({
+                    id: id,
+                    kategori: tipe,
+                    judul: judulBuku,
+                    nama: file.name,
+                    ukuran: file.size,
+                    waktu: bookItem.waktu,
+                    publicUrl: publicUrl,
+                    cloudUploaded: cloudUploaded
+                });
+                localStorage.setItem('bilal_koleksi_buku_' + tipe, JSON.stringify(metaList));
+
+                // 4. Perbarui UI Admin & Dropdown Muhaffiz
+                await renderKoleksiBukuAdmin();
                 await inisialisasiMateriDropdowns();
-                await muatPreviewPDF(tipe);
+
+                // Otomatis pilih buku baru ini di form Muhaffiz
+                let selEl = document.getElementById(tipe === 'hadits' ? 'input-kitab-hadits' : 'input-kategori-doa');
+                if (selEl) {
+                    selEl.value = id;
+                    if (tipe === 'hadits') updateKitabHaditsUI();
+                    else updateKategoriDoaUI();
+                }
 
                 if(progressBox) progressBox.classList.add('hidden');
 
                 if(cloudUploaded) {
-                    alert(`🎉 Alhamdulillah!\n\nFile PDF ${tipe === 'hadits' ? 'Hadits' : 'Doa'} "${file.name}" berhasil diunggah ke Supabase Cloud Storage!\n\n🔗 URL Publik telah disimpan. Buku PDF kini otomatis terpilih di menu Muhaffiz dan pratinjaunya langsung aktif.`);
+                    alert(`🎉 Alhamdulillah!\n\nBuku "${judulBuku}" berhasil disimpan dan diunggah ke Cloud Supabase Storage!\n\n🔗 Buku ini langsung tersedia di pilihan Muhaffiz dan pratinjau bukunya otomatis tampil.`);
                 } else {
-                    alert(`✅ File PDF ${tipe === 'hadits' ? 'Hadits' : 'Doa'} "${file.name}" berhasil disimpan di perangkat ini!\n\nBuku PDF kini otomatis terpilih di menu Muhaffiz dan pratinjaunya langsung aktif.`);
+                    alert(`✅ Buku "${judulBuku}" berhasil disimpan di database lokal!\n\nBuku ini langsung tersedia di pilihan Muhaffiz dan pratinjau bukunya otomatis tampil.`);
                 }
             } catch(e) {
-                console.error("Gagal simpan PDF:", e);
+                console.error("Gagal simpan buku PDF:", e);
                 if(progressBox) progressBox.classList.add('hidden');
                 alert("⚠️ Terjadi kesalahan saat memproses file PDF: " + (e.message || e));
             }
         }
 
-        async function bukaFilePDFLokal(tipe) {
-            let id = (tipe === 'hadits') ? 'pdf_hadits' : 'pdf_doa';
+        // Alias fungsi lama untuk kompatibilitas
+        async function prosesUploadPDF(file, tipe) {
+            await prosesUploadBukuBaru(file, tipe);
+        }
+
+        async function ubahNamaBukuPDF(id) {
             let item = await ambilPDFDariDB(id);
-            if(item && item.data) {
-                let blobUrl = URL.createObjectURL(item.data);
-                window.open(blobUrl, '_blank');
-            } else {
-                let link = (tipe === 'hadits') ? linkReferensiHadits : linkReferensiDoa;
-                if(link) {
-                    window.open(link, '_blank');
-                } else {
-                    alert("⚠️ Belum ada file PDF yang tersimpan.");
-                }
+            let tipe = id.startsWith('doa') ? 'doa' : 'hadits';
+            let currentJudul = (item && item.judul) ? item.judul : '';
+
+            if (!currentJudul) {
+                let metaList = JSON.parse(localStorage.getItem('bilal_koleksi_buku_' + tipe) || '[]');
+                let m = metaList.find(x => x.id === id);
+                if (m) currentJudul = m.judul;
             }
+            if (!currentJudul) currentJudul = (item && item.nama) ? item.nama : 'Buku PDF';
+
+            let judulBaru = prompt(`✏️ Ubah Nama / Judul Buku PDF:\n\n(Nama ini yang akan langsung tampil di menu pilihan Muhaffiz)`, currentJudul);
+            if (judulBaru === null) return; // Batal
+            judulBaru = judulBaru.trim();
+
+            if (!judulBaru) {
+                alert("⚠️ Nama buku tidak boleh kosong!");
+                return;
+            }
+
+            // Simpan perubahan ke IndexedDB jika ada
+            if (item) {
+                item.judul = judulBaru;
+                await simpanItemPDFKeDB(item);
+            }
+
+            // Simpan perubahan ke localStorage meta
+            let metaList = JSON.parse(localStorage.getItem('bilal_koleksi_buku_' + tipe) || '[]');
+            let idx = metaList.findIndex(x => x.id === id);
+            if (idx !== -1) {
+                metaList[idx].judul = judulBaru;
+                localStorage.setItem('bilal_koleksi_buku_' + tipe, JSON.stringify(metaList));
+            }
+
+            await renderKoleksiBukuAdmin();
+            await inisialisasiMateriDropdowns();
+            alert(`✅ Nama buku berhasil diubah menjadi "${judulBaru}"!`);
+        }
+
+        async function hapusBukuPDFDariKoleksi(id) {
+            let item = await ambilPDFDariDB(id);
+            let tipe = id.startsWith('doa') ? 'doa' : 'hadits';
+            let namaBuku = (item && item.judul) ? item.judul : ((item && item.nama) ? item.nama : 'Buku ini');
+
+            if (!confirm(`🗑️ Hapus buku "${namaBuku}" dari koleksi ${tipe === 'hadits' ? 'Hadits' : 'Doa'}?`)) {
+                return;
+            }
+
+            await hapusPDFDariDB(id);
+
+            if (cacheBlobUrlBuku[id]) {
+                try { URL.revokeObjectURL(cacheBlobUrlBuku[id]); } catch(e) {}
+                delete cacheBlobUrlBuku[id];
+            }
+
+            let metaList = JSON.parse(localStorage.getItem('bilal_koleksi_buku_' + tipe) || '[]');
+            metaList = metaList.filter(x => x.id !== id);
+            localStorage.setItem('bilal_koleksi_buku_' + tipe, JSON.stringify(metaList));
+
+            await renderKoleksiBukuAdmin();
+            await inisialisasiMateriDropdowns();
+            alert(`✅ Buku "${namaBuku}" berhasil dihapus dari koleksi.`);
         }
 
         async function hapusFilePDFLokal(tipe) {
-            let label = (tipe === 'hadits') ? 'Hadits' : 'Doa';
-            if(confirm(`🗑️ Hapus file PDF ${label} dari penyimpanan perangkat?`)) {
-                let id = (tipe === 'hadits') ? 'pdf_hadits' : 'pdf_doa';
-                await hapusPDFDariDB(id);
-                localStorage.removeItem('bilal_nama_pdf_' + tipe);
-                if(tipe === 'hadits' && cacheBlobUrlHadits) { URL.revokeObjectURL(cacheBlobUrlHadits); cacheBlobUrlHadits = null; }
-                if(tipe === 'doa' && cacheBlobUrlDoa) { URL.revokeObjectURL(cacheBlobUrlDoa); cacheBlobUrlDoa = null; }
-                await muatStatusPDFLokalUI();
-                await inisialisasiMateriDropdowns();
-                await muatPreviewPDF(tipe);
-                alert(`✅ File PDF ${label} berhasil dihapus.`);
+            let sel = document.getElementById(tipe === 'hadits' ? 'input-kitab-hadits' : 'input-kategori-doa');
+            let bookId = sel ? sel.value : (tipe === 'hadits' ? 'pdf_hadits' : 'pdf_doa');
+            await hapusBukuPDFDariKoleksi(bookId);
+        }
+
+        async function bukaBukuPDFByID(id) {
+            let url = await ambilURLBukuPDF(id);
+            if (url) {
+                window.open(url, '_blank');
+            } else {
+                alert("⚠️ File PDF buku belum dapat diakses.");
+            }
+        }
+
+        async function bukaFilePDFLokal(tipe) {
+            let sel = document.getElementById(tipe === 'hadits' ? 'input-kitab-hadits' : 'input-kategori-doa');
+            let bookId = sel ? sel.value : '';
+
+            if (bookId && bookId !== 'Belum Ada PDF' && bookId !== 'Lainnya') {
+                let url = await ambilURLBukuPDF(bookId);
+                if (url) {
+                    window.open(url, '_blank');
+                    return;
+                }
+            }
+
+            // Fallback ke tautan web online / Supabase
+            let link = (tipe === 'hadits') ? linkReferensiHadits : linkReferensiDoa;
+            if(link) {
+                window.open(link, '_blank');
+            } else {
+                alert("⚠️ Belum ada file PDF yang tersimpan untuk materi ini.");
+            }
+        }
+
+        async function renderKoleksiBukuAdmin() {
+            await migrasiDanMuatKoleksiBuku();
+
+            // 1. Render Koleksi Hadits
+            try {
+                let wadahHadits = document.getElementById('daftar-buku-hadits-admin');
+                let badgeHadits = document.getElementById('badge-total-buku-hadits');
+                let booksHadits = await ambilKoleksiBuku('hadits');
+
+                if (badgeHadits) badgeHadits.innerText = `${booksHadits.length} Buku`;
+
+                if (wadahHadits) {
+                    if (booksHadits.length === 0) {
+                        wadahHadits.innerHTML = `
+                            <div style="padding: 16px; text-align: center; color: var(--teks-sekunder); font-size: 12px; background: rgba(255,255,255,0.02); border-radius: 10px; border: 1px dashed rgba(59, 130, 246, 0.25); margin-bottom: 8px;">
+                                📖 Belum ada buku PDF Hadits. Silakan unggah buku PDF pertama pondok di bawah ini.
+                            </div>`;
+                    } else {
+                        let html = '';
+                        booksHadits.forEach((b) => {
+                            let isCloud = !!(b.cloudUploaded || (b.publicUrl && b.publicUrl.includes('supabase.co')));
+                            html += `
+                                <div style="background: rgba(15, 23, 42, 0.7); border: 1px solid rgba(59, 130, 246, 0.35); border-radius: 12px; padding: 12px 14px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap;">
+                                    <div style="display: flex; align-items: center; gap: 12px; min-width: 220px; flex: 1;">
+                                        <div style="width: 38px; height: 38px; border-radius: 8px; background: rgba(59, 130, 246, 0.2); border: 1px solid rgba(59, 130, 246, 0.4); display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0;">
+                                            📕
+                                        </div>
+                                        <div style="min-width: 0; flex: 1;">
+                                            <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+                                                <span style="font-size: 14px; font-weight: 800; color: #f8fafc;">${escapeHtmlPDF(b.judul)}</span>
+                                                ${isCloud ? '<span style="font-size: 10px; background: rgba(59, 130, 246, 0.2); color: #93c5fd; padding: 2px 7px; border-radius: 5px; font-weight: 700; border: 1px solid rgba(59, 130, 246, 0.35);">☁️ Cloud Supabase</span>' : '<span style="font-size: 10px; background: rgba(255, 255, 255, 0.08); color: var(--teks-sekunder); padding: 2px 7px; border-radius: 5px; font-weight: 700;">💾 Lokal</span>'}
+                                            </div>
+                                            <div style="font-size: 11px; color: var(--teks-sekunder); margin-top: 3px; word-break: break-all;">
+                                                📄 <b>${escapeHtmlPDF(b.nama || 'buku.pdf')}</b> &bull; ${formatUkuranFile(b.ukuran)} &bull; Disimpan ${b.waktu || 'offline'}
+                                            </div>
+                                            ${b.publicUrl ? `<div style="font-size: 10px; color: #60a5fa; margin-top: 3px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 340px;">🔗 ${escapeHtmlPDF(b.publicUrl)}</div>` : ''}
+                                        </div>
+                                    </div>
+                                    <div style="display: flex; align-items: center; gap: 6px; flex-wrap: wrap;">
+                                        <button type="button" class="btn-kecil" style="background: rgba(59, 130, 246, 0.2); color: #93c5fd; border: 1px solid rgba(59, 130, 246, 0.4); padding: 6px 12px; font-size: 11px; font-weight: 700; border-radius: 6px; cursor: pointer;" onclick="bukaBukuPDFByID('${b.id}')">
+                                            👁️ Buka
+                                        </button>
+                                        <button type="button" class="btn-kecil" style="background: rgba(251, 191, 36, 0.15); color: #fde047; border: 1px solid rgba(251, 191, 36, 0.35); padding: 6px 12px; font-size: 11px; font-weight: 700; border-radius: 6px; cursor: pointer;" onclick="ubahNamaBukuPDF('${b.id}')">
+                                            ✏️ Ubah Nama
+                                        </button>
+                                        <button type="button" class="btn-kecil" style="background: rgba(239, 68, 68, 0.15); color: #fca5a5; border: 1px solid rgba(239, 68, 68, 0.3); padding: 6px 12px; font-size: 11px; font-weight: 700; border-radius: 6px; cursor: pointer;" onclick="hapusBukuPDFDariKoleksi('${b.id}')">
+                                            🗑️ Hapus
+                                        </button>
+                                    </div>
+                                </div>`;
+                        });
+                        wadahHadits.innerHTML = html;
+                    }
+                }
+            } catch(e) {
+                console.warn('Error render koleksi buku Hadits:', e);
+            }
+
+            // 2. Render Koleksi Doa
+            try {
+                let wadahDoa = document.getElementById('daftar-buku-doa-admin');
+                let badgeDoa = document.getElementById('badge-total-buku-doa');
+                let booksDoa = await ambilKoleksiBuku('doa');
+
+                if (badgeDoa) badgeDoa.innerText = `${booksDoa.length} Buku`;
+
+                if (wadahDoa) {
+                    if (booksDoa.length === 0) {
+                        wadahDoa.innerHTML = `
+                            <div style="padding: 16px; text-align: center; color: var(--teks-sekunder); font-size: 12px; background: rgba(255,255,255,0.02); border-radius: 10px; border: 1px dashed rgba(16, 185, 129, 0.25); margin-bottom: 8px;">
+                                🤲 Belum ada buku PDF Doa & Dzikir. Silakan unggah buku PDF pertama pondok di bawah ini.
+                            </div>`;
+                    } else {
+                        let html = '';
+                        booksDoa.forEach((b) => {
+                            let isCloud = !!(b.cloudUploaded || (b.publicUrl && b.publicUrl.includes('supabase.co')));
+                            html += `
+                                <div style="background: rgba(15, 23, 42, 0.7); border: 1px solid rgba(16, 185, 129, 0.35); border-radius: 12px; padding: 12px 14px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap;">
+                                    <div style="display: flex; align-items: center; gap: 12px; min-width: 220px; flex: 1;">
+                                        <div style="width: 38px; height: 38px; border-radius: 8px; background: rgba(16, 185, 129, 0.2); border: 1px solid rgba(16, 185, 129, 0.4); display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0;">
+                                            📗
+                                        </div>
+                                        <div style="min-width: 0; flex: 1;">
+                                            <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+                                                <span style="font-size: 14px; font-weight: 800; color: #f8fafc;">${escapeHtmlPDF(b.judul)}</span>
+                                                ${isCloud ? '<span style="font-size: 10px; background: rgba(16, 185, 129, 0.2); color: #6ee7b7; padding: 2px 7px; border-radius: 5px; font-weight: 700; border: 1px solid rgba(16, 185, 129, 0.35);">☁️ Cloud Supabase</span>' : '<span style="font-size: 10px; background: rgba(255, 255, 255, 0.08); color: var(--teks-sekunder); padding: 2px 7px; border-radius: 5px; font-weight: 700;">💾 Lokal</span>'}
+                                            </div>
+                                            <div style="font-size: 11px; color: var(--teks-sekunder); margin-top: 3px; word-break: break-all;">
+                                                📄 <b>${escapeHtmlPDF(b.nama || 'buku.pdf')}</b> &bull; ${formatUkuranFile(b.ukuran)} &bull; Disimpan ${b.waktu || 'offline'}
+                                            </div>
+                                            ${b.publicUrl ? `<div style="font-size: 10px; color: #34d399; margin-top: 3px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 340px;">🔗 ${escapeHtmlPDF(b.publicUrl)}</div>` : ''}
+                                        </div>
+                                    </div>
+                                    <div style="display: flex; align-items: center; gap: 6px; flex-wrap: wrap;">
+                                        <button type="button" class="btn-kecil" style="background: rgba(16, 185, 129, 0.2); color: #6ee7b7; border: 1px solid rgba(16, 185, 129, 0.4); padding: 6px 12px; font-size: 11px; font-weight: 700; border-radius: 6px; cursor: pointer;" onclick="bukaBukuPDFByID('${b.id}')">
+                                            👁️ Buka
+                                        </button>
+                                        <button type="button" class="btn-kecil" style="background: rgba(251, 191, 36, 0.15); color: #fde047; border: 1px solid rgba(251, 191, 36, 0.35); padding: 6px 12px; font-size: 11px; font-weight: 700; border-radius: 6px; cursor: pointer;" onclick="ubahNamaBukuPDF('${b.id}')">
+                                            ✏️ Ubah Nama
+                                        </button>
+                                        <button type="button" class="btn-kecil" style="background: rgba(239, 68, 68, 0.15); color: #fca5a5; border: 1px solid rgba(239, 68, 68, 0.3); padding: 6px 12px; font-size: 11px; font-weight: 700; border-radius: 6px; cursor: pointer;" onclick="hapusBukuPDFDariKoleksi('${b.id}')">
+                                            🗑️ Hapus
+                                        </button>
+                                    </div>
+                                </div>`;
+                        });
+                        wadahDoa.innerHTML = html;
+                    }
+                }
+            } catch(e) {
+                console.warn('Error render koleksi buku Doa:', e);
             }
         }
 
         async function muatStatusPDFLokalUI() {
-            // Cek Hadits
-            try {
-                let itemH = await ambilPDFDariDB('pdf_hadits');
-                if(itemH && itemH.nama) localStorage.setItem('bilal_nama_pdf_hadits', itemH.nama);
-                let kH = document.getElementById('dropzone-kosong-hadits');
-                let tH = document.getElementById('dropzone-terisi-hadits');
-                let bH = document.getElementById('badge-status-pdf-hadits');
-                let nH = document.getElementById('nama-file-pdf-hadits');
-                let iH = document.getElementById('info-file-pdf-hadits');
-                let btnH = document.getElementById('btn-buka-ref-hadits');
-                let bCloudH = document.getElementById('badge-cloud-hadits');
-
-                let isSupabaseH = (linkReferensiHadits && linkReferensiHadits.includes('supabase.co')) || (itemH && itemH.cloudUploaded);
-
-                if(itemH && itemH.data) {
-                    if(kH) kH.classList.add('hidden');
-                    if(tH) tH.classList.remove('hidden');
-                    if(bH) { 
-                        bH.innerText = isSupabaseH ? '☁️ Supabase Cloud & Lokal' : '✅ PDF Lokal Aktif'; 
-                        bH.style.color = '#60a5fa'; 
-                        bH.style.background = 'rgba(59,130,246,0.2)'; 
-                    }
-                    if(nH) nH.innerText = itemH.nama;
-                    if(iH) iH.innerText = formatUkuranFile(itemH.ukuran) + ' • Disimpan ' + (itemH.waktu || 'offline') + (isSupabaseH ? ' • ☁️ Cloud' : '');
-                    if(btnH) btnH.innerText = '📄 Buka PDF Buku';
-                    if(bCloudH) bCloudH.classList.toggle('hidden', !isSupabaseH);
-                } else {
-                    if(kH) kH.classList.remove('hidden');
-                    if(tH) tH.classList.add('hidden');
-                    if(bH) { 
-                        if(isSupabaseH) {
-                            bH.innerText = '☁️ Tersedia di Supabase Cloud';
-                            bH.style.color = '#93c5fd';
-                            bH.style.background = 'rgba(59,130,246,0.15)';
-                        } else {
-                            bH.innerText = 'Belum ada PDF'; 
-                            bH.style.color = 'var(--teks-sekunder)'; 
-                            bH.style.background = 'rgba(255,255,255,0.06)'; 
-                        }
-                    }
-                    if(btnH) btnH.innerText = isSupabaseH ? '📄 Buka PDF Buku' : '🔗 Link Web / PDF';
-                    if(bCloudH) bCloudH.classList.toggle('hidden', !isSupabaseH);
-                }
-            } catch(e) { console.warn('Error cek status PDF Hadits', e); }
-
-            // Cek Doa
-            try {
-                let itemD = await ambilPDFDariDB('pdf_doa');
-                if(itemD && itemD.nama) localStorage.setItem('bilal_nama_pdf_doa', itemD.nama);
-                let kD = document.getElementById('dropzone-kosong-doa');
-                let tD = document.getElementById('dropzone-terisi-doa');
-                let bD = document.getElementById('badge-status-pdf-doa');
-                let nD = document.getElementById('nama-file-pdf-doa');
-                let iD = document.getElementById('info-file-pdf-doa');
-                let btnD = document.getElementById('btn-buka-ref-doa');
-                let bCloudD = document.getElementById('badge-cloud-doa');
-
-                let isSupabaseD = (linkReferensiDoa && linkReferensiDoa.includes('supabase.co')) || (itemD && itemD.cloudUploaded);
-
-                if(itemD && itemD.data) {
-                    if(kD) kD.classList.add('hidden');
-                    if(tD) tD.classList.remove('hidden');
-                    if(bD) { 
-                        bD.innerText = isSupabaseD ? '☁️ Supabase Cloud & Lokal' : '✅ PDF Lokal Aktif'; 
-                        bD.style.color = '#34d399'; 
-                        bD.style.background = 'rgba(16,185,129,0.2)'; 
-                    }
-                    if(nD) nD.innerText = itemD.nama;
-                    if(iD) iD.innerText = formatUkuranFile(itemD.ukuran) + ' • Disimpan ' + (itemD.waktu || 'offline') + (isSupabaseD ? ' • ☁️ Cloud' : '');
-                    if(btnD) btnD.innerText = '📄 Buka PDF Buku';
-                    if(bCloudD) bCloudD.classList.toggle('hidden', !isSupabaseD);
-                } else {
-                    if(kD) kD.classList.remove('hidden');
-                    if(tD) tD.classList.add('hidden');
-                    if(bD) { 
-                        if(isSupabaseD) {
-                            bD.innerText = '☁️ Tersedia di Supabase Cloud';
-                            bD.style.color = '#6ee7b7';
-                            bD.style.background = 'rgba(16,185,129,0.15)';
-                        } else {
-                            bD.innerText = 'Belum ada PDF'; 
-                            bD.style.color = 'var(--teks-sekunder)'; 
-                            bD.style.background = 'rgba(255,255,255,0.06)'; 
-                        }
-                    }
-                    if(btnD) btnD.innerText = isSupabaseD ? '📄 Buka PDF Buku' : '🔗 Link Web / PDF';
-                    if(bCloudD) bCloudD.classList.toggle('hidden', !isSupabaseD);
-                }
-            } catch(e) { console.warn('Error cek status PDF Doa', e); }
-
+            await renderKoleksiBukuAdmin();
             try {
                 await inisialisasiMateriDropdowns();
                 let progAktif = document.getElementById('program-hafalan-aktif') ? document.getElementById('program-hafalan-aktif').value : '';
@@ -2973,16 +3265,36 @@ USING (bucket_id = '${bucket}');`;
                 } else if (prog === "hadits") {
                     kategori = "Hadits";
                     juz = "-";
-                    let kSel = document.getElementById('input-kitab-hadits') ? document.getElementById('input-kitab-hadits').value : "";
-                    surah = (kSel === "Lainnya") ? (document.getElementById('input-kitab-hadits-manual') ? document.getElementById('input-kitab-hadits-manual').value.trim() : "") : kSel;
+                    let selH = document.getElementById('input-kitab-hadits');
+                    let optH = selH ? selH.selectedOptions[0] : null;
+                    let kSel = selH ? selH.value : "";
+                    if (kSel === "Lainnya") {
+                        surah = document.getElementById('input-kitab-hadits-manual') ? document.getElementById('input-kitab-hadits-manual').value.trim() : "";
+                    } else if (optH && optH.getAttribute('data-judul')) {
+                        surah = optH.getAttribute('data-judul');
+                    } else if (optH) {
+                        surah = optH.text.replace(/^[📕📗⚠️\s]+/, '').trim();
+                    } else {
+                        surah = kSel;
+                    }
                     ayat = document.getElementById('input-nomor-hadits-manual') ? document.getElementById('input-nomor-hadits-manual').value.trim() : "";
                     if(!surah || surah === "Belum Ada PDF") { alert("⚠️ Harap tentukan Kitab Hadits / Buku PDF!"); return; }
                     if(!ayat) { alert("⚠️ Harap tentukan Nomor Hadits / Bab / Halaman!"); return; }
                 } else if (prog === "doa") {
                     kategori = "Doa";
                     juz = "-";
-                    let kSel = document.getElementById('input-kategori-doa') ? document.getElementById('input-kategori-doa').value : "";
-                    surah = (kSel === "Lainnya") ? (document.getElementById('input-kategori-doa-manual') ? document.getElementById('input-kategori-doa-manual').value.trim() : "") : kSel;
+                    let selD = document.getElementById('input-kategori-doa');
+                    let optD = selD ? selD.selectedOptions[0] : null;
+                    let kSel = selD ? selD.value : "";
+                    if (kSel === "Lainnya") {
+                        surah = document.getElementById('input-kategori-doa-manual') ? document.getElementById('input-kategori-doa-manual').value.trim() : "";
+                    } else if (optD && optD.getAttribute('data-judul')) {
+                        surah = optD.getAttribute('data-judul');
+                    } else if (optD) {
+                        surah = optD.text.replace(/^[📕📗⚠️\s]+/, '').trim();
+                    } else {
+                        surah = kSel;
+                    }
                     ayat = document.getElementById('input-nama-doa-manual') ? document.getElementById('input-nama-doa-manual').value.trim() : "";
                     if(!surah || surah === "Belum Ada PDF") { alert("⚠️ Harap tentukan Kategori / Kitab Doa!"); return; }
                     if(!ayat) { alert("⚠️ Harap tentukan Nama Doa / Dzikir / Halaman!"); return; }
@@ -3082,7 +3394,14 @@ USING (bucket_id = '${bucket}');`;
                     let foundK = false;
                     if(selK) {
                         for(let i=0; i<selK.options.length; i++) {
-                            if(selK.options[i].value === item.surah) { selK.selectedIndex = i; foundK = true; break; }
+                            let opt = selK.options[i];
+                            let dj = opt.getAttribute('data-judul');
+                            let cleanText = opt.text.replace(/^[📕📗⚠️\s]+/, '').trim();
+                            if(opt.value === item.surah || dj === item.surah || cleanText === item.surah || opt.text === item.surah) { 
+                                selK.selectedIndex = i; 
+                                foundK = true; 
+                                break; 
+                            }
                         }
                         if(!foundK) {
                             selK.value = "Lainnya";
@@ -3101,7 +3420,14 @@ USING (bucket_id = '${bucket}');`;
                     let foundC = false;
                     if(selC) {
                         for(let i=0; i<selC.options.length; i++) {
-                            if(selC.options[i].value === item.surah) { selC.selectedIndex = i; foundC = true; break; }
+                            let opt = selC.options[i];
+                            let dj = opt.getAttribute('data-judul');
+                            let cleanText = opt.text.replace(/^[📕📗⚠️\s]+/, '').trim();
+                            if(opt.value === item.surah || dj === item.surah || cleanText === item.surah || opt.text === item.surah) { 
+                                selC.selectedIndex = i; 
+                                foundC = true; 
+                                break; 
+                            }
                         }
                         if(!foundC) {
                             selC.value = "Lainnya";
