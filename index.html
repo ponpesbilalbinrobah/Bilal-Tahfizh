@@ -242,6 +242,16 @@
             <h3>5. Laporan (LPJ)</h3>
             <button style="background: linear-gradient(135deg, #8b5cf6, #6d28d9); color: white; box-shadow: 0 6px 0 #5b21b6;" onclick="bukaModalLaporan()">🖨️ Cetak Laporan Excel/PDF</button>
         </div>
+
+        <div class="box">
+            <h3>6. Cadangkan & Pulihkan Database (Offline / Lokal)</h3>
+            <p style="color:var(--teks-sekunder); font-size:13px; margin-top:-5px; margin-bottom:12px;">Data otomatis tersimpan di laptop. Anda juga dapat mengunduh file cadangan (JSON) atau memulihkannya kapan saja.</p>
+            <div class="btn-group">
+                <button type="button" style="background: linear-gradient(135deg, #10b981, #047857); color: white; box-shadow: 0 6px 0 #065f46;" onclick="unduhBackupJSON()">💾 Cadangkan JSON</button>
+                <button type="button" style="background: linear-gradient(135deg, #3b82f6, #1d4ed8); color: white; box-shadow: 0 6px 0 #1e40af;" onclick="document.getElementById('input-restore-json').click()">📥 Pulihkan JSON</button>
+                <input type="file" id="input-restore-json" accept=".json" style="display:none" onchange="pulihkanBackupJSON(event)">
+            </div>
+        </div>
         <button class="btn-logout" onclick="logout()">Keluar dari Admin</button>
     </div>
 
@@ -427,6 +437,7 @@
             <select id="jenis-laporan" onchange="aturFormLaporan()"><option value="semua">Seluruh Halaqah</option><option value="halaqah">Halaqah Tertentu Saja</option><option value="santri">Santri Tertentu</option></select>
             <div id="opsi-halaqah-laporan" class="hidden"><label class="form-label">Pilih Halaqah:</label><select id="pilih-halaqah-laporan" onchange="updateSantriLaporan()"></select></div>
             <div id="opsi-santri-laporan" class="hidden"><label class="form-label">Pilih Santri:</label><select id="pilih-santri-laporan"><option value="">-- Pilih Halaqah Dulu --</option></select></div>
+            <p style="font-size:12px; color:var(--teks-sekunder); margin-top:15px; margin-bottom:5px; text-align:center;">📊 Laporan Excel menyertakan kolom <b>Total Juz</b> dan sheet <b>Rekap Santri</b> (total juz yang dihafal santri).</p>
             <div class="btn-group">
                 <button style="background: linear-gradient(135deg, #ef4444, #b91c1c); color:white; box-shadow: 0 6px 0 #991b1b;" onclick="prosesCetak('PDF')">📄 PDF</button>
                 <button style="background: linear-gradient(135deg, #fbbf24, #d97706); color:var(--teks-dalam-tombol); box-shadow: 0 6px 0 #b45309;" onclick="prosesCetak('Excel')">📊 Excel</button>
@@ -455,7 +466,91 @@
 
         // VARIABEL GLOBAL
         let databasePesantren = {}; let dataProgresGlobal = {}; let dataRiwayatServer = []; let dataAkunGlobal = {}; let namaMuhaffizAktif = ""; 
-        let selectedJuzArray = []; 
+        let selectedJuzArray = [];
+
+        // =========================================================
+        // --- SISTEM STORAGE OFFLINE & DATABASE PEMULIHAN ---
+        // =========================================================
+        const DEFAULT_DATA = {"akun":{"Ust. Irfan Sirajuddin":"guru123","Ust. Andi Fathurahman":"guru123"},"pesantren":{"Umar Bin Khaththab":["Muhammad Itsar","Ihram Dzunurain","Abul Faqih Abdullah","Muhammad Afif Al Harun","Muhammad Fikrul Hidayat","Muflih","Habiburrahman","Yahya","Muhammad Fatir Adika","Ibrahim Al Atsari"]},"progres":{"Muhammad Itsar":{"juz":"-","ayat":"77-83","surah":"Al-Baqarah"},"Muhammad Fatir Adika":{"juz":"-","ayat":"8-12","surah":"At-Tahrim"},"Muhammad Afif Al Harun":{"juz":"-","ayat":"195-200","surah":"Ali 'Imran"},"Muhammad Fikrul Hidayat":{"juz":"-","ayat":"32-49","surah":"At-Tur"},"Abul Faqih Abdullah":{"juz":"-","ayat":"283-286","surah":"Al-Baqarah"},"Habiburrahman":{"juz":"-","ayat":"75-96","surah":"Al-Waqi'ah"},"Ihram Dzunurain":{"juz":"-","ayat":"11-14","surah":"At-Tagabun"},"Ibrahim Al Atsari":{"juz":"1,2,26,27,28,29,30","ayat":"25-32","surah":"Ar-Rum"},"Muflih":{"juz":"-","ayat":"16-23","surah":"Muhammad"},"Yahya":{"juz":"-","ayat":"7-27","surah":"Al-Qamar"}},"riwayat":[{"halaqah":"Umar Bin Khaththab","santri":"Muhammad Itsar","tajwid":"4","makhraj":"4","catatan":"-","status":"Lanjut","kehadiran":"Hadir","jenis":"Ziyadah","tgl":"24/4/2026 06.50","ayat":"98-101","surah":"Al-Baqarah","juz":"-","lancar":"4"},{"halaqah":"Umar Bin Khaththab","santri":"Ihram Dzunurain","tajwid":"4","makhraj":"4","catatan":"-","status":"Lanjut","kehadiran":"Hadir","jenis":"Ziyadah","tgl":"24/4/2026 06.49","ayat":"11-12","surah":"At-Talaq","juz":"-","lancar":"4"},{"halaqah":"Umar Bin Khaththab","santri":"Abul Faqih Abdullah","tajwid":"4","makhraj":"4","catatan":"-","status":"Lanjut","kehadiran":"Hadir","jenis":"Ziyadah","tgl":"24/4/2026 06.48","ayat":"53-61","surah":"Ali 'Imran","juz":"-","lancar":"4"},{"halaqah":"Umar Bin Khaththab","santri":"Muhammad Afif Al Harun","tajwid":"4","makhraj":"4","catatan":"-","status":"Lanjut","kehadiran":"Hadir","jenis":"Ziyadah","tgl":"24/4/2026 06.48","ayat":"20-23","surah":"An-Nisa'","juz":"-","lancar":"4"},{"halaqah":"Umar Bin Khaththab","santri":"Muhammad Afif Al Harun","tajwid":"4","makhraj":"4","catatan":"-","status":"Lanjut","kehadiran":"Hadir","jenis":"Ziyadah","tgl":"24/4/2026 06.47","ayat":"20-23","surah":"An-Nisa'","juz":"-","lancar":"4"},{"halaqah":"Umar Bin Khaththab","santri":"Muhammad Afif Al Harun","tajwid":"4","makhraj":"4","catatan":"-","status":"Lanjut","kehadiran":"Hadir","jenis":"Ziyadah","tgl":"24/4/2026 06.47","ayat":"20-23","surah":"An-Nisa'","juz":"-","lancar":"4"},{"halaqah":"Umar Bin Khaththab","santri":"Muhammad Fikrul Hidayat","tajwid":"4","makhraj":"4","catatan":"-","status":"Lanjut","kehadiran":"Hadir","jenis":"Ziyadah","tgl":"24/4/2026 06.46","ayat":"1-16","surah":"Ar-Rahman","juz":"-","lancar":"4"},{"halaqah":"Umar Bin Khaththab","santri":"Muhammad Fikrul Hidayat","tajwid":"4","makhraj":"4","catatan":"-","status":"Lanjut","kehadiran":"Hadir","jenis":"Ziyadah","tgl":"24/4/2026 06.46","ayat":"50-55","surah":"Al-Qamar","juz":"-","lancar":"4"},{"halaqah":"Umar Bin Khaththab","santri":"Muflih","tajwid":"4","makhraj":"4","catatan":"-","status":"Lanjut","kehadiran":"Hadir","jenis":"Ziyadah","tgl":"24/4/2026 06.45","ayat":"13-16","surah":"Al-Fath","juz":"-","lancar":"4"},{"halaqah":"Umar Bin Khaththab","santri":"Habiburrahman","tajwid":"4","makhraj":"4","catatan":"-","status":"Lanjut","kehadiran":"Hadir","jenis":"Ziyadah","tgl":"24/4/2026 06.44","ayat":"6-14","surah":"Al-Ahqaf","juz":"-","lancar":"4"},{"halaqah":"Umar Bin Khaththab","santri":"Yahya","tajwid":"4","makhraj":"4","catatan":"-","status":"Lanjut","kehadiran":"Hadir","jenis":"Ziyadah","tgl":"24/4/2026 06.43","ayat":"1-16","surah":"Al-Waqi'ah","juz":"-","lancar":"4"},{"halaqah":"Umar Bin Khaththab","santri":"Muhammad Fatir Adika","tajwid":"4","makhraj":"4","catatan":"-","status":"Lanjut","kehadiran":"Hadir","jenis":"Ziyadah","tgl":"24/4/2026 06.42","ayat":"15-23","surah":"At-Tur","juz":"-","lancar":"4"},{"halaqah":"Umar Bin Khaththab","santri":"Ihram Dzunurain","tajwid":"4","makhraj":"4","catatan":"-","status":"Lanjut","kehadiran":"Hadir","jenis":"Ziyadah","tgl":"23/4/2026 06.33","ayat":"6-10","surah":"At-Talaq","juz":"-","lancar":"4"},{"halaqah":"Umar Bin Khaththab","santri":"Ihram Dzunurain","tajwid":"4","makhraj":"4","catatan":"-","status":"Lanjut","kehadiran":"Hadir","jenis":"Ziyadah","tgl":"23/4/2026 06.33","ayat":"6-10","surah":"At-Talaq","juz":"-","lancar":"4"},{"halaqah":"Umar Bin Khaththab","santri":"Muhammad Fatir Adika","tajwid":"4","makhraj":"4","catatan":"-","status":"Lanjut","kehadiran":"Hadir","jenis":"Ziyadah","tgl":"23/4/2026 06.30","ayat":"1-14","surah":"At-Tur","juz":"-","lancar":"4"},{"halaqah":"Umar Bin Khaththab","santri":"Muhammad Fatir Adika","tajwid":"4","makhraj":"4","catatan":"-","status":"Lanjut","kehadiran":"Hadir","jenis":"Ziyadah","tgl":"23/4/2026 06.28","ayat":"52-60","surah":"Az-Zariyat","juz":"-","lancar":"4"},{"halaqah":"Umar Bin Khaththab","santri":"Muhammad Afif Al Harun","tajwid":"4","makhraj":"4","catatan":"-","status":"Lanjut","kehadiran":"Hadir","jenis":"Ziyadah","tgl":"23/4/2026 06.26","ayat":"12-19","surah":"An-Nisa'","juz":"-","lancar":"4"},{"halaqah":"Umar Bin Khaththab","santri":"Muflih","tajwid":"4","makhraj":"4","catatan":"-","status":"Lanjut","kehadiran":"Hadir","jenis":"Ziyadah","tgl":"23/4/2026 06.22","ayat":"6-12","surah":"Al-Fath","juz":"-","lancar":"4"},{"halaqah":"Umar Bin Khaththab","santri":"Abul Faqih Abdullah","tajwid":"4","makhraj":"4","catatan":"-","status":"Lanjut","kehadiran":"Hadir","jenis":"Ziyadah","tgl":"23/4/2026 06.18","ayat":"38-52","surah":"Ali 'Imran","juz":"-","lancar":"4"},{"halaqah":"Umar Bin Khaththab","santri":"Muhammad Fikrul Hidayat","tajwid":"4","makhraj":"4","catatan":"-","status":"Lanjut","kehadiran":"Hadir","jenis":"Ziyadah","tgl":"23/4/2026 06.13","ayat":"28-49","surah":"Al-Qamar","juz":"-","lancar":"4"},{"halaqah":"Umar Bin Khaththab","santri":"Habiburrahman","tajwid":"4","makhraj":"4","catatan":"-","status":"Lanjut","kehadiran":"Hadir","jenis":"Ziyadah","tgl":"23/4/2026 06.12","ayat":"1-5","surah":"Al-Ahqaf","juz":"-","lancar":"4"},{"halaqah":"Umar Bin Khaththab","santri":"Muhammad Itsar","tajwid":"4","makhraj":"4","catatan":"-","status":"Lanjut","kehadiran":"Hadir","jenis":"Ziyadah","tgl":"23/4/2026 06.11","ayat":"94-97","surah":"Al-Baqarah","juz":"-","lancar":"4"},{"halaqah":"Umar Bin Khaththab","santri":"Yahya","tajwid":"4","makhraj":"4","catatan":"-","status":"Lanjut","kehadiran":"Hadir","jenis":"Ziyadah","tgl":"23/4/2026 06.08","ayat":"68-78","surah":"Ar-Rahman","juz":"-","lancar":"4"},{"halaqah":"Umar Bin Khaththab","santri":"Muhammad Fikrul Hidayat","tajwid":"4","makhraj":"4","catatan":"-","status":"Lanjut","kehadiran":"Hadir","jenis":"Ziyadah","tgl":"23/4/2026 06.06","ayat":"1-27","surah":"Al-Qamar","juz":"-","lancar":"4"},{"halaqah":"Umar Bin Khaththab","santri":"Muhammad Itsar","tajwid":"4","makhraj":"4","catatan":"-","status":"Lanjut","kehadiran":"Hadir","jenis":"Ziyadah","tgl":"23/4/2026 06.05","ayat":"89-93","surah":"Al-Baqarah","juz":"-","lancar":"4"},{"halaqah":"Umar Bin Khaththab","santri":"Ihram Dzunurain","tajwid":"4","makhraj":"4","catatan":"-","status":"Lanjut","kehadiran":"Hadir","jenis":"Ziyadah","tgl":"23/4/2026 06.04","ayat":"6-12","surah":"At-Talaq","juz":"-","lancar":"4"},{"halaqah":"Umar Bin Khaththab","santri":"Abul Faqih Abdullah","tajwid":"4","makhraj":"4","catatan":"-","status":"Lanjut","kehadiran":"Hadir","jenis":"Ziyadah","tgl":"23/4/2026 06.03","ayat":"21-37","surah":"Ali 'Imran","juz":"-","lancar":"4"},{"halaqah":"Umar Bin Khaththab","santri":"Muhammad Afif Al Harun","tajwid":"4","makhraj":"4","catatan":"-","status":"Lanjut","kehadiran":"Hadir","jenis":"Ziyadah","tgl":"23/4/2026 06.02","ayat":"7-11","surah":"An-Nisa'","juz":"-","lancar":"4"},{"halaqah":"Umar Bin Khaththab","santri":"Muhammad Fatir Adika","tajwid":"4","makhraj":"4","catatan":"-","status":"Lanjut","kehadiran":"Hadir","jenis":"Ziyadah","tgl":"23/4/2026 06.01","ayat":"19-40","surah":"Az-Zariyat","juz":"-","lancar":"4"},{"halaqah":"Umar Bin Khaththab","santri":"Muhammad Fatir Adika","tajwid":"4","makhraj":"4","catatan":"-","status":"Lanjut","kehadiran":"Hadir","jenis":"Ziyadah","tgl":"23/4/2026 06.01","ayat":"19-40","surah":"Az-Zariyat","juz":"-","lancar":"4"},{"halaqah":"Umar Bin Khaththab","santri":"Muflih","tajwid":"4","makhraj":"4","catatan":"-","status":"Lanjut","kehadiran":"Hadir","jenis":"Ziyadah","tgl":"23/4/2026 06.00","ayat":"30-34","surah":"Muhammad","juz":"-","lancar":"3"},{"halaqah":"Umar Bin Khaththab","santri":"Habiburrahman","tajwid":"4","makhraj":"4","catatan":"-","status":"Lanjut","kehadiran":"Hadir","jenis":"Ziyadah","tgl":"23/4/2026 05.59","ayat":"25-29","surah":"Al-Hadid","juz":"-","lancar":"4"},{"halaqah":"Umar Bin Khaththab","santri":"Yahya","tajwid":"4","makhraj":"4","catatan":"-","status":"Lanjut","kehadiran":"Hadir","jenis":"Ziyadah","tgl":"23/4/2026 05.58","ayat":"1-67","surah":"Ar-Rahman","juz":"-","lancar":"4"},{"halaqah":"Umar Bin Khaththab","santri":"Ihram Dzunurain","tajwid":"3","makhraj":"3","catatan":"-","status":"Lanjut","kehadiran":"Hadir","jenis":"Ziyadah","tgl":"20/4/2026 06.24","ayat":"1-5","surah":"At-Talaq","juz":"-","lancar":"4"},{"halaqah":"Umar Bin Khaththab","santri":"Abul Faqih Abdullah","tajwid":"4","makhraj":"4","catatan":"-","status":"Lanjut","kehadiran":"Hadir","jenis":"Ziyadah","tgl":"20/4/2026 06.02","ayat":"16-20","surah":"Ali 'Imran","juz":"-","lancar":"4"},{"halaqah":"Umar Bin Khaththab","santri":"Muhammad Afif Al Harun","tajwid":"4","makhraj":"4","catatan":"-","status":"Lanjut","kehadiran":"Hadir","jenis":"Ziyadah","tgl":"20/4/2026 05.58","ayat":"1-6","surah":"An-Nisa'","juz":"-","lancar":"4"},{"halaqah":"Umar Bin Khaththab","santri":"Muhammad Fikrul Hidayat","tajwid":"4","makhraj":"4","catatan":"-","status":"Lanjut","kehadiran":"Hadir","jenis":"Ziyadah","tgl":"20/4/2026 05.58","ayat":"27-44","surah":"An-Najm","juz":"-","lancar":"4"},{"halaqah":"Umar Bin Khaththab","santri":"Muhammad Fatir Adika","tajwid":"4","makhraj":"4","catatan":"-","status":"Lanjut","kehadiran":"Hadir","jenis":"Ziyadah","tgl":"20/4/2026 05.57","ayat":"1-18","surah":"Az-Zariyat","juz":"-","lancar":"4"},{"halaqah":"Umar Bin Khaththab","santri":"Muflih","tajwid":"4","makhraj":"4","catatan":"-","status":"Lanjut","kehadiran":"Hadir","jenis":"Ziyadah","tgl":"20/4/2026 05.56","ayat":"24-29","surah":"Muhammad","juz":"-","lancar":"4"},{"halaqah":"Umar Bin Khaththab","santri":"Habiburrahman","tajwid":"4","makhraj":"4","catatan":"-","status":"Lanjut","kehadiran":"Hadir","jenis":"Ziyadah","tgl":"20/4/2026 05.55","ayat":"12-18","surah":"Al-Hadid","juz":"-","lancar":"4"},{"halaqah":"Umar Bin Khaththab","santri":"Yahya","tajwid":"4","makhraj":"4","catatan":"-","status":"Lanjut","kehadiran":"Hadir","jenis":"Ziyadah","tgl":"20/4/2026 05.55","ayat":"50-55","surah":"Al-Qamar","juz":"-","lancar":"4"},{"halaqah":"Umar Bin Khaththab","santri":"Yahya","tajwid":"4","makhraj":"4","catatan":"-","status":"Lanjut","kehadiran":"Hadir","jenis":"Ziyadah","tgl":"20/4/2026 05.54","ayat":"Penuh","surah":"Al-Qamar s/d Ar-Rahman","juz":"-","lancar":"4"},{"halaqah":"Umar Bin Khaththab","santri":"Muhammad Itsar","tajwid":"4","makhraj":"4","catatan":"-","status":"Lanjut","kehadiran":"Hadir","jenis":"Ziyadah","tgl":"17/4/2026 06.57","ayat":"84-88","surah":"Al-Baqarah","juz":"-","lancar":"4"},{"halaqah":"Umar Bin Khaththab","santri":"Yahya","tajwid":"4","makhraj":"4","catatan":"-","status":"Lanjut","kehadiran":"Hadir","jenis":"Ziyadah","tgl":"17/4/2026 06.55","ayat":"28-49","surah":"Al-Qamar","juz":"-","lancar":"3"},{"halaqah":"Umar Bin Khaththab","santri":"Habiburrahman","tajwid":"4","makhraj":"4","catatan":"-","status":"Lanjut","kehadiran":"Hadir","jenis":"Ziyadah","tgl":"17/4/2026 06.50","ayat":"1-11","surah":"Al-Hadid","juz":"-","lancar":"4"},{"halaqah":"Umar Bin Khaththab","santri":"Habiburrahman","tajwid":"5","makhraj":"5","catatan":"-","status":"Lanjut","kehadiran":"Hadir","jenis":"Ziyadah","tgl":"17/4/2026 06.45","ayat":"1-26","surah":"An-Najm","juz":"-","lancar":"5"},{"halaqah":"Umar Bin Khaththab","santri":"Muhammad Fikrul Hidayat","tajwid":"5","makhraj":"5","catatan":"-","status":"Lanjut","kehadiran":"Hadir","jenis":"Ziyadah","tgl":"17/4/2026 06.43","ayat":"1-26","surah":"An-Najm","juz":"-","lancar":"5"},{"halaqah":"Umar Bin Khaththab","santri":"Ihram Dzunurain","tajwid":"4","makhraj":"4","catatan":"-","status":"Lanjut","kehadiran":"Hadir","jenis":"Ziyadah","tgl":"17/4/2026 06.40","ayat":"13-18","surah":"At-Tagabun","juz":"-","lancar":"4"},{"halaqah":"Umar Bin Khaththab","santri":"Ihram Dzunurain","tajwid":"4","makhraj":"4","catatan":"-","status":"Lanjut","kehadiran":"Hadir","jenis":"Ziyadah","tgl":"17/4/2026 06.40","ayat":"13-18","surah":"At-Tagabun","juz":"-","lancar":"4"},{"halaqah":"Umar Bin Khaththab","santri":"Muhammad Afif Al Harun","tajwid":"3","makhraj":"3","catatan":"-","status":"Ulangi","kehadiran":"Hadir","jenis":"Ziyadah","tgl":"17/4/2026 06.38","ayat":"1-6","surah":"An-Nisa'","juz":"-","lancar":"3"},{"halaqah":"Umar Bin Khaththab","santri":"Ihram Dzunurain","tajwid":"3","makhraj":"3","catatan":"-","status":"Ulangi","kehadiran":"Hadir","jenis":"Ziyadah","tgl":"17/4/2026 06.37","ayat":"1-6","surah":"An-Nisa'","juz":"-","lancar":"3"},{"halaqah":"Umar Bin Khaththab","santri":"Muhammad Afif Al Harun","tajwid":"3","makhraj":"3","catatan":"-","status":"Lanjut","kehadiran":"Hadir","jenis":"Ziyadah","tgl":"17/4/2026 06.36","ayat":"1-6","surah":"An-Nisa'","juz":"-","lancar":"3"},{"halaqah":"Umar Bin Khaththab","santri":"Muhammad Afif Al Harun","tajwid":"3","makhraj":"3","catatan":"-","status":"Lanjut","kehadiran":"Hadir","jenis":"Ziyadah","tgl":"17/4/2026 06.35","ayat":"1-6","surah":"An-Nisa'","juz":"-","lancar":"3"},{"halaqah":"Umar Bin Khaththab","santri":"Abul Faqih Abdullah","tajwid":"4","makhraj":"4","catatan":"-","status":"Lanjut","kehadiran":"Hadir","jenis":"Ziyadah","tgl":"17/4/2026 06.31","ayat":"1-15","surah":"Ali 'Imran","juz":"-","lancar":"4"},{"halaqah":"Umar Bin Khaththab","santri":"Muflih","tajwid":"4","makhraj":"4","catatan":"-","status":"Lanjut","kehadiran":"Hadir","jenis":"Ziyadah","tgl":"17/4/2026 06.24","ayat":"16-23","surah":"Muhammad","juz":"-","lancar":"4"},{"halaqah":"Umar Bin Khaththab","santri":"Yahya","tajwid":"4","makhraj":"4","catatan":[[]],"status":"Lanjut","kehadiran":"Hadir","jenis":"Ziyadah","tgl":"15/4/2026 06.51","ayat":"7-27","surah":"Al-Qamar","juz":"-","lancar":"3"},{"halaqah":"Umar Bin Khaththab","santri":"Muhammad Fikrul Hidayat","tajwid":"4","makhraj":"4","catatan":[[]],"status":"Lanjut","kehadiran":"Hadir","jenis":"Ziyadah","tgl":"15/4/2026 06.45","ayat":"32-49","surah":"At-Tur","juz":"-","lancar":"4"},{"halaqah":"Umar Bin Khaththab","santri":"Muhammad Itsar","tajwid":"4","makhraj":"4","catatan":[[]],"status":"Lanjut","kehadiran":"Hadir","jenis":"Ziyadah","tgl":"15/4/2026 06.41","ayat":"77-83","surah":"Al-Baqarah","juz":"-","lancar":"4"},{"halaqah":"Umar Bin Khaththab","santri":"Ihram Dzunurain","tajwid":"4","makhraj":"4","catatan":[[]],"status":"Lanjut","kehadiran":"Hadir","jenis":"Ziyadah","tgl":"15/4/2026 06.38","ayat":"11-14","surah":"At-Tagabun","juz":"-","lancar":"4"},{"halaqah":"Umar Bin Khaththab","santri":"Muhammad Afif Al Harun","tajwid":"4","makhraj":"4","catatan":[[]],"status":"Lanjut","kehadiran":"Hadir","jenis":"Ziyadah","tgl":"15/4/2026 06.35","ayat":"195-200","surah":"Ali 'Imran","juz":"-","lancar":"4"},{"halaqah":"Umar Bin Khaththab","santri":"Muhammad Fatir Adika","tajwid":"4","makhraj":"4","catatan":[[]],"status":"Lanjut","kehadiran":"Hadir","jenis":"Ziyadah","tgl":"15/4/2026 06.31","ayat":"8-12","surah":"At-Tahrim","juz":"-","lancar":"4"},{"halaqah":"Umar Bin Khaththab","santri":"Habiburrahman","tajwid":"4","makhraj":"4","catatan":[[]],"status":"Lanjut","kehadiran":"Hadir","jenis":"Ziyadah","tgl":"15/4/2026 06.27","ayat":"75-96","surah":"Al-Waqi'ah","juz":"-","lancar":"4"},{"halaqah":"Umar Bin Khaththab","santri":"Abul Faqih Abdullah","tajwid":"4","makhraj":"4","catatan":"MasyaAllah Jauhi pertemanan yang mengajak kepada kemalasan, senantiasa berdoa kepada allah subhanahu wata'ala untuk di mudahkan dalam menghafal","status":"Lanjut","kehadiran":"Hadir","jenis":"Ziyadah","tgl":"15/4/2026 06.22","ayat":"283-286","surah":"Al-Baqarah","juz":"-","lancar":"4"},{"halaqah":"Umar Bin Khaththab","santri":"Ibrahim Al Atsari","tajwid":"4","makhraj":"4","catatan":[[]],"status":"Lanjut","kehadiran":"Hadir","jenis":"Ziyadah","tgl":"15/4/2026 06.11","ayat":"32-41","surah":"Ar-Rum","juz":"-","lancar":"4"},{"halaqah":"Umar Bin Khaththab","santri":"Ibrahim Al Atsari","tajwid":"4","makhraj":"4","catatan":"-","status":"Ulangi","kehadiran":"Hadir","jenis":"Ziyadah","tgl":"15/4/2026 05.51","ayat":"25-32","surah":"Ar-Rum","juz":"1,2,26,27,28,29,30","lancar":"3"}]};
+
+        function simpanKeLocalStorage() {
+            try {
+                let dataToSave = {
+                    akun: dataAkunGlobal,
+                    pesantren: databasePesantren,
+                    progres: dataProgresGlobal,
+                    riwayat: dataRiwayatServer
+                };
+                localStorage.setItem('bilal_tahfiz_db', JSON.stringify(dataToSave));
+            } catch(e) { console.error('Gagal simpan local storage', e); }
+        }
+
+        function muatDariLocalStorage() {
+            try {
+                let saved = localStorage.getItem('bilal_tahfiz_db');
+                if (saved) {
+                    let data = JSON.parse(saved);
+                    dataAkunGlobal = (data.akun && Object.keys(data.akun).length > 0) ? data.akun : JSON.parse(JSON.stringify(DEFAULT_DATA.akun));
+                    databasePesantren = (data.pesantren && Object.keys(data.pesantren).length > 0) ? data.pesantren : JSON.parse(JSON.stringify(DEFAULT_DATA.pesantren));
+                    dataProgresGlobal = data.progres || JSON.parse(JSON.stringify(DEFAULT_DATA.progres));
+                    dataRiwayatServer = data.riwayat || JSON.parse(JSON.stringify(DEFAULT_DATA.riwayat));
+                } else {
+                    dataAkunGlobal = JSON.parse(JSON.stringify(DEFAULT_DATA.akun));
+                    databasePesantren = JSON.parse(JSON.stringify(DEFAULT_DATA.pesantren));
+                    dataProgresGlobal = JSON.parse(JSON.stringify(DEFAULT_DATA.progres));
+                    dataRiwayatServer = JSON.parse(JSON.stringify(DEFAULT_DATA.riwayat));
+                    simpanKeLocalStorage();
+                }
+            } catch(e) {
+                console.error('Error muat local storage, gunakan default', e);
+                dataAkunGlobal = JSON.parse(JSON.stringify(DEFAULT_DATA.akun));
+                databasePesantren = JSON.parse(JSON.stringify(DEFAULT_DATA.pesantren));
+                dataProgresGlobal = JSON.parse(JSON.stringify(DEFAULT_DATA.progres));
+                dataRiwayatServer = JSON.parse(JSON.stringify(DEFAULT_DATA.riwayat));
+            }
+            renderMuhaffizDropdown();
+            renderHalaqahDropdowns();
+        }
+
+        function unduhBackupJSON() {
+            let dataToSave = {
+                akun: dataAkunGlobal,
+                pesantren: databasePesantren,
+                progres: dataProgresGlobal,
+                riwayat: dataRiwayatServer
+            };
+            let blob = new Blob([JSON.stringify(dataToSave, null, 2)], { type: 'application/json' });
+            let url = URL.createObjectURL(blob);
+            let a = document.createElement('a');
+            a.href = url;
+            a.download = 'Backup_Database_Bilal_' + new Date().toISOString().slice(0,10) + '.json';
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+
+        function pulihkanBackupJSON(event) {
+            let file = event.target.files[0];
+            if(!file) return;
+            let reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    let d = JSON.parse(e.target.result);
+                    if(d.akun) dataAkunGlobal = d.akun;
+                    if(d.pesantren) databasePesantren = d.pesantren;
+                    if(d.progres) dataProgresGlobal = d.progres;
+                    if(d.riwayat) dataRiwayatServer = d.riwayat;
+                    simpanKeLocalStorage();
+                    renderMuhaffizDropdown();
+                    renderHalaqahDropdowns();
+                    renderTabelAdmin();
+                    alert('✅ Database berhasil dipulihkan dari file backup!');
+                } catch(err) {
+                    alert('⚠️ File backup tidak valid!');
+                }
+            };
+            reader.readAsText(file);
+        }
+ 
 
         window.addEventListener('load', function() {
             let selectSurah = document.getElementById('input-surah');
@@ -474,16 +569,24 @@
             document.getElementById('muhaffiz-grid-juz-30').innerHTML = gridHtmlMuhaffiz;
             document.getElementById('ortu-grid-juz-30').innerHTML = gridHtmlOrtu;
 
+            // Muat data lokal dulu (offline ready)
+            muatDariLocalStorage();
+
             fetch(scriptURL, { method: 'GET', mode: 'cors' }).then(r => r.json()).then(data => {
-                dataProgresGlobal = data.progres || {}; dataRiwayatServer = data.riwayat || []; dataAkunGlobal = data.akun || {};
-                databasePesantren = {};
+                if(data.progres && Object.keys(data.progres).length > 0) dataProgresGlobal = data.progres;
+                if(data.riwayat && data.riwayat.length > 0) dataRiwayatServer = data.riwayat;
+                if(data.akun && Object.keys(data.akun).length > 0) dataAkunGlobal = data.akun;
                 if(data.halaqah && data.halaqah.length > 0) {
+                    databasePesantren = {};
                     data.halaqah.forEach(h => databasePesantren[h] = []);
                     if(data.santri) { data.santri.forEach(s => { if(databasePesantren[s.halaqah]) databasePesantren[s.halaqah].push(s.nama); }); }
                 }
+                simpanKeLocalStorage();
                 renderMuhaffizDropdown();
-                document.getElementById('teks-loading').innerText = "Sistem Siap!";
-            }).catch(e => { document.getElementById('teks-loading').innerText = "Mode Offline";
+                renderHalaqahDropdowns();
+                document.getElementById('teks-loading').innerText = "Sistem Siap (Online)";
+            }).catch(e => {
+                document.getElementById('teks-loading').innerText = "Mode Offline (Data Lokal Aktif)";
             }).finally(() => {
                 setTimeout(function() {
                     let splash = document.getElementById('splash-screen'); splash.classList.add('fade-out');
@@ -528,8 +631,34 @@
         }
 
         // =========================================================
-        // --- LOGIKA JUZ MULTI-SELECT ---
+        // --- LOGIKA JUZ MULTI-SELECT & PERHITUNGAN TOTAL JUZ ---
         // =========================================================
+        function parseDaftarJuz(juzString) {
+            if (!juzString || juzString === "-" || typeof juzString !== 'string') return [];
+            let set = new Set();
+            let tokens = juzString.split(/[,;\s]+/).map(t => t.trim()).filter(Boolean);
+            tokens.forEach(tok => {
+                if (tok.includes('-')) {
+                    let parts = tok.split('-').map(Number);
+                    if (!isNaN(parts[0]) && !isNaN(parts[1]) && parts[0] <= parts[1]) {
+                        for (let i = parts[0]; i <= parts[1]; i++) {
+                            if (i >= 1 && i <= 30) set.add(i);
+                        }
+                    }
+                } else {
+                    let n = parseInt(tok, 10);
+                    if (!isNaN(n) && n >= 1 && n <= 30) set.add(n);
+                }
+            });
+            return Array.from(set).sort((a, b) => a - b);
+        }
+
+        function formatTotalJuz(juzString, kehadiran) {
+            if (kehadiran && kehadiran !== 'Hadir') return '-';
+            let arr = parseDaftarJuz(juzString);
+            return arr.length > 0 ? (arr.length + ' Juz') : '-';
+        }
+
         function toggleJuz(num) {
             let idx = selectedJuzArray.indexOf(num);
             if(idx > -1) {
@@ -552,7 +681,7 @@
             }
             let arr = [];
             if(juzString && juzString !== "-") {
-                arr = juzString.split(',').map(Number);
+                arr = parseDaftarJuz(juzString);
                 arr.forEach(num => {
                     let btn = document.getElementById(`${prefix}${num}`);
                     if(btn) btn.classList.add('aktif');
@@ -581,12 +710,12 @@
             renderTabelSantriAdmin(); renderHalaqahDropdowns(); 
         }
 
-        function tambahGuru() { let n = document.getElementById('nama-muhaffiz-baru').value.trim(); if(!n) return alert("⚠️ Nama tidak boleh kosong!"); if(dataAkunGlobal[n]) return alert("⚠️ Nama sudah terdaftar!"); eksekusiCRUD('crud_tambah', 'Akun', '', [n, "guru123"]); dataAkunGlobal[n] = "guru123"; document.getElementById('nama-muhaffiz-baru').value = ''; alert("✅ Muhaffizh ditambahkan!"); renderTabelAdmin(); renderMuhaffizDropdown(); }
-        function editGuru(namaLama) { let n = prompt("Ubah Nama Muhaffizh:", namaLama); if(n && n.trim() !== "" && n !== namaLama) { eksekusiCRUD('crud_edit', 'Akun', namaLama, [n.trim(), dataAkunGlobal[namaLama]]); dataAkunGlobal[n.trim()] = dataAkunGlobal[namaLama]; delete dataAkunGlobal[namaLama]; renderTabelAdmin(); renderMuhaffizDropdown(); } }
-        function hapusGuru(nama) { if(confirm(`Yakin ingin menghapus Muhaffizh '${nama}'?`)) { eksekusiCRUD('crud_hapus', 'Akun', nama, []); delete dataAkunGlobal[nama]; renderTabelAdmin(); renderMuhaffizDropdown(); } }
-        function tambahHalaqah() { let n = document.getElementById('nama-halaqah-baru').value.trim(); if(!n) return alert("⚠️ Nama Halaqah tidak boleh kosong!"); if(databasePesantren[n]) return alert("⚠️ Halaqah sudah ada!"); eksekusiCRUD('crud_tambah', 'Halaqah', '', [n]); databasePesantren[n] = []; document.getElementById('nama-halaqah-baru').value = ''; alert("✅ Halaqah ditambahkan!"); renderTabelAdmin(); }
-        function editHalaqah(namaLama) { let n = prompt("Ubah Nama Halaqah:", namaLama); if(n && n.trim() !== "" && n !== namaLama) { eksekusiCRUD('crud_edit', 'Halaqah', namaLama, [n.trim()]); databasePesantren[n.trim()] = databasePesantren[namaLama]; delete databasePesantren[namaLama]; renderTabelAdmin(); } }
-        function hapusHalaqah(nama) { if(confirm(`Yakin menghapus Halaqah '${nama}'?`)) { eksekusiCRUD('crud_hapus', 'Halaqah', nama, []); delete databasePesantren[nama]; renderTabelAdmin(); } }
+        function tambahGuru() { let n = document.getElementById('nama-muhaffiz-baru').value.trim(); if(!n) return alert("⚠️ Nama tidak boleh kosong!"); if(dataAkunGlobal[n]) return alert("⚠️ Nama sudah terdaftar!"); eksekusiCRUD('crud_tambah', 'Akun', '', [n, "guru123"]); dataAkunGlobal[n] = "guru123"; document.getElementById('nama-muhaffiz-baru').value = ''; alert("✅ Muhaffizh ditambahkan!"); renderTabelAdmin(); renderMuhaffizDropdown(); simpanKeLocalStorage(); }
+        function editGuru(namaLama) { let n = prompt("Ubah Nama Muhaffizh:", namaLama); if(n && n.trim() !== "" && n !== namaLama) { eksekusiCRUD('crud_edit', 'Akun', namaLama, [n.trim(), dataAkunGlobal[namaLama]]); dataAkunGlobal[n.trim()] = dataAkunGlobal[namaLama]; delete dataAkunGlobal[namaLama]; renderTabelAdmin(); renderMuhaffizDropdown(); simpanKeLocalStorage(); } }
+        function hapusGuru(nama) { if(confirm(`Yakin ingin menghapus Muhaffizh '${nama}'?`)) { eksekusiCRUD('crud_hapus', 'Akun', nama, []); delete dataAkunGlobal[nama]; renderTabelAdmin(); renderMuhaffizDropdown(); simpanKeLocalStorage(); } }
+        function tambahHalaqah() { let n = document.getElementById('nama-halaqah-baru').value.trim(); if(!n) return alert("⚠️ Nama Halaqah tidak boleh kosong!"); if(databasePesantren[n]) return alert("⚠️ Halaqah sudah ada!"); eksekusiCRUD('crud_tambah', 'Halaqah', '', [n]); databasePesantren[n] = []; document.getElementById('nama-halaqah-baru').value = ''; alert("✅ Halaqah ditambahkan!"); renderTabelAdmin(); simpanKeLocalStorage(); }
+        function editHalaqah(namaLama) { let n = prompt("Ubah Nama Halaqah:", namaLama); if(n && n.trim() !== "" && n !== namaLama) { eksekusiCRUD('crud_edit', 'Halaqah', namaLama, [n.trim()]); databasePesantren[n.trim()] = databasePesantren[namaLama]; delete databasePesantren[namaLama]; renderTabelAdmin(); simpanKeLocalStorage(); } }
+        function hapusHalaqah(nama) { if(confirm(`Yakin menghapus Halaqah '${nama}'?`)) { eksekusiCRUD('crud_hapus', 'Halaqah', nama, []); delete databasePesantren[nama]; renderTabelAdmin(); simpanKeLocalStorage(); } }
         function renderTabelSantriAdmin() {
             let h = document.getElementById('admin-pilih-halaqah').value; let tmp = document.getElementById('tabel-santri');
             if(!h) { tmp.innerHTML = '<p style="color:var(--teks-sekunder); text-align:center; font-size:13px;">Pilih halaqah di atas untuk melihat daftar santri.</p>'; return; }
@@ -594,9 +723,9 @@
             if(santris.length === 0) { tmp.innerHTML = '<p style="color:var(--teks-sekunder); text-align:center; font-size:13px;">Belum ada santri.</p>'; return; }
             let html = ''; santris.forEach(s => { html += `<div class="list-item"><span class="list-item-text">${s}</span><div style="display:flex; gap:5px;"><button onclick="editSantri('${h}', '${s}')" class="btn-kecil" style="background:rgba(59,130,246,0.2); color:#93c5fd; border:1px solid rgba(59,130,246,0.3);">✏️</button><button onclick="hapusSantri('${h}', '${s}')" class="btn-kecil" style="background:rgba(239,68,68,0.2); color:#fca5a5; border:1px solid rgba(239,68,68,0.3);">🗑️</button></div></div>`; }); tmp.innerHTML = html;
         }
-        function tambahSantri() { let h = document.getElementById('admin-pilih-halaqah').value; let d = document.getElementById('data-santri-baru').value.trim(); if(!h || !d) return alert("⚠️ Pilih Halaqah dan ketik nama santri!"); let lines = d.split('\n'); let batch = []; lines.forEach(n => { let nm = n.trim(); if(nm !== "" && (!databasePesantren[h] || !databasePesantren[h].includes(nm))) { batch.push([h, nm]); if(!databasePesantren[h]) databasePesantren[h] = []; databasePesantren[h].push(nm); } }); if(batch.length > 0) { eksekusiCRUD('crud_tambah_batch', 'Santri', '', batch); alert(`✅ ${batch.length} Santri ditambahkan!`); document.getElementById('data-santri-baru').value = ''; renderTabelSantriAdmin(); } }
-        function editSantri(halaqah, namaLama) { let n = prompt(`Ubah Nama Santri (${halaqah}):`, namaLama); if(n && n.trim() !== "" && n !== namaLama) { eksekusiCRUD('crud_edit', 'Santri', halaqah + "_" + namaLama, [halaqah, n.trim()]); let idx = databasePesantren[halaqah].indexOf(namaLama); if(idx > -1) databasePesantren[halaqah][idx] = n.trim(); renderTabelSantriAdmin(); } }
-        function hapusSantri(halaqah, nama) { if(confirm(`Hapus Santri '${nama}'?`)) { eksekusiCRUD('crud_hapus', 'Santri', halaqah + "_" + nama, []); let idx = databasePesantren[halaqah].indexOf(nama); if(idx > -1) databasePesantren[halaqah].splice(idx, 1); renderTabelSantriAdmin(); } }
+        function tambahSantri() { let h = document.getElementById('admin-pilih-halaqah').value; let d = document.getElementById('data-santri-baru').value.trim(); if(!h || !d) return alert("⚠️ Pilih Halaqah dan ketik nama santri!"); let lines = d.split('\n'); let batch = []; lines.forEach(n => { let nm = n.trim(); if(nm !== "" && (!databasePesantren[h] || !databasePesantren[h].includes(nm))) { batch.push([h, nm]); if(!databasePesantren[h]) databasePesantren[h] = []; databasePesantren[h].push(nm); } }); if(batch.length > 0) { eksekusiCRUD('crud_tambah_batch', 'Santri', '', batch); alert(`✅ ${batch.length} Santri ditambahkan!`); document.getElementById('data-santri-baru').value = ''; renderTabelSantriAdmin(); simpanKeLocalStorage(); } }
+        function editSantri(halaqah, namaLama) { let n = prompt(`Ubah Nama Santri (${halaqah}):`, namaLama); if(n && n.trim() !== "" && n !== namaLama) { eksekusiCRUD('crud_edit', 'Santri', halaqah + "_" + namaLama, [halaqah, n.trim()]); let idx = databasePesantren[halaqah].indexOf(namaLama); if(idx > -1) databasePesantren[halaqah][idx] = n.trim(); renderTabelSantriAdmin(); simpanKeLocalStorage(); } }
+        function hapusSantri(halaqah, nama) { if(confirm(`Hapus Santri '${nama}'?`)) { eksekusiCRUD('crud_hapus', 'Santri', halaqah + "_" + nama, []); let idx = databasePesantren[halaqah].indexOf(nama); if(idx > -1) databasePesantren[halaqah].splice(idx, 1); renderTabelSantriAdmin(); simpanKeLocalStorage(); } }
 
         function unduhTemplate() { let wb = XLSX.utils.book_new(); let wsGuru = XLSX.utils.aoa_to_sheet([["Nama", "Sandi"], ["Ustadz Fulan", "guru123"], ["Ustadzah Fulanah", "guru123"]]); let wsSantri = XLSX.utils.aoa_to_sheet([["Halaqah", "Nama Santri"], ["Halaqah Abu Bakar", "Ahmad Zaid"], ["Halaqah Umar", "Umar Al-Faruq"]]); wsGuru['!cols'] = [{wch: 25}, {wch: 15}]; wsSantri['!cols'] = [{wch: 25}, {wch: 25}]; XLSX.utils.book_append_sheet(wb, wsGuru, "Guru"); XLSX.utils.book_append_sheet(wb, wsSantri, "Santri"); XLSX.writeFile(wb, "Template_Import_Bilal.xlsx"); }
         function prosesImportExcel() { let fileInput = document.getElementById('file-import-excel'); if(!fileInput.files[0]) return alert("⚠️ Pilih file Excel terlebih dahulu!"); let btn = document.getElementById('btn-proses-import'); let asli = btn.innerText; btn.innerText = "⏳ Memproses Import..."; btn.disabled = true; let reader = new FileReader(); reader.onload = function(e) { let data = new Uint8Array(e.target.result); let workbook = XLSX.read(data, {type: 'array'}); let dataGuru = []; let dataSantri = []; if(workbook.Sheets["Guru"]) { let jsonGuru = XLSX.utils.sheet_to_json(workbook.Sheets["Guru"], {header: 1}); jsonGuru.slice(1).forEach(row => { if(row[0]) dataGuru.push([row[0].toString().trim(), (row[1] || "guru123").toString().trim()]); }); } if(workbook.Sheets["Santri"]) { let jsonSantri = XLSX.utils.sheet_to_json(workbook.Sheets["Santri"], {header: 1}); jsonSantri.slice(1).forEach(row => { if(row[0] && row[1]) dataSantri.push([row[0].toString().trim(), row[1].toString().trim()]); }); } if(dataGuru.length === 0 && dataSantri.length === 0) { btn.innerText = asli; btn.disabled = false; fileInput.value = ''; return alert("⚠️ Tidak ada data valid."); } fetch(scriptURL, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify({ action: "import_excel", guru: dataGuru, santri: dataSantri }) }).then(() => { alert("✅ Import Berhasil! Memuat ulang data..."); tarikDataServer('admin'); }).catch(() => alert("⚠️ Gagal koneksi import.")).finally(() => { btn.innerText = asli; btn.disabled = false; fileInput.value = ''; }); }; reader.readAsArrayBuffer(fileInput.files[0]); }
@@ -661,17 +790,24 @@
 
         function tarikDataServer(asal) {
             fetch(scriptURL).then(r => r.json()).then(data => {
-                dataProgresGlobal = data.progres; dataRiwayatServer = data.riwayat;
+                if(data.progres) dataProgresGlobal = data.progres;
+                if(data.riwayat) dataRiwayatServer = data.riwayat;
                 if(data.halaqah && data.halaqah.length > 0) {
                     databasePesantren = {}; data.halaqah.forEach(h => databasePesantren[h] = []);
                     if(data.santri) { data.santri.forEach(s => { if(databasePesantren[s.halaqah]) databasePesantren[s.halaqah].push(s.nama); }); }
                 }
                 if(data.akun) dataAkunGlobal = data.akun;
+                simpanKeLocalStorage();
 
                 if (asal === 'muhaffiz' && document.getElementById('muhaffiz-pilih-santri').value !== "") tampilkanKartuPrestasi(); 
                 else if (asal === 'ortu' && document.getElementById('ortu-pilih-santri').value !== "") tampilkanDataOrtu();
                 else if (asal === 'admin') renderTabelAdmin(); 
-            }).catch(e => console.error('Gagal tarik data server', e));
+            }).catch(e => {
+                console.warn('Mode offline aktif, menggunakan data lokal.');
+                if (asal === 'muhaffiz' && document.getElementById('muhaffiz-pilih-santri').value !== "") tampilkanKartuPrestasi(); 
+                else if (asal === 'ortu' && document.getElementById('ortu-pilih-santri').value !== "") tampilkanDataOrtu();
+                else if (asal === 'admin') renderTabelAdmin(); 
+            });
         }
 
         function tampilkanDataOrtu() {
@@ -681,7 +817,7 @@
                 
                 if (dataProgresGlobal[santri]) {
                     let jStr = dataProgresGlobal[santri].juz; setJuzUI(jStr, true);
-                    let jArr = jStr && jStr !== "-" ? jStr.split(',') : [];
+                    let jArr = parseDaftarJuz(jStr);
                     document.getElementById('ortu-infoJuz').innerText = jArr.length > 0 ? jArr.length + " Juz" : "Terdata"; document.getElementById('ortu-infoJuz').style.color = "var(--tema-warna)";
                     document.getElementById('ortu-infoSurah').innerText = dataProgresGlobal[santri].surah + " (" + dataProgresGlobal[santri].ayat + ")";
                 } else { 
@@ -719,7 +855,7 @@
                 kartu.style.display = "block";
                 if (dataProgresGlobal[santri]) { 
                     let jStr = dataProgresGlobal[santri].juz; setJuzUI(jStr, false);
-                    let jArr = jStr && jStr !== "-" ? jStr.split(',') : [];
+                    let jArr = parseDaftarJuz(jStr);
                     document.getElementById('infoTotalJuz').innerText = jArr.length > 0 ? jArr.length + " Juz" : "Terdata"; 
                     document.getElementById('infoTotalJuz').style.color = "var(--tema-warna)"; 
                     document.getElementById('infoSurah').innerText = dataProgresGlobal[santri].surah + " (" + dataProgresGlobal[santri].ayat + ")";
@@ -770,17 +906,28 @@
             } else { if(!halaqah || !santri) { alert("⚠️ Harap pilih Halaqah dan Santri!"); return; } juz = "-"; surah = "-"; ayat = "-"; t = {value: "-"}; l = {value: "-"}; m = {value: "-"}; statusSetoran = "-"; catatan = "-"; }
 
             let setoranBaru = { tgl: new Date().toLocaleDateString('id-ID') + " " + new Date().toLocaleTimeString('id-ID', {hour: '2-digit', minute:'2-digit'}), halaqah: halaqah, santri: santri, kehadiran: kehadiran, jenis: jenisSetoran, juz: juz, surah: surah, ayat: ayat, tajwid: t ? t.value : "-", lancar: l ? l.value : "-", makhraj: m ? m.value : "-", status: statusSetoran, catatan: catatan };
-            dataRiwayat.unshift(setoranBaru); renderRiwayatLokal();
+            dataRiwayat.unshift(setoranBaru); 
+            dataRiwayatServer.unshift(setoranBaru);
+            if(kehadiran === "Hadir" && statusSetoran === "Lanjut" && jenisSetoran === "Ziyadah") { 
+                dataProgresGlobal[santri] = { juz: juz, surah: surah, ayat: ayat }; 
+                tampilkanKartuPrestasi(); 
+            }
+            simpanKeLocalStorage();
+            renderRiwayatLokal();
 
             let btn = document.getElementById('btn-simpan-utama'); let asli = btn.innerText; btn.innerText = "⏳ Menyimpan..."; btn.disabled = true;
 
             fetch(scriptURL, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(setoranBaru) })
             .then(r => {
+                console.log("Sinkronisasi cloud berhasil");
+            }).catch(e => {
+                console.warn("Offline: tersimpan di memori lokal");
+            }).finally(() => {
+                btn.innerText = asli; btn.disabled = false;
                 document.getElementById('input-surah').value = ''; document.getElementById('input-surah-akhir').value = ''; updateMateriUI(); document.getElementById('catatanEvaluasi').value = ''; 
                 pilihStatus('Lanjut'); if(t && t.checked) t.checked = false; if(l && l.checked) l.checked = false; if(m && m.checked) m.checked = false; document.querySelector('input[name="kehadiran"][value="Hadir"]').checked = true; toggleFormSetoran(); 
-                
-                if(kehadiran === "Hadir" && statusSetoran === "Lanjut" && jenisSetoran === "Ziyadah") { dataProgresGlobal[santri] = { juz: juz, surah: surah, ayat: ayat }; tampilkanKartuPrestasi(); }
-            }).catch(e => { alert('⚠️ Gagal menyimpan ke Spreadsheet. Cek internet.'); }).finally(() => { btn.innerText = asli; btn.disabled = false; });
+                alert("✅ Setoran berhasil disimpan ke database!");
+            });
         }
 
         function drawStars(nilai) { if(nilai === "-") return "-"; let n = parseInt(nilai); return `<span style="color:#fbbf24; text-shadow:0 1px 5px rgba(251,191,36,0.6);">${'★'.repeat(n)}</span><span style="color:rgba(255,255,255,0.15);">${'★'.repeat(5-n)}</span>`; }
@@ -820,18 +967,174 @@
         function updateSantriLaporan() { let h = document.getElementById('pilih-halaqah-laporan').value; let s = document.getElementById('pilih-santri-laporan'); s.innerHTML = '<option value="">-- Pilih Santri --</option>'; if(h !== "") { let ds = databasePesantren[h]; if(ds && ds.length > 0) { ds.forEach(n => s.appendChild(new Option(n, n))); } } }
         
         function prosesCetak(tipeExport) {
-            let j = document.getElementById('jenis-laporan').value; let th = document.getElementById('pilih-halaqah-laporan').value; let ts = document.getElementById('pilih-santri-laporan').value; let pj = document.getElementById('penanggung-jawab').value || "Admin Pondok"; let tgl = document.getElementById('tanggal-laporan').value || new Date().toLocaleDateString('id-ID');
-            let sumber = dataRiwayatServer.length > 0 ? dataRiwayatServer : dataRiwayat; let dataCetak = sumber.filter(i => { if (j === 'halaqah') return i.halaqah === th; if (j === 'santri') return i.halaqah === th && i.santri === ts; return true; });
+            let j = document.getElementById('jenis-laporan').value; 
+            let th = document.getElementById('pilih-halaqah-laporan').value; 
+            let ts = document.getElementById('pilih-santri-laporan').value; 
+            let pj = document.getElementById('penanggung-jawab').value || "Admin Pondok"; 
+            let tgl = document.getElementById('tanggal-laporan').value || new Date().toLocaleDateString('id-ID');
+            let sumber = dataRiwayatServer.length > 0 ? dataRiwayatServer : dataRiwayat; 
+            let dataCetak = sumber.filter(i => { 
+                if (j === 'halaqah') return i.halaqah === th; 
+                if (j === 'santri') return i.halaqah === th && i.santri === ts; 
+                return true; 
+            });
             if (dataCetak.length === 0) { alert("⚠️ Tidak ada data untuk dicetak."); return; }
             
-            let head = [["No", "Waktu", "Halaqah", "Nama Santri", "Kehadiran", "Jenis", "Juz", "Surah/Ayat", "Nilai (T,L,M)", "Status", "Catatan"]];
-            let body = dataCetak.map((item, idx) => [ idx + 1, item.tgl, item.halaqah, item.santri, item.kehadiran, item.jenis, item.juz, item.kehadiran === 'Hadir' ? `${item.surah} : ${item.ayat}` : "-", item.kehadiran === 'Hadir' ? `T:${item.tajwid}, L:${item.lancar}, M:${item.makhraj}` : "-", item.status, item.catatan ]);
+            let head = [["No", "Waktu", "Halaqah", "Nama Santri", "Kehadiran", "Jenis", "Juz", "Total Juz", "Surah/Ayat", "Nilai (T,L,M)", "Status", "Catatan"]];
+            let body = dataCetak.map((item, idx) => {
+                let listJuz = parseDaftarJuz(item.juz);
+                let strJuz = item.kehadiran === 'Hadir' && listJuz.length > 0 ? listJuz.join(', ') : (item.kehadiran === 'Hadir' ? (item.juz || "-") : "-");
+                let strTotal = formatTotalJuz(item.juz, item.kehadiran);
+                return [
+                    idx + 1,
+                    item.tgl,
+                    item.halaqah,
+                    item.santri,
+                    item.kehadiran,
+                    item.jenis,
+                    strJuz,
+                    strTotal,
+                    item.kehadiran === 'Hadir' ? `${item.surah} : ${item.ayat}` : "-",
+                    item.kehadiran === 'Hadir' ? `T:${item.tajwid}, L:${item.lancar}, M:${item.makhraj}` : "-",
+                    item.status,
+                    item.catatan
+                ];
+            });
             
             if (tipeExport === 'Excel') { 
-                let wb = XLSX.utils.book_new(); let ws = XLSX.utils.aoa_to_sheet([...head, ...body]); XLSX.utils.book_append_sheet(wb, ws, "Laporan"); XLSX.writeFile(wb, `Laporan_${tgl}.xlsx`);
+                let wb = XLSX.utils.book_new(); 
+                
+                // Sheet 1: Laporan Riwayat Setoran
+                let ws = XLSX.utils.aoa_to_sheet([...head, ...body]); 
+                ws['!cols'] = [
+                    { wch: 6 },
+                    { wch: 18 },
+                    { wch: 22 },
+                    { wch: 26 },
+                    { wch: 12 },
+                    { wch: 12 },
+                    { wch: 32 },
+                    { wch: 14 },
+                    { wch: 26 },
+                    { wch: 18 },
+                    { wch: 12 },
+                    { wch: 32 }
+                ];
+                XLSX.utils.book_append_sheet(wb, ws, "Laporan"); 
+
+                // Sheet 2: Rekapitulasi Capaian Hafalan Santri (Mencakup Total Juz yang Tidak Berurutan)
+                let rekapSantriMap = {};
+                if (j === 'santri' && ts) {
+                    rekapSantriMap[ts] = { halaqah: th, juzSet: new Set(), totalSetoran: 0, hadir: 0, sakit: 0, izin: 0, alfa: 0, lastSurah: '-' };
+                } else if (j === 'halaqah' && th) {
+                    let listS = databasePesantren[th] || [];
+                    listS.forEach(s => {
+                        rekapSantriMap[s] = { halaqah: th, juzSet: new Set(), totalSetoran: 0, hadir: 0, sakit: 0, izin: 0, alfa: 0, lastSurah: '-' };
+                    });
+                } else {
+                    for (let hNama in databasePesantren) {
+                        let listS = databasePesantren[hNama] || [];
+                        listS.forEach(s => {
+                            rekapSantriMap[s] = { halaqah: hNama, juzSet: new Set(), totalSetoran: 0, hadir: 0, sakit: 0, izin: 0, alfa: 0, lastSurah: '-' };
+                        });
+                    }
+                }
+
+                // Tambahkan santri dari data riwayat jika belum masuk master
+                dataCetak.forEach(item => {
+                    if (!rekapSantriMap[item.santri]) {
+                        rekapSantriMap[item.santri] = { halaqah: item.halaqah || '-', juzSet: new Set(), totalSetoran: 0, hadir: 0, sakit: 0, izin: 0, alfa: 0, lastSurah: '-' };
+                    }
+                });
+
+                // Sinkronkan progres dari dataProgresGlobal
+                for (let sNama in rekapSantriMap) {
+                    if (dataProgresGlobal && dataProgresGlobal[sNama]) {
+                        let prog = dataProgresGlobal[sNama];
+                        parseDaftarJuz(prog.juz).forEach(jz => rekapSantriMap[sNama].juzSet.add(jz));
+                        if (prog.surah && prog.surah !== '-') {
+                            rekapSantriMap[sNama].lastSurah = prog.surah + (prog.ayat && prog.ayat !== '-' ? ` : ${prog.ayat}` : '');
+                        }
+                    }
+                }
+
+                // Akumulasikan seluruh setoran santri
+                dataCetak.forEach(item => {
+                    let r = rekapSantriMap[item.santri];
+                    if (r) {
+                        r.totalSetoran++;
+                        if (item.kehadiran === 'Hadir') r.hadir++;
+                        else if (item.kehadiran === 'Sakit') r.sakit++;
+                        else if (item.kehadiran === 'Izin') r.izin++;
+                        else if (item.kehadiran === 'Alfa') r.alfa++;
+
+                        if (item.kehadiran === 'Hadir') {
+                            parseDaftarJuz(item.juz).forEach(jz => r.juzSet.add(jz));
+                            if (r.lastSurah === '-' && item.surah && item.surah !== '-') {
+                                r.lastSurah = item.surah + (item.ayat && item.ayat !== '-' ? ` : ${item.ayat}` : '');
+                            }
+                        }
+                    }
+                });
+
+                let headRekap = [["No", "Halaqah", "Nama Santri", "Total Juz Dihafal", "Rincian Juz Dihafal", "Surah & Ayat Terakhir", "Total Setoran", "Hadir", "Sakit", "Izin", "Alfa"]];
+                let bodyRekap = [];
+                let rekapIdx = 1;
+                for (let sNama in rekapSantriMap) {
+                    let r = rekapSantriMap[sNama];
+                    let arrJuz = Array.from(r.juzSet).sort((a, b) => a - b);
+                    bodyRekap.push([
+                        rekapIdx++,
+                        r.halaqah,
+                        sNama,
+                        arrJuz.length > 0 ? (arrJuz.length + " Juz") : "0 Juz",
+                        arrJuz.length > 0 ? arrJuz.join(', ') : "-",
+                        r.lastSurah,
+                        r.totalSetoran,
+                        r.hadir,
+                        r.sakit,
+                        r.izin,
+                        r.alfa
+                    ]);
+                }
+
+                let wsRekap = XLSX.utils.aoa_to_sheet([...headRekap, ...bodyRekap]);
+                wsRekap['!cols'] = [
+                    { wch: 6 },
+                    { wch: 22 },
+                    { wch: 26 },
+                    { wch: 18 },
+                    { wch: 35 },
+                    { wch: 26 },
+                    { wch: 14 },
+                    { wch: 10 },
+                    { wch: 10 },
+                    { wch: 10 },
+                    { wch: 10 }
+                ];
+                XLSX.utils.book_append_sheet(wb, wsRekap, "Rekap Santri");
+
+                XLSX.writeFile(wb, `Laporan_${tgl}.xlsx`);
             } else if (tipeExport === 'PDF') { 
-                const { jsPDF } = window.jspdf; const doc = new jsPDF('landscape'); doc.setFontSize(16); doc.setTextColor(251, 191, 36); doc.text("Laporan Setoran", 14, 15); doc.setFontSize(11); doc.setTextColor(55, 65, 81); doc.text(`Tanggal: ${tgl} | Penanggung Jawab: ${pj}`, 14, 23); doc.autoTable({ head: head, body: body, startY: 28, theme: 'grid', headStyles: { fillColor: [217, 119, 6] }, styles: { fontSize: 9, cellPadding: 3 } }); doc.save(`Laporan_${tgl}.pdf`); 
-            } tutupModalLaporan();
+                const { jsPDF } = window.jspdf; 
+                const doc = new jsPDF('landscape'); 
+                doc.setFontSize(16); 
+                doc.setTextColor(251, 191, 36); 
+                doc.text("Laporan Setoran", 14, 15); 
+                doc.setFontSize(11); 
+                doc.setTextColor(55, 65, 81); 
+                doc.text(`Tanggal: ${tgl} | Penanggung Jawab: ${pj}`, 14, 23); 
+                doc.autoTable({ 
+                    head: head, 
+                    body: body, 
+                    startY: 28, 
+                    theme: 'grid', 
+                    headStyles: { fillColor: [217, 119, 6], fontSize: 8 }, 
+                    styles: { fontSize: 8, cellPadding: 2.5 } 
+                }); 
+                doc.save(`Laporan_${tgl}.pdf`); 
+            } 
+            tutupModalLaporan();
         }
     </script>
 </body>
